@@ -1,0 +1,277 @@
+Markow-Kette
+Zur Navigation springen
+Zur Suche springen
+Markow-Kette mit drei Zuständen und unvollständigen Verbindungen
+
+Eine Markow-Kette (englisch Markov chain; auch Markow-Prozess, nach Andrei Andrejewitsch Markow; andere Schreibweisen Markov-Kette, Markoff-Kette, Markof-Kette) ist ein spezieller stochastischer Prozess. Eine Markow-Kette ist darüber definiert, dass auch durch Kenntnis einer nur begrenzten Vorgeschichte ebenso gute Prognosen über die zukünftige Entwicklung möglich sind wie bei Kenntnis der gesamten Vorgeschichte des Prozesses.
+
+Man unterscheidet Markow-Ketten unterschiedlicher Ordnung. Im Falle einer Markow-Kette erster Ordnung heißt das: Der zukünftige Zustand des Prozesses ist nur durch den aktuellen Zustand bedingt und wird nicht durch vergangene Zustände beeinflusst. Die mathematische Formulierung im Falle einer endlichen Zustandsmenge benötigt lediglich den Begriff der diskreten Verteilung sowie der bedingten Wahrscheinlichkeit, während im zeitstetigen Falle die Konzepte der Filtration sowie der bedingten Erwartung benötigt werden.
+
+Ziel bei der Anwendung von Markow-Ketten ist es, Wahrscheinlichkeiten für das Eintreten zukünftiger Ereignisse anzugeben.
+
+Die Begriffe Markow-Kette und Markow-Prozess werden im Allgemeinen synonym verwendet. Zum Teil sind aber zur Abgrenzung mit Markow-Ketten Prozesse in diskreter Zeit (diskreter Zustandsraum) gemeint und mit Markow-Prozessen Prozesse in stetiger Zeit (stetiger Zustandsraum).
+Inhaltsverzeichnis
+
+    1 Einführende Beispiele
+        1.1 Diskrete, endliche Markow-Kette
+        1.2 Diskrete, unendliche Markow-Kette
+    2 Diskrete Zeit und höchstens abzählbar unendliche Zustandsmenge
+        2.1 Definition
+            2.1.1 Markow-Kette n-ter Ordnung
+        2.2 Grundlegende Eigenschaften
+        2.3 Beispiele
+            2.3.1 Endlicher Zustandsraum
+            2.3.2 Abzählbar unendlicher Zustandsraum
+            2.3.3 Klassische Beispiele
+        2.4 Attribute
+            2.4.1 Irreduzibilität
+            2.4.2 Periodizität
+            2.4.3 Rekurrenz und Transienz
+            2.4.4 Absorbierende Zustände
+            2.4.5 Stationäre Verteilungen
+            2.4.6 Reversibilität
+        2.5 Modellierung
+            2.5.1 Arrival First (AF)
+            2.5.2 Departure First (DF)
+        2.6 Simulation
+    3 Stetige Zeit und diskreter Zustandsraum
+    4 Diskrete Zeit und allgemeiner Zustandsraum
+    5 Allgemeine Formulierung
+        5.1 Definition
+    6 Anwendungen
+    7 Siehe auch
+    8 Literatur
+    9 Weblinks
+
+Einführende Beispiele
+Numerisches Beispiel einer einfachen Markow-Kette mit den zwei Zuständen E und A.
+
+Markow-Ketten eignen sich sehr gut, um zufällige Zustandsänderungen eines Systems zu modellieren, falls man Grund zu der Annahme hat, dass die Zustandsänderungen nur über einen begrenzten Zeitraum hinweg Einfluss aufeinander haben oder sogar gedächtnislos sind. Ein Beispiel sind Auslastungen von Bediensystemen mit gedächtnislosen Ankunfts- und Bedienzeiten.
+Diskrete, endliche Markow-Kette
+
+Ein populäres Beispiel für eine zeitdiskrete Markow-Kette mit endlichem Zustandsraum ist die zufällige Irrfahrt (engl. Random Walk) auf einem diskreten Kreis, modelliert durch den Restklassenring Z / n Z {\displaystyle \mathbb {Z} /n\mathbb {Z} } {\mathbb Z}/n{\mathbb Z}. Dies führt zum endlichen Zustandsraum S = { 0 , 1 , 2 , … , ( n − 1 ) } {\displaystyle S=\left\{0,1,2,\dots ,(n-1)\right\}} S=\left\{0,1,2,\dots ,(n-1)\right\}. Hierbei startet man in der Äquivalenzklasse [ 0 ] {\displaystyle [0]} [0] der 0, und bewegt sich in jedem Schritt aus dem aktuellen Zustand [ i ] {\displaystyle [i]} [i] jeweils mit Wahrscheinlichkeit 1 / 2 {\displaystyle 1/2} 1/2 nach [ i + 1 ] {\displaystyle [i+1]} [i+1] oder nach [ i − 1 ] {\displaystyle [i-1]} [i-1] (also anschaulich: einen Schritt nach links oder nach rechts).
+Eine (endliche) zufällige Irrfahrt mit zwei absorbierenden Zuständen (ganz links und ganz rechts). Die Zustände „-1“, „0“ und „1“ haben jeweils die gleiche Übergangswahrscheinlichkeit (0,5) zu den Zuständen links und rechts von ihnen.
+Diskrete, unendliche Markow-Kette
+
+Als Beispiel für einen abzählbar unendlichen Zustandsraum wirft man eine Münze immer wieder und notiert bei jedem Wurf, wie oft bislang ‚Kopf‘ erschienen ist. Die Abfolge der so gebildeten Zahlen bildet eine (zeitdiskrete) Markow-Kette, diesmal mit Zustandsraum S = { 0 , 1 , 2 , … } {\displaystyle S=\{0,1,2,\dots \}} S=\{0,1,2,\dots \} mit jeweils der Übergangswahrscheinlichkeit 1 / 2 {\displaystyle 1/2} 1/2 für den Übergang von [ i ] {\displaystyle [i]} [i] nach [ i + 1 ] {\displaystyle [i+1]} [i+1] und für das Verbleiben in [ i ] {\displaystyle [i]} [i].
+
+Ein weiteres Beispiel für eine Markow-Kette mit unendlichem Zustandsraum ist der Galton-Watson-Prozess, der oftmals zur Modellierung von Populationen genutzt wird.
+Diskrete Zeit und höchstens abzählbar unendliche Zustandsmenge
+Definition
+
+Gegeben sei eine Familie von Zufallsvariablen Y = ( X t ) t ∈ N {\displaystyle Y=(X_{t})_{t\in \mathbb {N} }} Y=(X_{t})_{{t\in {\mathbb {N}}}}, wobei alle X t {\displaystyle X_{t}} X_{t} nur Werte aus dem höchstens abzählbaren Zustandsraum S = { s 1 , s 2 , s 3 , … } {\displaystyle S=\{s_{1},s_{2},s_{3},\dots \}} S=\{s_{1},s_{2},s_{3},\dots \} annehmen. Dann heißt Y {\displaystyle Y} Y eine (diskrete) Markow-Kette genau dann, wenn
+
+      P ( X t + 1 = s j t + 1 ∣ X t = s j t , X t − 1 = s j t − 1 , … , X 0 = s j 0 ) =   P ( X t + 1 = s j t + 1 ∣ X t = s j t ) . {\displaystyle {\begin{aligned}&\ P(X_{t+1}=s_{j_{t+1}}\mid X_{t}=s_{j_{t}},X_{t-1}=s_{j_{t-1}},\dots ,X_{0}=s_{j_{0}})\\=&\ P(X_{t+1}=s_{j_{t+1}}\mid X_{t}=s_{j_{t}}).\end{aligned}}} {\begin{aligned}&\ P(X_{{t+1}}=s_{{j_{{t+1}}}}\mid X_{t}=s_{{j_{t}}},X_{{t-1}}=s_{{j_{{t-1}}}},\dots ,X_{0}=s_{{j_{0}}})\\=&\ P(X_{{t+1}}=s_{{j_{{t+1}}}}\mid X_{t}=s_{{j_{{t}}}}).\end{aligned}}
+
+gilt. Die Übergangswahrscheinlichkeiten hängen also nur von dem aktuellen Zustand ab und nicht von der gesamten Vergangenheit. Dies bezeichnet man als Markow-Eigenschaft oder auch als Gedächtnislosigkeit. Seien
+
+    p i j ( t ) := P ( X t + 1 = s j ∣ X t = s i ) , i , j = 1 , … , m {\displaystyle p_{ij}(t):=P(X_{t+1}=s_{j}\mid X_{t}=s_{i}),\quad i,j=1,\dots ,m} p_{{ij}}(t):=P(X_{{t+1}}=s_{j}\mid X_{t}=s_{i}),\quad i,j=1,\dots ,m
+
+die Übergangswahrscheinlichkeiten. Diese lassen sich dann in eine quadratische Übergangsmatrix zusammenfassen:
+
+    M ( t ) = ( p i j ( t ) ) s i , s j ∈ S {\displaystyle \mathbf {M} (t)=(p_{ij}(t))_{s_{i},s_{j}\in S}} {\mathbf {M}}(t)=(p_{{ij}}(t))_{{s_{i},s_{j}\in S}}
+
+Sind die Übergangswahrscheinlichkeiten unabhängig vom Zeitpunkt t {\displaystyle t} t, gilt also p i j ( t ) = p i j {\displaystyle p_{ij}(t)=p_{ij}} p_{{ij}}(t)=p_{{ij}} für alle t {\displaystyle t} t, so heißt die Markow-Kette homogen oder Kette mit stationären Übergangswahrscheinlichkeiten. Bei Homogenität einer Kette definiert man p i j n = P ( X n = s j ∣ X 0 = s i ) {\displaystyle p_{ij}^{n}=P(X_{n}=s_{j}\mid X_{0}=s_{i})} {\displaystyle p_{ij}^{n}=P(X_{n}=s_{j}\mid X_{0}=s_{i})} als die n {\displaystyle n} n-Schritt-Übergangswahrscheinlichkeit.
+Markow-Kette n-ter Ordnung
+
+Gelegentlich werden auch Markow-Ketten n {\displaystyle n} n-ter Ordnung untersucht. Bei diesen hängt der zukünftige Zustand von den n {\displaystyle n} n vorherigen Zuständen ab:
+
+      P ( X t + 1 = s j t + 1 ∣ X t = s j t , X t − 1 = s j t − 1 , … , X 0 = s j 0 ) =   P ( X t + 1 = s j t + 1 ∣ X t = s j t , … , X t − n + 1 = s j t − n + 1 ) . {\displaystyle {\begin{aligned}&\ P(X_{t+1}=s_{j_{t+1}}\mid X_{t}=s_{j_{t}},X_{t-1}=s_{j_{t-1}},\dots ,X_{0}=s_{j_{0}})\\=&\ P(X_{t+1}=s_{j_{t+1}}\mid X_{t}=s_{j_{t}},\dots ,X_{t-n+1}=s_{j_{t-n+1}}).\end{aligned}}} {\begin{aligned}&\ P(X_{{t+1}}=s_{{j_{{t+1}}}}\mid X_{t}=s_{{j_{t}}},X_{{t-1}}=s_{{j_{{t-1}}}},\dots ,X_{0}=s_{{j_{0}}})\\=&\ P(X_{{t+1}}=s_{{j_{{t+1}}}}\mid X_{t}=s_{{j_{t}}},\dots ,X_{{t-n+1}}=s_{{j_{{t-n+1}}}}).\end{aligned}}
+
+In diesem Sinn sind die oben betrachteten Markow-Ketten Ketten erster Ordnung. Ketten höherer Ordnung werden hier aber nicht weiter betrachtet.
+Grundlegende Eigenschaften
+
+    Die Verteilung von X 0 {\displaystyle X_{0}} X_0 wird manchmal auch als Startverteilung oder Anfangsverteilung bezeichnet. Bei Vorgabe einer Startverteilung sind alle weiteren Verteilungen X t {\displaystyle X_{t}} X_{t} eindeutig bestimmt. Daher hat sich teilweise die verkürzte Notation eingebürgert, nur die Startverteilung α {\displaystyle \alpha } \alpha und den Zeitschritt von Interesse anzugeben:
+
+        P α ( X t = i ) := P ( X t = i | X 0    hat Verteilung    α ) {\displaystyle P^{\alpha }(X_{t}=i):=P(X_{t}=i|X_{0}\ {\text{ hat Verteilung }}\ \alpha )} P^{\alpha }(X_{t}=i):=P(X_{t}=i|X_{0}\ {\text{ hat Verteilung }}\ \alpha )
+
+    Startet man in einem eindeutigen Zustand j {\displaystyle j} j , so wird meist P j ( X t = i ) {\displaystyle P^{j}(X_{t}=i)} P^{j}(X_{t}=i) geschrieben.
+
+    Bei einem endlichen Zustandsraum lassen sich Markow-Ketten mittels der Übergangsmatrix und von Wahrscheinlichkeitsvektoren beschreiben. Wählt man einen stochastischen Startvektor v 0 {\displaystyle v_{0}} v_{0} (als Zeilenvektor) als Startverteilung, so ergibt sich die Verteilung zum Zeitpunkt 1 durch v 1 = v 0 M {\displaystyle v_{1}=v_{0}M} v_{1}=v_{0}M. Damit folgt induktiv v n = v 0 M n {\displaystyle v_{n}=v_{0}M^{n}} v_{n}=v_{0}M^{n}. Dabei ist dann genau der i {\displaystyle i} i-te Eintrag von v n {\displaystyle v_{n}} v_{n} die Wahrscheinlichkeit zum Zeitpunkt n {\displaystyle n} n im Zustand i {\displaystyle i} i zu sein, wenn mit der Startverteilung v 0 {\displaystyle v_{0}} v_{0} gestartet wurde.
+    Gemäß der obigen Ausführung lassen sich im Falle der Homogenität und der Endlichkeit des Zustandsraumes leicht die n {\displaystyle n} n-Schritt-Übergangswahrscheinlichkeiten berechnen. Diese sind dann genau
+
+        p i j n = [ M n ] i , j {\displaystyle p_{ij}^{n}=\left[M^{n}\right]_{i,j}} {\displaystyle p_{ij}^{n}=\left[M^{n}\right]_{i,j}},
+
+    also der Eintrag, der in der i {\displaystyle i} i-ten Zeile und der j {\displaystyle j} j-ten Spalte der n {\displaystyle n} n-ten Potenz der Übergangsmatrix steht.
+
+    Allgemein gilt die Chapman-Kolmogorow-Gleichung. Im Falle eines endlichen Zustandsraumes ist sie genau das komponentenweise Ausschreiben der Matrixmultiplikation.
+    Markow-Ketten sind diskrete dynamische Systeme. Der Zeitraum ist N {\displaystyle \mathbb {N} } \mathbb{N} , der Index der Zufallsvariable. Den Zustandsraum im Sinne des dynamischen Systems bilden dann alle Verteilungen auf dem Zustandsraum im Sinne der Markow-Kette. Die Operation Φ {\displaystyle \Phi } \Phi ordnet dann der Verteilung im t {\displaystyle t} t-ten Zeitschritt die Verteilung im ( t + 1 ) {\displaystyle (t+1)} (t+1)-ten Zeitschritt zu. Im Falle eines endlichen Zustandsraumes der Markow-Kette ist dies dann genau die iterierte Anwendung der Übergangsmatrix wie oben beschrieben. Einige Begriffe aus der Theorie der dynamischen Systeme haben ein Pendant in der Theorie der Markow-Ketten wie z. B. kritische Punkte und stationäre Verteilungen.
+    Homogene Markow-Ketten mit einer stationären Verteilung als Startverteilung sind stark stationäre stochastische Prozesse. Somit sind zeitdiskrete Markow-Ketten mit abzählbarem Zustandsraum maßerhaltende dynamische Systeme, wenn sie in ihrer invarianten Verteilung starten. Sind sie zusätzlich positiv rekurrent sowie irreduzibel, so sind sie sogar ergodische stochastische Prozesse und erlauben die Anwendung von Aussagen der Ergodentheorie wie zum Beispiel des individuellen Ergodensatzes.
+    Die oben definierte Übergangsmatrix ist unendlichdimensional, wenn der Zustandsraum abzählbar unendlich ist. Nur im Falle der Endlichkeit des Zustandsraumes handelt es sich um eine Matrix im Sinne der Linearen Algebra.
+
+Beispiele
+Endlicher Zustandsraum
+Übergangsgraph für die beschriebene Markow-Kette
+
+Wir versuchen, mithilfe einer Markow-Kette eine einfache Wettervorhersage zu bilden. Dazu kodieren wir 1 = „die Sonne scheint“, 2 = „es ist bewölkt“ und 3 = „es regnet“. Als Zeitschritt wählen wir einen Tag. Aus Erfahrung wissen wir, dass wenn heute die Sonne scheint, die Wahrscheinlichkeit, dass es morgen regnet, ungefähr 80 % ist und die Wahrscheinlichkeit, dass es bewölkt ist, ca. 20 % beträgt. Außerdem treffen wir die Annahme, dass sich diese Wahrscheinlichkeiten nicht ändern, die Markow-Kette also homogen ist. Somit wissen wir nun
+
+    P ( X t + 1 = i | X t = 1 ) = { 0  falls  i = 1 0 , 2  falls  i = 2 , 0 , 8  falls  i = 3 {\displaystyle P(X_{t+1}=i|X_{t}=1)={\begin{cases}0&{\text{ falls }}\quad i=1\\0{,}2&{\text{ falls }}\quad i=2,\\0{,}8&{\text{ falls }}\quad i=3\end{cases}}} {\displaystyle P(X_{t+1}=i|X_{t}=1)={\begin{cases}0&{\text{ falls }}\quad i=1\\0{,}2&{\text{ falls }}\quad i=2,\\0{,}8&{\text{ falls }}\quad i=3\end{cases}}}
+
+Ist es aber bewölkt, so regnet es mit Wahrscheinlichkeit 0,5 am folgenden Tag und mit Wahrscheinlichkeit von 0,5 scheint die Sonne. Es gilt also
+
+    P ( X t + 1 = i | X t = 2 ) = { 0 , 5  falls  i = 1 0  falls  i = 2 , 0 , 5  falls  i = 3 {\displaystyle P(X_{t+1}=i|X_{t}=2)={\begin{cases}0{,}5&{\text{ falls }}\quad i=1\\0&{\text{ falls }}\quad i=2,\\0{,}5&{\text{ falls }}\quad i=3\end{cases}}} {\displaystyle P(X_{t+1}=i|X_{t}=2)={\begin{cases}0{,}5&{\text{ falls }}\quad i=1\\0&{\text{ falls }}\quad i=2,\\0{,}5&{\text{ falls }}\quad i=3\end{cases}}}
+
+Regnet es heute, so scheint danach nur mit Wahrscheinlichkeit von 0,1 die Sonne und mit Wahrscheinlichkeit von 0,9 ist es bewölkt. Damit folgt für die Übergangswahrscheinlichkeiten
+
+    P ( X t + 1 = i | X t = 3 ) = { 0 , 1  falls  i = 1 0 , 9  falls  i = 2 , 0  falls  i = 3 {\displaystyle P(X_{t+1}=i|X_{t}=3)={\begin{cases}0{,}1&{\text{ falls }}\quad i=1\\0{,}9&{\text{ falls }}\quad i=2,\\0&{\text{ falls }}\quad i=3\end{cases}}} {\displaystyle P(X_{t+1}=i|X_{t}=3)={\begin{cases}0{,}1&{\text{ falls }}\quad i=1\\0{,}9&{\text{ falls }}\quad i=2,\\0&{\text{ falls }}\quad i=3\end{cases}}}
+
+Damit ist die Markow-Kette vollständig beschrieben. Anschaulich lassen sich solche Markow-Ketten gut durch Übergangsgraphen darstellen, wie oben abgebildet. Ordnet man nun die Übergangswahrscheinlichkeiten zu einer Übergangsmatrix an, so erhält man
+
+    M = [ 0 0 , 2 0 , 8 0 , 5 0 0 , 5 0 , 1 0 , 9 0 ] {\displaystyle M={\begin{bmatrix}0&0{,}2&0{,}8\\0{,}5&0&0{,}5\\0{,}1&0{,}9&0\end{bmatrix}}} M = \begin{bmatrix} 0 & 0{,}2 & 0{,}8 \\ 0 {,}5 & 0 & 0{,}5 \\ 0{,}1 & 0{,}9 & 0 \end{bmatrix}
+
+Wir wollen nun wissen, wie sich das Wetter entwickeln wird, wenn heute die Sonne scheint. Dazu geben wir die Anfangsverteilung X 0 {\displaystyle X_{0}} X_0 vor in Form des stochastischen Startvektors v 0 = ( 1 ; 0 ; 0 ) {\displaystyle v_{0}=(1;0;0)} {\displaystyle v_{0}=(1;0;0)}. Wir starten also fast sicher im Zustand 1. Multiplikation von rechts mit der Übergangsmatrix liefert v 1 = v 0 M = ( 0 ; 0 , 2 ; 0 , 8 ) {\displaystyle v_{1}=v_{0}M=(0;0{,}2;0{,}8)} v_{1}=v_{0}M=(0;0{,}2;0{,}8). Mit achtzigprozentiger Wahrscheinlichkeit regnet es also. Am dritten Tag gilt v 3 = v 0 M 3 ≈ ( 0,370 0 ; 0,126 0 ; 0,504 0 ) {\displaystyle v_{3}=v_{0}M^{3}\approx (0{,}3700;0{,}1260;0{,}5040)} v_{3}=v_{0}M^{3}\approx (0{,}3700;0{,}1260;0{,}5040). Somit ist die Regenwahrscheinlichkeit am dritten Tag knapp über 50 % und die Sonnenwahrscheinlichkeit knapp unter 40 %. Somit lässt sich für jedes vorgegebene Wetter am Starttag die Regen- und Sonnenwahrscheinlichkeit an einem beliebigen Tag angeben. Auch Fragestellungen wie: „Heute scheint die Sonne. Wie groß ist die Wahrscheinlichkeit, dass es vor drei Tagen geregnet hat?“ lassen sich mit dem Satz von Bayes beantworten.
+Abzählbar unendlicher Zustandsraum
+
+Definieren wir nun eine Markow-Kette auf dem Zustandsraum Z {\displaystyle \mathbb {Z} } \mathbb {Z} und mit Übergangswahrscheinlichkeiten
+
+    P ( X t + 1 = i | X t = j ) = { p  falls  i = j + 1 q  falls  i = j − 1 , 0 sonst {\displaystyle P(X_{t+1}=i|X_{t}=j)={\begin{cases}p&{\text{ falls }}\quad i=j+1\\q&{\text{ falls }}\quad i=j-1,\\0&{\text{sonst}}\end{cases}}} {\displaystyle P(X_{t+1}=i|X_{t}=j)={\begin{cases}p&{\text{ falls }}\quad i=j+1\\q&{\text{ falls }}\quad i=j-1,\\0&{\text{sonst}}\end{cases}}}
+
+wobei p + q = 1 , p , q ≥ 0 {\displaystyle p+q=1,p,q\geq 0} p+q=1,p,q\geq 0 gilt. Dies lässt sich so veranschaulichen: Startet man an einem beliebigen Punkt, so bewegt man sich entweder mit einer Wahrscheinlichkeit von p {\displaystyle p} p nach „rechts“, sprich begibt sich zu der nächsthöheren Zahl. Mit Wahrscheinlichkeit q {\displaystyle q} q wandert man nach „links“ zu einer niedrigeren Zahl. Entsprechend diesem Vorgehen irrt man dann über den Zahlenstrahl. Daher wird diese Markow-Kette auch Irrfahrt auf Z {\displaystyle \mathbb {Z} } \mathbb {Z} genannt. Gelegentlich wird für solche Markow-Ketten auch der Begriff des Random Walk verwendet. Starten wir im Zustand 0, so ist mit den obigen Übergangswahrscheinlichkeiten
+
+    P 0 ( X 1 = i ) = { p  falls  i = 1 q  falls  i = − 1 , 0  sonst {\displaystyle P^{0}(X_{1}=i)={\begin{cases}p&{\text{ falls }}\quad i=1\\q&{\text{ falls }}\quad i=-1,\\0&{\text{ sonst}}\end{cases}}} {\displaystyle P^{0}(X_{1}=i)={\begin{cases}p&{\text{ falls }}\quad i=1\\q&{\text{ falls }}\quad i=-1,\\0&{\text{ sonst}}\end{cases}}}
+
+Daraus folgt dann P 0 ( X 2 = − 2 ) = q 2 , P 0 ( X 2 = 0 ) = 2 p q , P 0 ( X 2 = 2 ) = p 2 {\displaystyle P^{0}(X_{2}=-2)=q^{2},P^{0}(X_{2}=0)=2pq,P^{0}(X_{2}=2)=p^{2}} P^{0}(X_{2}=-2)=q^{2},P^{0}(X_{2}=0)=2pq,P^{0}(X_{2}=2)=p^{2}. Hier zeigt sich ein gewisser Zusammenhang zur Binomialverteilung. Außerdem gilt aber auch P 0 ( X 2 = − 1 ) = P 0 ( X 2 = 1 ) = 0 {\displaystyle P^{0}(X_{2}=-1)=P^{0}(X_{2}=1)=0} P^{0}(X_{2}=-1)=P^{0}(X_{2}=1)=0. Gewisse Zustände können also nur zu bestimmten Zeiten besucht werden, eine Eigenschaft, die Periodizität genannt wird.
+
+Ist allgemeiner ( Z n ) n ∈ N {\displaystyle (Z_{n})_{n\in \mathbb {N} }} {\displaystyle (Z_{n})_{n\in \mathbb {N} }} eine Folge unabhängiger und identisch verteilter Zufallsvariablen mit Werten in Z {\displaystyle \mathbb {Z} } \mathbb {Z} , dann ist durch
+
+    X t = ∑ n = 1 t Z n {\displaystyle X_{t}=\sum _{n=1}^{t}Z_{n}} {\displaystyle X_{t}=\sum _{n=1}^{t}Z_{n}}
+
+eine Markow-Kette ( X t ) t ∈ N {\displaystyle (X_{t})_{t\in \mathbb {N} }} {\displaystyle (X_{t})_{t\in \mathbb {N} }} mit Übergangswahrscheinlichkeiten p i j = P ( Z 1 = j − i ) {\displaystyle p_{ij}=P(Z_{1}=j-i)} {\displaystyle p_{ij}=P(Z_{1}=j-i)} gegeben.
+Klassische Beispiele
+
+Einige der bekanntesten Markow-Ketten sind
+
+    Die Irrfahrt auf Z D {\displaystyle \mathbb {Z} ^{D}} {\mathbb {Z}}^{D} sowie Verallgemeinerungen auf Graphen.
+    Der Galton-Watson-Prozess, welcher die Fortpflanzung einer sich eingeschlechtlich fortpflanzenden Spezies modelliert
+    Das Ehrenfest-Modell zur Modellierung der Diffusion von Molekülen durch Membrane.
+
+Attribute
+
+Markow-Ketten können gewisse Attribute zukommen, welche insbesondere das Langzeitverhalten beeinflussen. Dazu gehören beispielsweise die folgenden:
+Irreduzibilität
+→ Hauptartikel: Irreduzible Markow-Kette
+
+Irreduzibilität ist wichtig für die Konvergenz gegen einen stationären Zustand. Vereinfacht gesagt ist eine Markow-Kette irreduzibel, wenn für alle Zustände i {\displaystyle i} i und j {\displaystyle j} j gilt, dass die Wahrscheinlichkeit, in endlicher Zeit von i {\displaystyle i} i nach j {\displaystyle j} j zu kommen, echt positiv ist. Gilt dies für fixierte i {\displaystyle i} i und j {\displaystyle j} j , so sagt man auch, dass i {\displaystyle i} i und j {\displaystyle j} j miteinander kommunizieren.
+Periodizität
+→ Hauptartikel: Periodische Markow-Kette
+
+Periodische Markow-Ketten erhalten trotz aller Zufälligkeit des Systems gewisse deterministische Strukturen. Ist eine Markow-Kette periodisch mit Periode d {\displaystyle d} d , so kann sie höchstens alle d {\displaystyle d} d Zeitschritte wieder zu ihrem Startpunkt zurückkehren (dies ist aber nicht zwingend).
+Rekurrenz und Transienz
+→ Hauptartikel: Rekurrente Markow-Kette
+
+Die Rekurrenz und die Transienz beschreiben das Langzeitverhalten einer Markow-Kette. Wird ein Zustand fast sicher unendlich oft besucht, so heißt er rekurrent, ansonsten transient. Sind alle Zustände rekurrent (transient), so heißt die Markow-Kette rekurrent (transient). Wichtiges Hilfsmittel zur Bestimmung von Rekurrenz ist die Green-Funktion.
+Absorbierende Zustände
+→ Hauptartikel: Absorbierender Zustand
+
+Absorbierende Zustände sind Zustände, welche nach dem Betreten nicht wieder verlassen werden können. Hier interessiert man sich insbesondere für die Absorptionswahrscheinlichkeit, also die Wahrscheinlichkeit, einen solchen Zustand zu betreten.
+Stationäre Verteilungen
+→ Hauptartikel: Stationäre Verteilung
+
+In der Anwendung sind oftmals besonders stationäre Verteilungen interessant. Gibt man diese Verteilungen als Startverteilung von X 0 {\displaystyle X_{0}} X_0 vor, so sind alle darauf folgenden Verteilungen der Zustände X n {\displaystyle X_{n}} X_{n} für beliebiges n {\displaystyle n} n gleich der Startverteilung. Interessant ist hier die Frage, wann solche Verteilungen existieren und wann eine beliebige Verteilung gegen solch eine stationäre Verteilung konvergiert.
+Reversibilität
+→ Hauptartikel: Reversible Markow-Kette
+
+Bei reversiblen Markow-Ketten lässt sich nicht unterscheiden, ob sie in der Zeit vorwärts oder rückwärts laufen, sie sind also invariant unter Zeitumkehr. Insbesondere folgt aus Reversibilität die Existenz eines Stationären Zustandes.
+Modellierung
+
+Oft hat man in Anwendungen eine Modellierung vorliegen, in welcher die Zustandsänderungen der Markow-Kette durch eine Folge von zu zufälligen Zeiten stattfindenden Ereignissen bestimmt wird (man denke an obiges Beispiel von Bediensystemen mit zufälligen Ankunfts- und Bedienzeiten). Hier muss bei der Modellierung entschieden werden, wie das gleichzeitige Auftreten von Ereignissen (Ankunft vs. Erledigung) behandelt wird. Meist entscheidet man sich dafür, künstlich eine Abfolge der gleichzeitigen Ereignisse einzuführen. Üblicherweise unterscheidet man dabei zwischen den Möglichkeiten Arrival First und Departure First.
+Arrival First (AF)
+
+Bei dieser Disziplin wird zu Beginn eines Zeitschrittes das Bedienen gestartet. Danach treffen neue Forderungen ein, und erst am Ende eines Zeitschrittes tritt das Bedien-Ende auf.
+Mk af.png
+
+Der Vorteil dieser Disziplin ist, dass Forderungsankünfte immer vor einem möglichen Bedien-Ende eintreffen und damit die PASTA-Eigenschaft (Poisson Arrivals See Time Averages) gilt. Mit Hilfe dieser Eigenschaft lassen sich für Ankünfte, die als Bernoulli-Prozess modelliert sind, unter anderem sehr einfach für Bediensysteme wichtige Eigenschaften wie die Verlustwahrscheinlichkeit P V {\displaystyle P_{V}} P_{V} berechnen.
+
+Als Nachteil kann eine Forderung, die im Zeitschlitz z t {\displaystyle z_{t}} z_{t} eintrifft, frühestens in z t + 1 {\displaystyle z_{t+1}} z_{{t+1}} fertig bedient werden. Dies führt unter Umständen zu einer höheren Anzahl von benötigten Warteplätzen im modellierten System.
+Departure First (DF)
+
+Im Fall von Departure First kommen zu Beginn eines Zeitschrittes Forderungen im System an. Darauf folgt der Start von Bedienzeiten und am Ende eines Zeitschrittes das Ende von Bedienzeiten.
+Mk df.png
+
+Bei diesem Ansatz gilt die PASTA Eigenschaft nicht mehr, was im Allgemeinen zu komplizierteren Berechnungen als im Falle von Arrival First führt. Eine Forderung kann im selben Zeitschritt eintreffen und fertig bedient werden.
+Simulation
+
+Diskrete Markow-Ketten mit endlichem Zustandsraum S = { 1 , … , m } {\displaystyle S=\{1,\dots ,m\}} {\displaystyle S=\{1,\dots ,m\}} können leicht simuliert werden, wenn Standardzufallszahlen u t {\displaystyle u_{t}} {\displaystyle u_{t}} verfügbar sind. Dazu definiert man r i ( j ) = { 0 falls  j = 0 ∑ l = 1 j p i l sonst {\displaystyle r_{i}(j)={\begin{cases}0&{\text{falls }}\quad j=0\\\sum _{l=1}^{j}p_{il}&{\text{sonst}}\end{cases}}} {\displaystyle r_{i}(j)={\begin{cases}0&{\text{falls }}\quad j=0\\\sum _{l=1}^{j}p_{il}&{\text{sonst}}\end{cases}}}
+
+für alle i , j ∈ S {\displaystyle i,j\in S} i,j\in S. Ist nun X t = i {\displaystyle X_{t}=i} {\displaystyle X_{t}=i}, dann setze X t + 1 = j {\displaystyle X_{t+1}=j} {\displaystyle X_{t+1}=j} genau dann, wenn u t ∈ [ r i ( j − 1 ) , r i ( j ) ] {\displaystyle u_{t}\in [r_{i}(j-1),r_{i}(j)]} {\displaystyle u_{t}\in [r_{i}(j-1),r_{i}(j)]} ist. Dieses Verfahren ist insbesondere dann effizient, wenn wenige p i j {\displaystyle p_{ij}} p_{{ij}} ungleich null sind. Es entspricht der Inversionsmethode mit der Wahrscheinlichkeitsfunktion p i ( { j } ) := p i j {\displaystyle p_{i}(\{j\}):=p_{ij}} p_{i}(\{j\}):=p_{{ij}}. Die Möglichkeit, auch große Markow-Ketten zu simulieren, macht man sich beim MCMC-Verfahren zunutze, um Verteilungen zu simulieren, die nicht durch klassische Verfahren simuliert werden können.
+Stetige Zeit und diskreter Zustandsraum
+
+Analog lässt sich die Markow-Kette auch für kontinuierliche Zeit und diskreten Zustandsraum bilden. Das heißt, dass sich zu bestimmten Zeitpunkten der Zustand sprunghaft ändert.
+
+Sei ( X ( t ) ) t ≥ 0 {\displaystyle (X(t))_{t\geq 0}} (X(t))_{{t\geq 0}} ein stochastischer Prozess mit kontinuierlicher Zeit und diskretem Zustandsraum. Dann gilt bei einem homogenen Markow-Prozess
+
+    ∀ n ∈ N ,   0 < t 1 < ⋯ < t n ,   t > 0 ,   i 1 , … , i n , j ∈ S : {\displaystyle \forall n\in \mathbb {N} ,\ 0<t_{1}<\dotsb <t_{n},\ t>0,\ i_{1},\ldots ,i_{n},j\in S:} \forall n\in \mathbb{N} ,\ 0<t_{1}<\dotsb <t_{n},\ t>0,\ i_{1},\ldots ,i_{n},j\in S:
+
+        P ( X ( t n + t ) = j ∣ X ( t n ) = i n , … , X ( t 1 ) = i 1 ) = P ( X ( t n + t ) = j ∣ X ( t n ) = i n ) = P ( X ( t ) = j ∣ X ( 0 ) = i n ) =: p i n , j ( t ) {\displaystyle {\begin{aligned}P(X(t_{n}+t)=j\mid X(t_{n})=i_{n},\ldots ,X(t_{1})=i_{1})&=P(X(t_{n}+t)=j\mid X(t_{n})=i_{n})\\&=P(X(t)=j\mid X(0)=i_{n})\\&=:p_{i_{n},j}(t)\end{aligned}}} {\begin{aligned}P(X(t_{n}+t)=j\mid X(t_{n})=i_{n},\ldots ,X(t_{1})=i_{1})&=P(X(t_{n}+t)=j\mid X(t_{n})=i_{n})\\&=P(X(t)=j\mid X(0)=i_{n})\\&=:p_{{i_{n},j}}(t)\end{aligned}}
+
+Auch hier lassen sich Übergangsmatrizen bilden: P ( t ) := [ p i , j ( t ) ] {\displaystyle P(t):=[p_{i,j}(t)]} P(t):=[p_{{i,j}}(t)] für alle t > 0 {\displaystyle t>0} t>0 und P ( 0 ) := I {\displaystyle P(0):=I} P(0):=I (Hierbei steht I {\displaystyle I} I wie üblich für die Einheitsmatrix).
+
+Es gilt die Chapman-Kolmogorow-Gleichung und ( P ( t ) ) t ≥ 0 {\displaystyle (P(t))_{t\geq 0}} (P(t))_{{t\geq 0}} ist entsprechend eine Halbgruppe, die unter gewissen Voraussetzungen einen infinitesimalen Erzeuger, nämlich die Q-Matrix hat.
+
+Beispiel hierfür ist der homogene Poisson-Prozess, der die Q-Matrix p i j = λ 1 { j = i + 1 } − λ 1 { j = i } {\displaystyle p_{ij}=\lambda \mathbf {1} _{\{j=i+1\}}-\lambda \mathbf {1} _{\{j=i\}}} p_{{ij}}=\lambda {\mathbf {1}}_{{\{j=i+1\}}}-\lambda {\mathbf {1}}_{{\{j=i\}}} besitzt, oder allgemeiner jeder Geburts- und Todesprozess.
+Diskrete Zeit und allgemeiner Zustandsraum
+
+Markow-Ketten können auch auf allgemeinen messbaren Zustandsräumen definiert werden. Ist der Zustandsraum nicht abzählbar, so benötigt man hierzu den stochastischen Kern als Verallgemeinerung zur Übergangsmatrix. Dabei ist eine Markow-Kette durch die Startverteilung auf dem Zustandsraum und den stochastischen Kern (auch Übergangskern oder Markowkern) schon eindeutig bestimmt.
+
+Auf dem Gebiet der allgemeinen Markow-Ketten gibt es noch viele offene Probleme. Gut erforscht sind lediglich Harris-Ketten. Ein klassisches Beispiel für einen Markow-Prozess in stetiger Zeit und stetigem Zustandsraum ist der Wiener-Prozess, die mathematische Modellierung der brownschen Bewegung.
+Allgemeine Formulierung
+
+Inhomogene Markow-Prozesse lassen sich mithilfe der elementaren Markow-Eigenschaft definieren, homogene Markow-Prozesse mittels der schwachen Markow-Eigenschaft für Prozesse mit stetiger Zeit und mit Werten in beliebigen Räumen definieren. Meist beschränkt man sich hierbei aber aus Gründen der Handhabbarkeit auf polnische Räume. Eine Verschärfung der schwachen Markow-Eigenschaft ist die starke Markow-Eigenschaft.
+Definition
+
+Gegeben sei ein stochastischer Prozess X = ( X t ) t ∈ T {\displaystyle X=(X_{t})_{t\in T}} X=(X_t)_{t \in T} , für den gilt:
+
+    Für die Indexmenge T {\displaystyle T} T gilt T ⊂ [ 0 , ∞ ) {\displaystyle T\subset [0,\infty )} T \subset [0,\infty) sowie 0 ∈ T {\displaystyle 0\in T} 0 \in T und sie ist abgeschlossen bezüglich Addition.
+    Jedes X t {\displaystyle X_{t}} X_{t} nimmt Werte in ( E , B ( E ) ) {\displaystyle (E,{\mathcal {B}}(E))} (E, \mathcal B(E)) an, demnach nimmt X {\displaystyle X} X Werte in ( E × T , B ( E ) ⊗ T ) {\displaystyle (E^{\times T},{\mathcal {B}}(E)^{\otimes T})} (E^{\times T}, \mathcal B (E)^{ \otimes T}) an. Dabei ist B ( E ) {\displaystyle {\mathcal {B}}(E)} \mathcal B (E) die Borelsche σ-Algebra.
+
+Der Prozess heißt dann ein Markow-Prozess mit Verteilungen ( P x ) x ∈ E {\displaystyle (P_{x})_{x\in E}} (P_x)_{x \in E} auf ( Ω , A ) {\displaystyle (\Omega ,{\mathcal {A}})} (\Omega ,{\mathcal A}), wenn gilt:
+
+    Für alle x ∈ E {\displaystyle x\in E} x \in E ist X {\displaystyle X} X ein stochastischer Prozess auf ( Ω , A , P x ) {\displaystyle (\Omega ,{\mathcal {A}},P_{x})} (\Omega, \mathcal A, P_x) mit P x ( X 0 = x ) = 1 {\displaystyle P_{x}(X_{0}=x)=1} P_x(X_0=x)=1
+    Es existiert ein Markow-Kern κ {\displaystyle \kappa } \kappa von ( E , B ( E ) ) {\displaystyle (E,{\mathcal {B}}(E))} (E, \mathcal B(E)) nach ( E × T , B ( E ) ⊗ T ) {\displaystyle (E^{\times T},{\mathcal {B}}(E)^{\otimes T})} (E^{ \times T}, \mathcal B (E)^{\otimes T}) mit
+
+        κ ( x , B ) = P x ( X ∈ B ) {\displaystyle \kappa (x,B)=P_{x}(X\in B)} \kappa(x, B)= P_x(X \in B) für alle B ∈ B ( E ) ⊗ T {\displaystyle B\in {\mathcal {B}}(E)^{\otimes T}} B \in \mathcal B (E)^{ \otimes T} .
+
+    Es gilt die schwache Markow-Eigenschaft.
+
+Anwendungen
+
+Markow-Ketten werden in unterschiedlichen Bereichen verwendet.
+
+    In den Wirtschaftswissenschaften bei der Warteschlangentheorie. Hier unterstellt man eine homogene Markow-Kette. Dort wird die zu einer Periode wartende Anzahl an Kunden betrachtet. Die Wahrscheinlichkeiten für Ankunft oder Abfertigung eines Kunden sind zeitinvariant (unabhängig von der Periode).
+    Bioinformatik: Markow-Ketten werden in der Bioinformatik dazu verwendet, Sequenzabschnitte auf bestimmte Eigenschaften zu untersuchen. Hierzu zählt z. B. das Vorhandensein von CpG-Inseln, da in diesen die Übergangswahrscheinlichkeiten zwischen C-G und G-C erhöht sind.
+    In der Gesundheitsökonomie zur probabilistischen Modellierung im Zuge einer Kosten-Nutzen-Analyse von Gesundheitstechnologien wie zum Beispiel Medikamenten.
+    In der Versicherungsmathematik werden diskrete Markow-Ketten verwendet zur Einrechnung biometrischer Risiken (Invalidisierungswahrscheinlichkeiten, Sterbewahrscheinlichkeiten, …).
+    Die Finanzmathematik verwendet auf dem Wiener-Prozess basierende Markow-Prozesse zur Modellierung von Aktienkurs- und Zinsentwicklungen.
+    In der Musik zur Komposition algorithmischer Werke, zum Beispiel bei Iannis Xenakis.
+    Im Qualitätsmanagement zur Bestimmung der Zuverlässigkeit eines Systems und dessen Teilkomponenten
+    In der Physik zur Modellierung des Zerfalls eines Compoundkerns und zur Herleitung von Master-Gleichungen in der Markow-Näherung
+    Im automatisierten Onlinemarketing zur Generierung von Texten, welche von automatischen Spamfiltern nur schwer von durch Menschen verfasste Texte zu unterscheiden sind.
+    Ebenso zum Erkennen von Spam-Mails mittels eines Markow-Spamfilters
+    Bestimmte Brettspiele wie Monopoly und das Leiterspiel lassen sich als Markow-Kette auffassen.
+    Der PageRank einer Homepage lässt sich als Markow-Kette interpretieren. Insbesondere ist diese Markow-Kette durch die stochastische Google-Matrix beschrieben.
+    Zur Simulation von Verteilungen, die ansonsten nur schwer zugänglich sind, mittels der Markow chain Monte Carlo-Methode
+
+Siehe auch
+
+    Markov Random Field
+    Endlicher Automat
+    Hidden Markov Model
+    Semi-Markow-Prozess
+
+Literatur
+
+    Philipp von Hilgers, Wladimir Velminski (Hrsg.): Andrej A. Markov. Berechenbare Künste. diaphanes, Zürich/ Berlin 2007, ISBN 978-3-935300-69-8.
+    Andrei A. Markov: An Example of Statistical Investigation of the Text Eugene Onegin Concerning the Connection of Samples in Chains. trans. Classical Text in Translation. In: Science in Context. 19.4, 2006, S. 591–600.
+    Pierre Brémaud: Markov Chains. Springer Verlag, 1999, ISBN 0-387-98509-3.
+    Ehrhard Behrends: Introduction to Markov Chains. Vieweg, 2000, ISBN 3-528-06986-4.
+    Olle Häggström: Finite Markov Chains and Algorithmic Applications. Cambridge University Press, 2002.
+    Daniel W. Stroock: An introduction to Markov processes. (= Graduate Texts in Mathematics. 230). 2. Auflage. Springer/ Heidelberg 2014, ISBN 978-3-642-40522-8.
+
+Weblinks
+
+    mathematik.uni-ulm.de – Skript Markov-Ketten
+
+Normdaten (Sachbegriff): GND: 4037612-6
+Kategorien:
+
+    Markow-ProzesseAndrei Andrejewitsch Markow (Mathematiker, 1856) als Namensgeber

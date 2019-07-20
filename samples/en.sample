@@ -1,0 +1,713 @@
+
+Markov chain
+From Wikipedia, the free encyclopedia
+Jump to navigation Jump to search
+A diagram representing a two-state Markov process, with the states labelled E and A. Each number represents the probability of the Markov process changing from one state to another state, with the direction indicated by the arrow. For example, if the Markov process is in state A, then the probability it changes to state E is 0.4, while the probability it remains in state A is 0.6.
+
+A Markov chain is a stochastic model describing a sequence of possible events in which the probability of each event depends only on the state attained in the previous event.[1][2][3]
+
+In probability theory and related fields, a Markov process, named after the Russian mathematician Andrey Markov, is a stochastic process that satisfies the Markov property[1][4][5] (sometimes characterized as "memorylessness"). Roughly speaking, a process satisfies the Markov property if one can make predictions for the future of the process based solely on its present state just as well as one could knowing the process's full history, hence independently from such history, that is, conditional on the present state of the system, its future and past states are independent.
+
+A Markov chain is a type of Markov process that has either a discrete state space or a discrete index set (often representing time), but the precise definition of a Markov chain varies.[6] For example, it is common to define a Markov chain as a Markov process in either discrete or continuous time with a countable state space (thus regardless of the nature of time),[7][8][9][10] but it is also common to define a Markov chain as having discrete time in either countable or continuous state space (thus regardless of the state space).[6]
+
+Markov studied Markov processes in the early 20th century, publishing his first paper on the topic in 1906.[11][12][13][14] Random walks based on integers and the gambler's ruin problem are examples of Markov processes.[15][16] Some variations of these processes were studied hundreds of years earlier in the context of independent variables.[17][18][19] Two important examples of Markov processes are the Wiener process, also known as the Brownian motion process, and the Poisson process,[20] which are considered the most important and central stochastic processes in the theory of stochastic processes,[21][22][23] and were discovered repeatedly and independently, both before and after 1906, in various settings.[24][25] These two processes are Markov processes in continuous time, while random walks on the integers and the gambler's ruin problem are examples of Markov processes in discrete time.[15][16]
+
+Markov chains have many applications as statistical models of real-world processes,[1][26][27][28] such as studying cruise control systems in motor vehicles, queues or lines of customers arriving at an airport, exchange rates of currencies, storage systems such as dams, and population growths of certain animal species.[29] The algorithm known as PageRank, which was originally proposed for the internet search engine Google, is based on a Markov process.[1][30][31]
+
+Markov processes are the basis for general stochastic simulation methods known as Markov chain Monte Carlo, which are used for simulating sampling from complex probability distributions, and have found extensive application in Bayesian statistics.[29][32][33]
+
+The adjective Markovian is used to describe something that is related to a Markov process.[1][34]
+Contents
+
+    1 Introduction
+    2 History
+    3 Examples
+        3.1 Gambling
+        3.2 A birth-death process
+        3.3 A non-Markov example
+    4 Markov property
+    5 Formal definition
+        5.1 Discrete-time Markov chain
+            5.1.1 Variations
+            5.1.2 Example
+        5.2 Continuous-time Markov chain
+            5.2.1 Infinitesimal definition
+            5.2.2 Jump chain/holding time definition
+            5.2.3 Transition probability definition
+    6 Transient evolution
+    7 Properties
+        7.1 Reducibility
+        7.2 Periodicity
+        7.3 Transience and recurrence
+            7.3.1 Mean recurrence time
+            7.3.2 Expected number of visits
+            7.3.3 Absorbing states
+        7.4 Ergodicity
+        7.5 Steady-state analysis and limiting distributions
+            7.5.1 Steady-state analysis and the time-inhomogeneous Markov chain
+    8 Finite state space
+        8.1 Stationary distribution relation to eigenvectors and simplices
+        8.2 Time-homogeneous Markov chain with a finite state space
+        8.3 Convergence speed to the stationary distribution
+    9 Reversible Markov chain
+        9.1 Closest reversible Markov chain
+    10 Bernoulli scheme
+    11 General state space
+        11.1 Harris chains
+        11.2 Locally interacting Markov chains
+    12 Markovian representations
+    13 Transient behaviour
+    14 Stationary distribution
+        14.1 Example 1
+        14.2 Example 2
+    15 Hitting times
+        15.1 Expected hitting times
+    16 Time reversal
+    17 Embedded Markov chain
+    18 Applications
+        18.1 Physics
+        18.2 Chemistry
+        18.3 Testing
+        18.4 Solar irradiance variability
+        18.5 Speech recognition
+        18.6 Information and computer science
+        18.7 Queueing theory
+        18.8 Internet applications
+        18.9 Statistics
+        18.10 Economics and finance
+        18.11 Social sciences
+        18.12 Mathematical biology
+        18.13 Genetics
+        18.14 Games
+        18.15 Music
+        18.16 Baseball
+        18.17 Markov text generators
+        18.18 Bioinformatics
+    19 See also
+    20 Notes
+    21 References
+    22 External links
+
+Introduction
+Russian mathematician Andrey Markov
+
+A Markov chain is a stochastic process with the Markov property.[1] The term "Markov chain" refers to the sequence of random variables such a process moves through, with the Markov property defining serial dependence only between adjacent periods (as in a "chain").[1] It can thus be used for describing systems that follow a chain of linked events, where what happens next depends only on the current state of the system.
+
+The system's state space and time parameter index need to be specified. The following table gives an overview of the different instances of Markov processes for different levels of state space generality and for discrete time v. continuous time:
+	Countable state space 	Continuous or general state space
+Discrete-time 	(discrete-time) Markov chain on a countable or finite state space 	Harris chain (Markov chain on a general state space)
+Continuous-time 	Continuous-time Markov process or Markov jump process 	Any continuous stochastic process with the Markov property, e.g., the Wiener process
+
+Note that there is no definitive agreement in the literature on the use of some of the terms that signify special cases of Markov processes. Usually the term "Markov chain" is reserved for a process with a discrete set of times, that is, a discrete-time Markov chain (DTMC),[1][35][35] but a few authors use the term "Markov process" to refer to a continuous-time Markov chain (CTMC) without explicit mention.[36][37][38] In addition, there are other extensions of Markov processes that are referred to as such but do not necessarily fall within any of these four categories (see Markov model). Moreover, the time index need not necessarily be real-valued; like with the state space, there are conceivable processes that move through index sets with other mathematical constructs. Notice that the general state space continuous-time Markov chain is general to such a degree that it has no designated term.
+
+While the time parameter is usually discrete, the state space of a Markov chain does not have any generally agreed-on restrictions: the term may refer to a process on an arbitrary state space.[39] However, many applications of Markov chains employ finite or countably infinite state spaces, which have a more straightforward statistical analysis. Besides time-index and state-space parameters, there are many other variations, extensions and generalizations (see Variations). For simplicity, most of this article concentrates on the discrete-time, discrete state-space case, unless mentioned otherwise.
+
+The changes of state of the system are called transitions.[1] The probabilities associated with various state changes are called transition probabilities. The process is characterized by a state space, a transition matrix describing the probabilities of particular transitions, and an initial state (or initial distribution) across the state space. By convention, we assume all possible states and transitions have been included in the definition of the process, so there is always a next state, and the process does not terminate.
+
+A discrete-time random process involves a system which is in a certain state at each step, with the state changing randomly between steps.[1] The steps are often thought of as moments in time, but they can equally well refer to physical distance or any other discrete measurement. Formally, the steps are the integers or natural numbers, and the random process is a mapping of these to states.[40] The Markov property states that the conditional probability distribution for the system at the next step (and in fact at all future steps) depends only on the current state of the system, and not additionally on the state of the system at previous steps.
+
+Since the system changes randomly, it is generally impossible to predict with certainty the state of a Markov chain at a given point in the future.[40] However, the statistical properties of the system's future can be predicted.[40] In many applications, it is these statistical properties that are important.
+
+A famous Markov chain is the so-called "drunkard's walk", a random walk on the number line where, at each step, the position may change by +1 or −1 with equal probability. From any position there are two possible transitions, to the next or previous integer. The transition probabilities depend only on the current position, not on the manner in which the position was reached. For example, the transition probabilities from 5 to 4 and 5 to 6 are both 0.5, and all other transition probabilities from 5 are 0. These probabilities are independent of whether the system was previously in 4 or 6.
+
+Another example is the dietary habits of a creature who eats only grapes, cheese, or lettuce, and whose dietary habits conform to the following rules:
+
+    It eats exactly once a day.
+    If it ate cheese today, tomorrow it will eat lettuce or grapes with equal probability.
+    If it ate grapes today, tomorrow it will eat grapes with probability 1/10, cheese with probability 4/10 and lettuce with probability 5/10.
+    If it ate lettuce today, tomorrow it will eat grapes with probability 4/10 or cheese with probability 6/10. It will not eat lettuce again tomorrow.
+
+This creature's eating habits can be modeled with a Markov chain since its choice tomorrow depends solely on what it ate today, not what it ate yesterday or any other time in the past. One statistical property that could be calculated is the expected percentage, over a long period, of the days on which the creature will eat grapes.
+
+A series of independent events (for example, a series of coin flips) satisfies the formal definition of a Markov chain. However, the theory is usually applied only when the probability distribution of the next step depends non-trivially on the current state.
+History
+
+Andrey Markov studied Markov chains in the early 20th century.[1] Markov was interested in studying an extension of independent random sequences, motivated by a disagreement with Pavel Nekrasov who claimed independence was necessary for the weak law of large numbers to hold.[1][41] In his first paper on Markov chains, published in 1906, Markov showed that under certain conditions the average outcomes of the Markov chain would converge to a fixed vector of values, so proving a weak law of large numbers without the independence assumption,[1][12][13][14] which had been commonly regarded as a requirement for such mathematical laws to hold.[14] Markov later used Markov chains to study the distribution of vowels in Eugene Onegin, written by Alexander Pushkin, and proved a central limit theorem for such chains.[1][12] See Markov chain central limit theorem.
+
+In 1912 Henri Poincaré studied Markov chains on finite groups with an aim to study card shuffling. Other early uses of Markov chains include a diffusion model, introduced by Paul and Tatyana Ehrenfest in 1907, and a branching process, introduced by Francis Galton and Henry William Watson in 1873, preceding the work of Markov.[12][13] After the work of Galton and Watson, it was later revealed that their branching process had been independently discovered and studied around three decades earlier by Irénée-Jules Bienaymé.[42] Starting in 1928, Maurice Fréchet became interested in Markov chains, eventually resulting in him publishing in 1938 a detailed study on Markov chains.[12][43]
+
+Andrei Kolmogorov developed in a 1931 paper a large part of the early theory of continuous-time Markov processes.[44][45] Kolmogorov was partly inspired by Louis Bachelier's 1900 work on fluctuations in the stock market as well as Norbert Wiener's work on Einstein's model of Brownian movement.[44][46] He introduced and studied a particular set of Markov processes known as diffusion processes, where he derived a set of differential equations describing the processes.[44][47] Independent of Kolmogorov's work, Sydney Chapman derived in a 1928 paper an equation, now called the Chapman–Kolmogorov equation, in a less mathematically rigorous way than Kolmogorov, while studying Brownian movement.[48] The differential equations are now called the Kolmogorov equations[49] or the Kolmogorov–Chapman equations.[50] Other mathematicians who contributed significantly to the foundations of Markov processes include William Feller, starting in 1930s, and then later Eugene Dynkin, starting in the 1950s.[45]
+Examples
+Gambling
+
+Suppose that you start with $10, and you wager $1 on an unending, fair, coin toss indefinitely, or until you lose all of your money. If X n {\displaystyle X_{n}} X_{n} represents the number of dollars you have after n tosses, with X 0 = 10 {\displaystyle X_{0}=10} X_0 = 10, then the sequence { X n : n ∈ N } {\displaystyle \{X_{n}:n\in \mathbb {N} \}} \{X_{n}:n\in {\mathbb {N}}\} is a Markov process. If I know that you have $12 now, then it would be expected that with even odds, you will either have $11 or $13 after the next toss. This guess is not improved by the added knowledge that you started with $10, then went up to $11, down to $10, up to $11, and then to $12.
+
+The process described here is a Markov chain on a countable state space that follows a random walk.[1]
+A birth-death process
+
+If one pops one hundred kernels of popcorn in an oven, each kernel popping at an independent exponentially-distributed time, then this would be a continuous-time Markov process. If X t {\displaystyle X_{t}} X_{t} denotes the number of kernels which have popped up to time t, the problem can be defined as finding the number of kernels that will pop in some later time. The only thing one needs to know is the number of kernels that have popped prior to the time "t". It is not necessary to know when they popped, so knowing X t {\displaystyle X_{t}} X_{t} for previous times "t" is not relevant.
+
+The process described here is an approximation of a Poisson point process – Poisson processes are also Markov processes.
+A non-Markov example
+
+Suppose that there is a coin purse containing five quarters (each worth 25¢), five dimes (each worth 10¢), and five nickels (each worth 5¢), and one by one, coins are randomly drawn from the purse and are set on a table. If X n {\displaystyle X_{n}} X_{n} represents the total value of the coins set on the table after n draws, with X 0 = 0 {\displaystyle X_{0}=0} X_{0}=0, then the sequence { X n : n ∈ N } {\displaystyle \{X_{n}:n\in \mathbb {N} \}} \{X_{n}:n\in {\mathbb {N}}\} is not a Markov process.
+
+To see why this is the case, suppose that in the first six draws, all five nickels and a quarter are drawn. Thus X 6 = $ 0.50 {\displaystyle X_{6}=\$0.50} X_6 = \$0.50. If we know not just X 6 {\displaystyle X_{6}} X_6, but the earlier values as well, then we can determine which coins have been drawn, and we know that the next coin will not be a nickel; so we can determine that X 7 ≥ $ 0.60 {\displaystyle X_{7}\geq \$0.60} X_7 \geq \$0.60 with probability 1. But if we do not know the earlier values, then based only on the value X 6 {\displaystyle X_{6}} X_6 we might guess that we had drawn four dimes and two nickels, in which case it would certainly be possible to draw another nickel next. Thus, our guesses about X 7 {\displaystyle X_{7}} X_7 are impacted by our knowledge of values prior to X 6 {\displaystyle X_{6}} X_6.
+
+However, it is possible to model this scenario as a Markov process. Instead of defining X n {\displaystyle X_{n}} X_{n} to represent the total value of the coins on the table, we could define X n {\displaystyle X_{n}} X_{n} to represent the count of the various coin types on the table. For instance, X 6 = 1 , 0 , 5 {\displaystyle X_{6}=1,0,5} {\displaystyle X_{6}=1,0,5} could be defined to represent the state where there is one quarter, zero dimes, and five nickels on the table after 6 one-by-one draws. This new model would be represented by 216 possible states (that is, 6x6x6 states, since each of the three coin types could have zero to five coins on the table by the end of the 6 draws). Suppose that the first draw results in state X 1 = 0 , 1 , 0 {\displaystyle X_{1}=0,1,0} {\displaystyle X_{1}=0,1,0}. The probability of achieving X 2 {\displaystyle X_{2}} X_{2} now depends on X 1 {\displaystyle X_{1}} X_{1}; for example, the state X 2 = 1 , 0 , 1 {\displaystyle X_{2}=1,0,1} {\displaystyle X_{2}=1,0,1} is not possible. After the second draw, the third draw depends on which coins have so far been drawn, but no longer only on the coins that were drawn for the first state (since probabilistically important information has since been added to the scenario). In this way, the likelihood of the X n = i , j , k {\displaystyle X_{n}=i,j,k} {\displaystyle X_{n}=i,j,k} state depends exclusively on the outcome of the X n − 1 = ℓ , m , p {\displaystyle X_{n-1}=\ell ,m,p} {\displaystyle X_{n-1}=\ell ,m,p} state.
+Markov property
+
+The Markov property refers to the memoryless property of a stochastic process.
+
+A stochastic process has the Markov property if the conditional probability distribution of future states of the process depends only upon the present state, not on the sequence of events that preceded it.
+Formal definition
+Discrete-time Markov chain
+
+A discrete-time Markov chain is a sequence of random variables X1, X2, X3, ... with the Markov property, namely that the probability of moving to the next state depends only on the present state and not on the previous states:
+
+    Pr ( X n + 1 = x ∣ X 1 = x 1 , X 2 = x 2 , … , X n = x n ) = Pr ( X n + 1 = x ∣ X n = x n ) , {\displaystyle \Pr(X_{n+1}=x\mid X_{1}=x_{1},X_{2}=x_{2},\ldots ,X_{n}=x_{n})=\Pr(X_{n+1}=x\mid X_{n}=x_{n}),} {\displaystyle \Pr(X_{n+1}=x\mid X_{1}=x_{1},X_{2}=x_{2},\ldots ,X_{n}=x_{n})=\Pr(X_{n+1}=x\mid X_{n}=x_{n}),} if both conditional probabilities are well defined, that is, if Pr ( X 1 = x 1 , … , X n = x n ) > 0. {\displaystyle \Pr(X_{1}=x_{1},\ldots ,X_{n}=x_{n})>0.} {\displaystyle \Pr(X_{1}=x_{1},\ldots ,X_{n}=x_{n})>0.}
+
+The possible values of Xi form a countable set S called the state space of the chain.
+
+Markov chains are often described by a sequence of directed graphs, where the edges of graph n are labeled by the probabilities of going from one state at time n to the other states at time n + 1, Pr ( X n + 1 = x ∣ X n = x n ) . {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=x_{n}).} {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=x_{n}).} The same information is represented by the transition matrix from time n to time n + 1. However, Markov chains are frequently assumed to be time-homogeneous (see variations below), in which case the graph and matrix are independent of n and are thus not presented as sequences.
+
+These descriptions highlight the structure of the Markov chain that is independent of the initial distribution Pr ( X 1 = x 1 ) . {\displaystyle \Pr(X_{1}=x_{1}).} {\displaystyle \Pr(X_{1}=x_{1}).} When time-homogeneous, the chain can be interpreted as a state machine assigning a probability of hopping from each vertex or state to an adjacent one. The probability Pr ( X n = x ∣ X 1 = x 1 ) {\displaystyle \Pr(X_{n}=x\mid X_{1}=x_{1})} {\displaystyle \Pr(X_{n}=x\mid X_{1}=x_{1})} of the machine's state can be analyzed as the statistical behavior of the machine with an element x 1 {\displaystyle x_{1}} x_{1} of the state space as input, or as the behavior of the machine with the initial distribution Pr ( X 1 = y ) = [ x 1 = y ] {\displaystyle \Pr(X_{1}=y)=[x_{1}=y]} \Pr(X_{1}=y)=[x_{1}=y] of states as input, where [ P ] {\displaystyle [P]} [P] is the Iverson bracket.
+
+The fact that some sequences of states might have zero probability of occurring corresponds to a graph with multiple connected components, where we omit edges that would carry a zero transition probability. For example, if a has a nonzero probability of going to b, but a and x lie in different connected components of the graph, then Pr ( X n + 1 = b ∣ X n = a ) {\displaystyle \Pr(X_{n+1}=b\mid X_{n}=a)} {\displaystyle \Pr(X_{n+1}=b\mid X_{n}=a)} is defined, while Pr ( X n + 1 = b ∣ X 1 = x , … , X n = a ) {\displaystyle \Pr(X_{n+1}=b\mid X_{1}=x,\ldots ,X_{n}=a)} {\displaystyle \Pr(X_{n+1}=b\mid X_{1}=x,\ldots ,X_{n}=a)} is not.
+Variations
+
+    Time-homogeneous Markov chains (or stationary Markov chains) are processes where
+
+        Pr ( X n + 1 = x ∣ X n = y ) = Pr ( X n = x ∣ X n − 1 = y ) {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=y)=\Pr(X_{n}=x\mid X_{n-1}=y)} {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=y)=\Pr(X_{n}=x\mid X_{n-1}=y)}
+
+    for all n. The probability of the transition is independent of n.
+
+    A Markov chain with memory (or a Markov chain of order m)
+
+    where m is finite, is a process satisfying
+
+        Pr ( X n = x n ∣ X n − 1 = x n − 1 , X n − 2 = x n − 2 , … , X 1 = x 1 ) = Pr ( X n = x n ∣ X n − 1 = x n − 1 , X n − 2 = x n − 2 , … , X n − m = x n − m )  for  n > m {\displaystyle {\begin{aligned}{}&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{1}=x_{1})\\=&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{n-m}=x_{n-m}){\text{ for }}n>m\end{aligned}}} {\displaystyle {\begin{aligned}{}&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{1}=x_{1})\\=&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{n-m}=x_{n-m}){\text{ for }}n>m\end{aligned}}}
+
+    In other words, the future state depends on the past m states. It is possible to construct a chain ( Y n ) {\displaystyle (Y_{n})} {\displaystyle (Y_{n})} from ( X n ) {\displaystyle (X_{n})} (X_{n}) which has the 'classical' Markov property by taking as state space the ordered m-tuples of X values, ie. Y n = ( X n , X n − 1 , … , X n − m + 1 ) {\displaystyle Y_{n}=\left(X_{n},X_{n-1},\ldots ,X_{n-m+1}\right)} {\displaystyle Y_{n}=\left(X_{n},X_{n-1},\ldots ,X_{n-m+1}\right)}.
+
+Example
+Finance Markov chain example state space.svg
+
+A state diagram for a simple example is shown in the figure on the right, using a directed graph to picture the state transitions. The states represent whether a hypothetical stock market is exhibiting a bull market, bear market, or stagnant market trend during a given week. According to the figure, a bull week is followed by another bull week 90% of the time, a bear week 7.5% of the time, and a stagnant week the other 2.5% of the time. Labelling the state space {1 = bull, 2 = bear, 3 = stagnant} the transition matrix for this example is
+
+    P = [ 0.9 0.075 0.025 0.15 0.8 0.05 0.25 0.25 0.5 ] . {\displaystyle P={\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}.} P={\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}.
+
+The distribution over states can be written as a stochastic row vector x with the relation x(n + 1) = x(n)P. So if at time n the system is in state x(n), then three time periods later, at time n + 3 the distribution is
+
+    x ( n + 3 ) = x ( n + 2 ) P = ( x ( n + 1 ) P ) P = x ( n + 1 ) P 2 = ( x ( n ) P ) P 2 = x ( n ) P 3 {\displaystyle {\begin{aligned}x^{(n+3)}&=x^{(n+2)}P=\left(x^{(n+1)}P\right)P\\\\&=x^{(n+1)}P^{2}=\left(x^{(n)}P\right)P^{2}\\&=x^{(n)}P^{3}\\\end{aligned}}} {\displaystyle {\begin{aligned}x^{(n+3)}&=x^{(n+2)}P=\left(x^{(n+1)}P\right)P\\\\&=x^{(n+1)}P^{2}=\left(x^{(n)}P\right)P^{2}\\&=x^{(n)}P^{3}\\\end{aligned}}}
+
+Markov Chains prediction on 3 discrete steps based on the transition matrix from the example to the left.[51]
+
+In particular, if at time n the system is in state 2 (bear), then at time n + 3 the distribution is
+
+    x ( n + 3 ) = [ 0 1 0 ] [ 0.9 0.075 0.025 0.15 0.8 0.05 0.25 0.25 0.5 ] 3 = [ 0 1 0 ] [ 0.7745 0.17875 0.04675 0.3575 0.56825 0.07425 0.4675 0.37125 0.16125 ] = [ 0.3575 0.56825 0.07425 ] . {\displaystyle {\begin{aligned}x^{(n+3)}&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}^{3}\\[5pt]&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.7745&0.17875&0.04675\\0.3575&0.56825&0.07425\\0.4675&0.37125&0.16125\\\end{bmatrix}}\\[5pt]&={\begin{bmatrix}0.3575&0.56825&0.07425\end{bmatrix}}.\end{aligned}}} {\displaystyle {\begin{aligned}x^{(n+3)}&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}^{3}\\[5pt]&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.7745&0.17875&0.04675\\0.3575&0.56825&0.07425\\0.4675&0.37125&0.16125\\\end{bmatrix}}\\[5pt]&={\begin{bmatrix}0.3575&0.56825&0.07425\end{bmatrix}}.\end{aligned}}}
+
+Markov chains prediction on 50 discrete steps. Again, the transition matrix from the left is used.[51]
+
+Using the transition matrix it is possible to calculate, for example, the long-term fraction of weeks during which the market is stagnant, or the average number of weeks it will take to go from a stagnant to a bull market. Using the transition probabilities, the steady-state probabilities indicate that 62.5% of weeks will be in a bull market, 31.25% of weeks will be in a bear market and 6.25% of weeks will be stagnant, since:
+
+    lim N → ∞ P N = [ 0.625 0.3125 0.0625 0.625 0.3125 0.0625 0.625 0.3125 0.0625 ] {\displaystyle \lim _{N\to \infty }\,P^{N}={\begin{bmatrix}0.625&0.3125&0.0625\\0.625&0.3125&0.0625\\0.625&0.3125&0.0625\end{bmatrix}}} {\displaystyle \lim _{N\to \infty }\,P^{N}={\begin{bmatrix}0.625&0.3125&0.0625\\0.625&0.3125&0.0625\\0.625&0.3125&0.0625\end{bmatrix}}}
+
+A thorough development and many examples can be found in the on-line monograph Meyn & Tweedie 2005.[52]
+
+A finite-state machine can be used as a representation of a Markov chain. Assuming a sequence of independent and identically distributed input signals (for example, symbols from a binary alphabet chosen by coin tosses), if the machine is in state y at time n, then the probability that it moves to state x at time n + 1 depends only on the current state.
+Continuous-time Markov chain
+
+A continuous-time Markov chain (Xt)t ≥ 0 is defined by a finite or countable state space S, a transition rate matrix Q with dimensions equal to that of the state space and initial probability distribution defined on the state space. For i ≠ j, the elements qij are non-negative and describe the rate of the process transitions from state i to state j. The elements qii are chosen such that each row of the transition rate matrix sums to zero, while the row-sums of a probability transition matrix in a (discrete) Markov chain are all equal to one.
+
+There are three equivalent definitions of the process.[53]
+Infinitesimal definition
+The continuous time Markov chain is characterized by the transition rates, the derivatives with respect to time of the transition probabilities between states i and j.
+
+Let X t {\displaystyle X_{t}} X_{t} be the random variable describing the state of the process at time t, and assume the process is in a state i at time t. Then, knowing X t = i {\displaystyle X_{t}=i} {\displaystyle X_{t}=i}, X t + h = j {\displaystyle X_{t+h}=j} {\displaystyle X_{t+h}=j} is independent of previous values ( X s : s < t ) {\displaystyle \left(X_{s}:s<t\right)} {\displaystyle \left(X_{s}:s<t\right)}, and as h → 0 for all j and for all t,
+
+    Pr ( X ( t + h ) = j ∣ X ( t ) = i ) = δ i j + q i j h + o ( h ) {\displaystyle \Pr(X(t+h)=j\mid X(t)=i)=\delta _{ij}+q_{ij}h+o(h)} {\displaystyle \Pr(X(t+h)=j\mid X(t)=i)=\delta _{ij}+q_{ij}h+o(h)},
+
+where δ i j {\displaystyle \delta _{ij}} \delta _{ij} is the Kronecker delta, using the little-o notation. The q i j {\displaystyle q_{ij}} q_{ij} can be seen as measuring how quickly the transition from i to j happens.
+Jump chain/holding time definition
+
+Define a discrete-time Markov chain Yn to describe the nth jump of the process and variables S1, S2, S3, ... to describe holding times in each of the states where Si follows the exponential distribution with rate parameter −qYiYi.
+Transition probability definition
+
+For any value n = 0, 1, 2, 3, ... and times indexed up to this value of n: t0, t1, t2, ... and all states recorded at these times i0, i1, i2, i3, ... it holds that
+
+    Pr ( X t n + 1 = i n + 1 ∣ X t 0 = i 0 , X t 1 = i 1 , … , X t n = i n ) = p i n i n + 1 ( t n + 1 − t n ) {\displaystyle \Pr(X_{t_{n+1}}=i_{n+1}\mid X_{t_{0}}=i_{0},X_{t_{1}}=i_{1},\ldots ,X_{t_{n}}=i_{n})=p_{i_{n}i_{n+1}}(t_{n+1}-t_{n})} {\displaystyle \Pr(X_{t_{n+1}}=i_{n+1}\mid X_{t_{0}}=i_{0},X_{t_{1}}=i_{1},\ldots ,X_{t_{n}}=i_{n})=p_{i_{n}i_{n+1}}(t_{n+1}-t_{n})}
+
+where pij is the solution of the forward equation (a first-order differential equation)
+
+    P ′ ( t ) = P ( t ) Q {\displaystyle P'(t)=P(t)Q} {\displaystyle P'(t) = P(t) Q}
+
+with initial condition P(0) is the identity matrix.
+Transient evolution
+
+The probability of going from state i to state j in n time steps is
+
+    p i j ( n ) = Pr ( X n = j ∣ X 0 = i ) {\displaystyle p_{ij}^{(n)}=\Pr(X_{n}=j\mid X_{0}=i)} {\displaystyle p_{ij}^{(n)}=\Pr(X_{n}=j\mid X_{0}=i)}
+
+and the single-step transition is
+
+    p i j = Pr ( X 1 = j ∣ X 0 = i ) . {\displaystyle p_{ij}=\Pr(X_{1}=j\mid X_{0}=i).} {\displaystyle p_{ij}=\Pr(X_{1}=j\mid X_{0}=i).}
+
+For a time-homogeneous Markov chain:
+
+    p i j ( n ) = Pr ( X k + n = j ∣ X k = i ) {\displaystyle p_{ij}^{(n)}=\Pr(X_{k+n}=j\mid X_{k}=i)} {\displaystyle p_{ij}^{(n)}=\Pr(X_{k+n}=j\mid X_{k}=i)}
+
+and
+
+    p i j = Pr ( X k + 1 = j ∣ X k = i ) . {\displaystyle p_{ij}=\Pr(X_{k+1}=j\mid X_{k}=i).} {\displaystyle p_{ij}=\Pr(X_{k+1}=j\mid X_{k}=i).}
+
+The n-step transition probabilities satisfy the Chapman–Kolmogorov equation, that for any k such that 0 < k < n,
+
+    p i j ( n ) = ∑ r ∈ S p i r ( k ) p r j ( n − k ) {\displaystyle p_{ij}^{(n)}=\sum _{r\in S}p_{ir}^{(k)}p_{rj}^{(n-k)}} p_{ij}^{(n)}=\sum _{r\in S}p_{ir}^{(k)}p_{rj}^{(n-k)}
+
+where S is the state space of the Markov chain.
+
+The marginal distribution Pr(Xn = x) is the distribution over states at time n. The initial distribution is Pr(X0 = x). The evolution of the process through one time step is described by
+
+    Pr ( X n = j ) = ∑ r ∈ S p r j Pr ( X n − 1 = r ) = ∑ r ∈ S p r j ( n ) Pr ( X 0 = r ) . {\displaystyle \Pr(X_{n}=j)=\sum _{r\in S}p_{rj}\Pr(X_{n-1}=r)=\sum _{r\in S}p_{rj}^{(n)}\Pr(X_{0}=r).} {\displaystyle \Pr(X_{n}=j)=\sum _{r\in S}p_{rj}\Pr(X_{n-1}=r)=\sum _{r\in S}p_{rj}^{(n)}\Pr(X_{0}=r).}
+
+(The superscript (n) is an index, and not an exponent.)
+Properties
+Reducibility
+
+A Markov chain is said to be irreducible if it is possible to get to any state from any state.[1] The following explains this definition more formally.
+
+A state j is said to be accessible from a state i (written i → j) if a system started in state i has a non-zero probability of transitioning into state j at some point. Formally, state j is accessible from state i if there exists an integer nij ≥ 0 such that
+
+    Pr ( X n i j = j ∣ X 0 = i ) = p i j ( n i j ) > 0. {\displaystyle \Pr(X_{n_{ij}}=j\mid X_{0}=i)=p_{ij}^{(n_{ij})}>0.} {\displaystyle \Pr(X_{n_{ij}}=j\mid X_{0}=i)=p_{ij}^{(n_{ij})}>0.}
+
+This integer is allowed to be different for each pair of states, hence the subscripts in nij. Allowing n to be zero means that every state is accessible from itself by definition. The accessibility relation is reflexive and transitive, but not necessarily symmetric.
+
+A state i is said to communicate with state j (written i ↔ j) if both i → j and j → i. A communicating class is a maximal set of states C such that every pair of states in C communicates with each other. Communication is an equivalence relation, and communicating classes are the equivalence classes of this relation.
+
+A communicating class is closed if the probability of leaving the class is zero, namely if i is in C but j is not, then j is not accessible from i. The set of communicating classes forms a directed, acyclic graph by inheriting the arrows from the original state space. A communicating class is closed if and only if it has no outgoing arrows in this graph.
+
+A state i is said to be essential or final if for all j such that i → j it is also true that j → i. A state i is inessential if it is not essential.[54] A state is final if and only if its communicating class is closed.
+
+A Markov chain is said to be irreducible if its state space is a single communicating class; in other words, if it is possible to get to any state from any state.
+Periodicity
+
+A state i has period k if any return to state i must occur in multiples of k time steps. Formally, the period of a state is defined as
+
+    k = gcd { n > 0 : Pr ( X n = i ∣ X 0 = i ) > 0 } {\displaystyle k=\gcd\{n>0:\Pr(X_{n}=i\mid X_{0}=i)>0\}} k=\gcd\{n>0:\Pr(X_{n}=i\mid X_{0}=i)>0\}
+
+(where "gcd" is the greatest common divisor) provided that this set is not empty. Otherwise the period is not defined. Note that even though a state has period k, it may not be possible to reach the state in k steps. For example, suppose it is possible to return to the state in {6, 8, 10, 12, ...} time steps; k would be 2, even though 2 does not appear in this list.
+
+If k = 1, then the state is said to be aperiodic. Otherwise (k > 1), the state is said to be periodic with period k. A Markov chain is aperiodic if every state is aperiodic. An irreducible Markov chain only needs one aperiodic state to imply all states are aperiodic.
+
+Every state of a bipartite graph has an even period.
+Transience and recurrence
+
+A state i is said to be transient if, given that we start in state i, there is a non-zero probability that we will never return to i. Formally, let the random variable Ti be the first return time to state i (the "hitting time"):
+
+    T i = inf { n ≥ 1 : X n = i } . {\displaystyle T_{i}=\inf\{n\geq 1:X_{n}=i\}.} {\displaystyle T_{i}=\inf\{n\geq 1:X_{n}=i\}.}
+
+The number
+
+    f i i ( n ) = Pr ( T i = n ∣ X 0 = i ) {\displaystyle f_{ii}^{(n)}=\Pr(T_{i}=n\mid X_{0}=i)} {\displaystyle f_{ii}^{(n)}=\Pr(T_{i}=n\mid X_{0}=i)}
+
+is the probability that we return to state i for the first time after n steps. Therefore, state i is transient if
+
+    Pr ( T i < ∞ ∣ X 0 = i ) = ∑ n = 1 ∞ f i i ( n ) < 1. {\displaystyle \Pr(T_{i}<\infty \mid X_{0}=i)=\sum _{n=1}^{\infty }f_{ii}^{(n)}<1.} {\displaystyle \Pr(T_{i}<\infty \mid X_{0}=i)=\sum _{n=1}^{\infty }f_{ii}^{(n)}<1.}
+
+State i is recurrent (or persistent) if it is not transient. Recurrent states are guaranteed (with probability 1) to have a finite hitting time. Recurrence and transience are class properties, that is, they either hold or do not hold equally for all members of a communicating class.
+Mean recurrence time
+
+Even if the hitting time is finite with probability 1, it need not have a finite expectation. The mean recurrence time at state i is the expected return time Mi:
+
+    M i = E [ T i ] = ∑ n = 1 ∞ n ⋅ f i i ( n ) . {\displaystyle M_{i}=E[T_{i}]=\sum _{n=1}^{\infty }n\cdot f_{ii}^{(n)}.} {\displaystyle M_{i}=E[T_{i}]=\sum _{n=1}^{\infty }n\cdot f_{ii}^{(n)}.}
+
+State i is positive recurrent (or non-null persistent) if Mi is finite; otherwise, state i is null recurrent (or null persistent).
+Expected number of visits
+
+It can be shown that a state i is recurrent if and only if the expected number of visits to this state is infinite:
+
+    ∑ n = 0 ∞ p i i ( n ) = ∞ . {\displaystyle \sum _{n=0}^{\infty }p_{ii}^{(n)}=\infty .} {\displaystyle \sum _{n=0}^{\infty }p_{ii}^{(n)}=\infty .}
+
+Absorbing states
+
+A state i is called absorbing if it is impossible to leave this state. Therefore, the state i is absorbing if and only if
+
+    p i i = 1  and  p i j = 0  for  i ≠ j . {\displaystyle p_{ii}=1{\text{ and }}p_{ij}=0{\text{ for }}i\not =j.} p_{ii}=1{\text{ and }}p_{ij}=0{\text{ for }}i\not =j.
+
+If every state can reach an absorbing state, then the Markov chain is an absorbing Markov chain.[1]
+Ergodicity
+
+A state i is said to be ergodic if it is aperiodic and positive recurrent. In other words, a state i is ergodic if it is recurrent, has a period of 1, and has finite mean recurrence time. If all states in an irreducible Markov chain are ergodic, then the chain is said to be ergodic.
+
+It can be shown that a finite state irreducible Markov chain is ergodic if it has an aperiodic state. More generally, a Markov chain is ergodic if there is a number N such that any state can be reached from any other state in any number of steps greater than or equal to a number N. In case of a fully connected transition matrix, where all transitions have a non-zero probability, this condition is fulfilled with N = 1.
+
+A Markov chain with more than one state and just one out-going transition per state is either not irreducible or not aperiodic, hence cannot be ergodic.
+Steady-state analysis and limiting distributions
+
+If the Markov chain is a time-homogeneous Markov chain,[55] so that the process is described by a single, time-independent matrix p i j {\displaystyle p_{ij}} p_{ij}, then the vector π {\displaystyle {\boldsymbol {\pi }}} {\boldsymbol {\pi }} is called a stationary distribution (or invariant measure) if ∀ j ∈ S {\displaystyle \forall j\in S} \forall j\in S it satisfies
+
+    0 ≤ π j ≤ 1. {\displaystyle 0\leq \pi _{j}\leq 1.} 0\leq \pi _{j}\leq 1.
+    ∑ j ∈ S π j = 1. {\displaystyle \sum _{j\in S}\pi _{j}=1.} \sum _{j\in S}\pi _{j}=1.
+    π j = ∑ i ∈ S π i p i j . {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}p_{ij}.} \pi _{j}=\sum _{i\in S}\pi _{i}p_{ij}.
+
+An irreducible chain has a positive stationary distribution (a stationary distribution such that ∀ i , π i > 0 {\displaystyle \forall i,\pi _{i}>0} {\displaystyle \forall i,\pi _{i}>0}) if and only if all of its states are positive recurrent.[56] In that case, π is unique and is related to the expected return time:
+
+    π j = C M j , {\displaystyle \pi _{j}={\frac {C}{M_{j}}}\,,} \pi _{j}={\frac {C}{M_{j}}}\,,
+
+where C {\displaystyle C} C is the normalizing constant. Further, if the positive recurrent chain is both irreducible and aperiodic, it is said to have a limiting distribution; for any i and j,
+
+    lim n → ∞ p i j ( n ) = C M j . {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {C}{M_{j}}}.} {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {C}{M_{j}}}.}
+
+(There is no assumption on the starting distribution; the chain converges to the stationary distribution regardless of where it begins. Such π {\displaystyle \pi } \pi is called the equilibrium distribution of the chain.)
+
+If a chain has more than one closed communicating class, its stationary distributions will not be unique (consider any closed communicating class C i {\displaystyle C_{i}} C_{i} in the chain; each one will have its own unique stationary distribution π i {\displaystyle \pi _{i}} \pi _{i}. Extending these distributions to the overall chain, setting all values to zero outside the communication class, yields that the set of invariant measures of the original chain is the set of all convex combinations of the π i {\displaystyle \pi _{i}} \pi _{i}'s). However, if a state j is aperiodic, then lim n → ∞ p j j ( n ) = C M j {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{jj}^{(n)}={\tfrac {C}{M_{j}}}} {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{jj}^{(n)}={\tfrac {C}{M_{j}}}} and for any other state i, let fij be the probability that the chain ever visits state j if it starts at i, lim n → ∞ p i j ( n ) = C f i j M j . {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{ij}^{(n)}=C{\tfrac {f_{ij}}{M_{j}}}.} {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{ij}^{(n)}=C{\tfrac {f_{ij}}{M_{j}}}.}
+
+If a state i is periodic with period k > 1 then the limit lim n → ∞ p i i ( n ) {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{ii}^{(n)}} {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{ii}^{(n)}} does not exist, although the limit lim n → ∞ p i i ( k n + r ) {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{ii}^{(kn+r)}} {\displaystyle \lim \nolimits _{n\rightarrow \infty }p_{ii}^{(kn+r)}} does exist for every integer r.
+Steady-state analysis and the time-inhomogeneous Markov chain
+
+A Markov chain need not necessarily be time-homogeneous to have an equilibrium distribution. If there is a probability distribution over states π {\displaystyle {\boldsymbol {\pi }}} {\boldsymbol {\pi }} such that
+
+    π j = ∑ i ∈ S π i Pr ( X n + 1 = j ∣ X n = i ) {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}\,\Pr(X_{n+1}=j\mid X_{n}=i)} {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}\,\Pr(X_{n+1}=j\mid X_{n}=i)}
+
+for every state j and every time n then π {\displaystyle {\boldsymbol {\pi }}} {\boldsymbol {\pi }} is an equilibrium distribution of the Markov chain. Such can occur in Markov chain Monte Carlo (MCMC) methods in situations where a number of different transition matrices are used, because each is efficient for a particular kind of mixing, but each matrix respects a shared equilibrium distribution.
+Finite state space
+
+If the state space is finite, the transition probability distribution can be represented by a matrix, called the transition matrix, with the (i, j)th element of P equal to
+
+    p i j = Pr ( X n + 1 = j ∣ X n = i ) . {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i).} {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i).}
+
+Since each row of P sums to one and all elements are non-negative, P is a right stochastic matrix.
+Stationary distribution relation to eigenvectors and simplices
+
+A stationary distribution π is a (row) vector, whose entries are non-negative and sum to 1, is unchanged by the operation of transition matrix P on it and so is defined by
+
+    π P = π . {\displaystyle \pi \mathbf {P} =\pi .} {\displaystyle \pi \mathbf {P} =\pi .}
+
+By comparing this definition with that of an eigenvector we see that the two concepts are related and that
+
+    π = e ∑ i e i {\displaystyle \pi ={\frac {e}{\sum _{i}{e_{i}}}}} \pi ={\frac {e}{\sum _{i}{e_{i}}}}
+
+is a normalized ( ∑ i π i = 1 {\displaystyle \textstyle \sum _{i}\pi _{i}=1} \textstyle \sum _{i}\pi _{i}=1) multiple of a left eigenvector e of the transition matrix P with an eigenvalue of 1. If there is more than one unit eigenvector then a weighted sum of the corresponding stationary states is also a stationary state. But for a Markov chain one is usually more interested in a stationary state that is the limit of the sequence of distributions for some initial distribution.
+
+The values of a stationary distribution π i {\displaystyle \textstyle \pi _{i}} \textstyle \pi _{i} are associated with the state space of P and its eigenvectors have their relative proportions preserved. Since the components of π are positive and the constraint that their sum is unity can be rewritten as ∑ i 1 ⋅ π i = 1 {\displaystyle \textstyle \sum _{i}1\cdot \pi _{i}=1} \textstyle \sum _{i}1\cdot \pi _{i}=1 we see that the dot product of π with a vector whose components are all 1 is unity and that π lies on a simplex.
+Time-homogeneous Markov chain with a finite state space
+
+If the Markov chain is time-homogeneous, then the transition matrix P is the same after each step, so the k-step transition probability can be computed as the k-th power of the transition matrix, Pk.
+
+If the Markov chain is irreducible and aperiodic, then there is a unique stationary distribution π. Additionally, in this case Pk converges to a rank-one matrix in which each row is the stationary distribution π:
+
+    lim k → ∞ P k = 1 π {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi } \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi 
+
+where 1 is the column vector with all entries equal to 1. This is stated by the Perron–Frobenius theorem. If, by whatever means, lim k → ∞ P k {\displaystyle \scriptstyle \lim _{k\to \infty }\mathbf {P} ^{k}} \scriptstyle \lim _{k\to \infty }\mathbf {P} ^{k} is found, then the stationary distribution of the Markov chain in question can be easily determined for any starting distribution, as will be explained below.
+
+For some stochastic matrices P, the limit lim k → ∞ P k {\displaystyle \scriptstyle \lim \limits _{k\to \infty }\mathbf {P} ^{k}} \scriptstyle \lim \limits _{k\to \infty }\mathbf {P} ^{k} does not exist while the stationary distribution does, as shown by this example:
+
+    P = ( 0 1 1 0 ) P 2 k = I P 2 k + 1 = P {\displaystyle \mathbf {P} ={\begin{pmatrix}0&1\\1&0\end{pmatrix}}\qquad \mathbf {P} ^{2k}=I\qquad \mathbf {P} ^{2k+1}=\mathbf {P} } {\displaystyle \mathbf {P} ={\begin{pmatrix}0&1\\1&0\end{pmatrix}}\qquad \mathbf {P} ^{2k}=I\qquad \mathbf {P} ^{2k+1}=\mathbf {P} }
+    ( 1 2 1 2 ) ( 0 1 1 0 ) = ( 1 2 1 2 ) {\displaystyle {\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}{\begin{pmatrix}0&1\\1&0\end{pmatrix}}={\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}} {\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}{\begin{pmatrix}0&1\\1&0\end{pmatrix}}={\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}
+
+(This example illustrates a periodic Markov chain.)
+
+Because there are a number of different special cases to consider, the process of finding this limit if it exists can be a lengthy task. However, there are many techniques that can assist in finding this limit. Let P be an n×n matrix, and define Q = lim k → ∞ P k . {\displaystyle \scriptstyle \mathbf {Q} =\lim _{k\to \infty }\mathbf {P} ^{k}.} \scriptstyle \mathbf {Q} =\lim _{k\to \infty }\mathbf {P} ^{k}.
+
+It is always true that
+
+    Q P = Q . {\displaystyle \mathbf {QP} =\mathbf {Q} .} \mathbf {QP} =\mathbf {Q} .
+
+Subtracting Q from both sides and factoring then yields
+
+    Q ( P − I n ) = 0 n , n , {\displaystyle \mathbf {Q} (\mathbf {P} -\mathbf {I} _{n})=\mathbf {0} _{n,n},} \mathbf {Q} (\mathbf {P} -\mathbf {I} _{n})=\mathbf {0} _{n,n},
+
+where In is the identity matrix of size n, and 0n,n is the zero matrix of size n×n. Multiplying together stochastic matrices always yields another stochastic matrix, so Q must be a stochastic matrix (see the definition above). It is sometimes sufficient to use the matrix equation above and the fact that Q is a stochastic matrix to solve for Q. Including the fact that the sum of each the rows in P is 1, there are n+1 equations for determining n unknowns, so it is computationally easier if on the one hand one selects one row in Q and substitutes each of its elements by one, and on the other one substitutes the corresponding element (the one in the same column) in the vector 0, and next left-multiplies this latter vector by the inverse of transformed former matrix to find Q.
+
+Here is one method for doing so: first, define the function f(A) to return the matrix A with its right-most column replaced with all 1's. If [f(P − In)]−1 exists then[57]
+
+    Q = f ( 0 n , n ) [ f ( P − I n ) ] − 1 . {\displaystyle \mathbf {Q} =f(\mathbf {0} _{n,n})[f(\mathbf {P} -\mathbf {I} _{n})]^{-1}.} \mathbf {Q} =f(\mathbf {0} _{n,n})[f(\mathbf {P} -\mathbf {I} _{n})]^{-1}.
+    Explain: The original matrix equation is equivalent to a system of n×n linear equations in n×n variables. And there are n more linear equations from the fact that Q is a right stochastic matrix whose each row sums to 1. So it needs any n×n independent linear equations of the (n×n+n) equations to solve for the n×n variables. In this example, the n equations from “Q multiplied by the right-most column of (P-In)” have been replaced by the n stochastic ones.
+
+One thing to notice is that if P has an element Pi,i on its main diagonal that is equal to 1 and the ith row or column is otherwise filled with 0's, then that row or column will remain unchanged in all of the subsequent powers Pk. Hence, the ith row or column of Q will have the 1 and the 0's in the same positions as in P.
+Convergence speed to the stationary distribution
+
+As stated earlier, from the equation π = π P , {\displaystyle {\boldsymbol {\pi }}={\boldsymbol {\pi }}\mathbf {P} ,} {\displaystyle {\boldsymbol {\pi }}={\boldsymbol {\pi }}\mathbf {P} ,} (if exists) the stationary (or steady state) distribution π is a left eigenvector of row stochastic matrix P. Then assuming that P is diagonalizable or equivalently that P has n linearly independent eigenvectors, speed of convergence is elaborated as follows. (For non-diagonalizable, that is, defective matrices, one may start with the Jordan normal form of P and proceed with a bit more involved set of arguments in a similar way.[58])
+
+Let U be the matrix of eigenvectors (each normalized to having an L2 norm equal to 1) where each column is a left eigenvector of P and let Σ be the diagonal matrix of left eigenvalues of P, that is, Σ = diag(λ1,λ2,λ3,...,λn). Then by eigendecomposition
+
+    P = U Σ U − 1 . {\displaystyle \mathbf {P} =\mathbf {U\Sigma U} ^{-1}.} \mathbf {P} =\mathbf {U\Sigma U} ^{-1}.
+
+Let the eigenvalues be enumerated such that:
+
+    1 = | λ 1 | > | λ 2 | ⩾ | λ 3 | ⩾ ⋯ ⩾ | λ n | . {\displaystyle 1=|\lambda _{1}|>|\lambda _{2}|\geqslant |\lambda _{3}|\geqslant \cdots \geqslant |\lambda _{n}|.} {\displaystyle 1=|\lambda _{1}|>|\lambda _{2}|\geqslant |\lambda _{3}|\geqslant \cdots \geqslant |\lambda _{n}|.}
+
+Since P is a row stochastic matrix, its largest left eigenvalue is 1. If there is a unique stationary distribution, then the largest eigenvalue and the corresponding eigenvector is unique too (because there is no other π which solves the stationary distribution equation above). Let ui be the i-th column of U matrix, that is, ui is the left eigenvector of P corresponding to λi. Also let x be a length n row vector that represents a valid probability distribution; since the eigenvectors ui span R n , {\displaystyle \mathbb {R} ^{n},} {\displaystyle \mathbb {R} ^{n},} we can write
+
+    x T = ∑ i = 1 n a i u i , a i ∈ R . {\displaystyle \mathbf {x} ^{T}=\sum _{i=1}^{n}a_{i}\mathbf {u} _{i},\qquad a_{i}\in \mathbb {R} .} {\displaystyle \mathbf {x} ^{T}=\sum _{i=1}^{n}a_{i}\mathbf {u} _{i},\qquad a_{i}\in \mathbb {R} .}
+
+If we multiply x with P from right and continue this operation with the results, in the end we get the stationary distribution π. In other words, π = ui ← xPP...P = xPk as k → ∞. That means
+
+    π ( k ) = x ( U Σ U − 1 ) ( U Σ U − 1 ) ⋯ ( U Σ U − 1 ) = x U Σ k U − 1 = ( a 1 u 1 T + a 2 u 2 T + ⋯ + a n u n T ) U Σ k U − 1 = a 1 λ 1 k u 1 T + a 2 λ 2 k u 2 T + ⋯ + a n λ n k u n T u i ⊥ u j  for  i ≠ j = λ 1 k { a 1 u 1 T + a 2 ( λ 2 λ 1 ) k u 2 T + a 3 ( λ 3 λ 1 ) k u 3 T + ⋯ + a n ( λ n λ 1 ) k u n T } {\displaystyle {\begin{aligned}{\boldsymbol {\pi }}^{(k)}&=\mathbf {x} \left(\mathbf {U\Sigma U} ^{-1}\right)\left(\mathbf {U\Sigma U} ^{-1}\right)\cdots \left(\mathbf {U\Sigma U} ^{-1}\right)\\&=\mathbf {xU\Sigma } ^{k}\mathbf {U} ^{-1}\\&=\left(a_{1}\mathbf {u} _{1}^{T}+a_{2}\mathbf {u} _{2}^{T}+\cdots +a_{n}\mathbf {u} _{n}^{T}\right)\mathbf {U\Sigma } ^{k}\mathbf {U} ^{-1}\\&=a_{1}\lambda _{1}^{k}\mathbf {u} _{1}^{T}+a_{2}\lambda _{2}^{k}\mathbf {u} _{2}^{T}+\cdots +a_{n}\lambda _{n}^{k}\mathbf {u} _{n}^{T}&&u_{i}\bot u_{j}{\text{ for }}i\neq j\\&=\lambda _{1}^{k}\left\{a_{1}\mathbf {u} _{1}^{T}+a_{2}\left({\frac {\lambda _{2}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{2}^{T}+a_{3}\left({\frac {\lambda _{3}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{3}^{T}+\cdots +a_{n}\left({\frac {\lambda _{n}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{n}^{T}\right\}\end{aligned}}} {\displaystyle {\begin{aligned}{\boldsymbol {\pi }}^{(k)}&=\mathbf {x} \left(\mathbf {U\Sigma U} ^{-1}\right)\left(\mathbf {U\Sigma U} ^{-1}\right)\cdots \left(\mathbf {U\Sigma U} ^{-1}\right)\\&=\mathbf {xU\Sigma } ^{k}\mathbf {U} ^{-1}\\&=\left(a_{1}\mathbf {u} _{1}^{T}+a_{2}\mathbf {u} _{2}^{T}+\cdots +a_{n}\mathbf {u} _{n}^{T}\right)\mathbf {U\Sigma } ^{k}\mathbf {U} ^{-1}\\&=a_{1}\lambda _{1}^{k}\mathbf {u} _{1}^{T}+a_{2}\lambda _{2}^{k}\mathbf {u} _{2}^{T}+\cdots +a_{n}\lambda _{n}^{k}\mathbf {u} _{n}^{T}&&u_{i}\bot u_{j}{\text{ for }}i\neq j\\&=\lambda _{1}^{k}\left\{a_{1}\mathbf {u} _{1}^{T}+a_{2}\left({\frac {\lambda _{2}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{2}^{T}+a_{3}\left({\frac {\lambda _{3}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{3}^{T}+\cdots +a_{n}\left({\frac {\lambda _{n}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{n}^{T}\right\}\end{aligned}}}
+
+Since π = u1, π(k) approaches to π as k → ∞ with a speed in the order of λ2/λ1 exponentially. This follows because | λ 2 | ⩾ ⋯ ⩾ | λ n | , {\displaystyle |\lambda _{2}|\geqslant \cdots \geqslant |\lambda _{n}|,} {\displaystyle |\lambda _{2}|\geqslant \cdots \geqslant |\lambda _{n}|,} hence λ2/λ1 is the dominant term. Random noise in the state distribution π can also speed up this convergence to the stationary distribution.[59]
+Reversible Markov chain
+
+A Markov chain is said to be reversible if there is a probability distribution π over its states such that
+
+    π i Pr ( X n + 1 = j ∣ X n = i ) = π j Pr ( X n + 1 = i ∣ X n = j ) {\displaystyle \pi _{i}\Pr(X_{n+1}=j\mid X_{n}=i)=\pi _{j}\Pr(X_{n+1}=i\mid X_{n}=j)} \pi _{i}\Pr(X_{n+1}=j\mid X_{n}=i)=\pi _{j}\Pr(X_{n+1}=i\mid X_{n}=j)
+
+for all times n and all states i and j. This condition is known as the detailed balance condition (some books call it the local balance equation).
+
+Considering a fixed arbitrary time n and using the shorthand
+
+    p i j = Pr ( X n + 1 = j ∣ X n = i ) , {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i)\,,} {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i)\,,}
+
+the detailed balance equation can be written more compactly as
+
+    π i p i j = π j p j i . {\displaystyle \pi _{i}p_{ij}=\pi _{j}p_{ji}\,.} \pi _{i}p_{ij}=\pi _{j}p_{ji}\,.
+
+The single time-step from n to n + 1 can be thought of as each person i having πi dollars initially and paying each person j a fraction pij of it. The detailed balance condition states that upon each payment, the other person pays exactly the same amount of money back.[60] Clearly the total amount of money π each person has remains the same after the time-step, since every dollar spent is balanced by a corresponding dollar received. This can be shown more formally by the equality
+
+    ∑ i π i p i j = ∑ i π j p j i = π j ∑ i p j i = π j , {\displaystyle \sum _{i}\pi _{i}p_{ij}=\sum _{i}\pi _{j}p_{ji}=\pi _{j}\sum _{i}p_{ji}=\pi _{j}\,,} \sum _{i}\pi _{i}p_{ij}=\sum _{i}\pi _{j}p_{ji}=\pi _{j}\sum _{i}p_{ji}=\pi _{j}\,,
+
+which essentially states that the total amount of money person j receives (including from himself) during the time-step equals the amount of money he pays others, which equals all the money he initially had because it was assumed that all money is spent (that is, pji sums to 1 over i). The assumption is a technical one, because the money not really used is simply thought of as being paid from person j to himself (that is, pjj is not necessarily zero).
+
+As n was arbitrary, this reasoning holds for any n, and therefore for reversible Markov chains π is always a steady-state distribution of Pr(Xn+1 = j | Xn = i) for every n.
+
+If the Markov chain begins in the steady-state distribution, that is, if P r ( X 0 = i ) = π i {\displaystyle Pr(X_{0}=i)=\pi _{i}} {\displaystyle Pr(X_{0}=i)=\pi _{i}}, then P r ( X n = i ) = π i {\displaystyle Pr(X_{n}=i)=\pi _{i}} {\displaystyle Pr(X_{n}=i)=\pi _{i}} for all n {\displaystyle n} n and the detailed balance equation can be written as
+
+    Pr ( X n = i , X n + 1 = j ) = Pr ( X n + 1 = i , X n = j ) . {\displaystyle \Pr(X_{n}=i,X_{n+1}=j)=\Pr(X_{n+1}=i,X_{n}=j)\,.} \Pr(X_{n}=i,X_{n+1}=j)=\Pr(X_{n+1}=i,X_{n}=j)\,.
+
+The left- and right-hand sides of this last equation are identical except for a reversing of the time indices n and n + 1.
+
+Kolmogorov's criterion gives a necessary and sufficient condition for a Markov chain to be reversible directly from the transition matrix probabilities. The criterion requires that the products of probabilities around every closed loop are the same in both directions around the loop.
+
+Reversible Markov chains are common in Markov chain Monte Carlo (MCMC) approaches because the detailed balance equation for a desired distribution π necessarily implies that the Markov chain has been constructed so that π is a steady-state distribution. Even with time-inhomogeneous Markov chains, where multiple transition matrices are used, if each such transition matrix exhibits detailed balance with the desired π distribution, this necessarily implies that π is a steady-state distribution of the Markov chain.
+Closest reversible Markov chain
+
+For any time-homogeneous Markov chain given by a transition matrix P ∈ R n × n {\displaystyle P\in \mathbb {R} ^{n\times n}} P\in \mathbb {R} ^{n\times n}, any norm ‖ ⋅ ‖ {\displaystyle \|\cdot \|} \|\cdot \| on R n × n {\displaystyle \mathbb {R} ^{n\times n}} \mathbb {R} ^{n\times n} which is induced by a scalar product, and any probability vector π {\displaystyle \pi } \pi , there exists a unique transition matrix P ∗ {\displaystyle P^{*}} P^{*} which is reversible according to π {\displaystyle \pi } \pi and which is closest to P {\displaystyle P} P according to the norm ‖ ⋅ ‖ . {\displaystyle \|\cdot \|.} \|\cdot\|. The matrix P ∗ {\displaystyle P^{*}} P^{*} can be computed by solving a quadratic-convex optimization problem.[61] A GNU licensed Matlab script that computes the nearest reversible Markov chain can be found here.
+
+For example, consider the following Markov chain:
+Simple Markov chain.
+
+This Markov chain is not reversible. According to the Frobenius norm the closest reversible Markov chain according to π = ( 1 3 , 1 3 , 1 3 ) {\displaystyle \pi =\left({\frac {1}{3}},{\frac {1}{3}},{\frac {1}{3}}\right)} \pi =\left({\frac {1}{3}},{\frac {1}{3}},{\frac {1}{3}}\right) can be computed as
+Mchain simple corrected C1.png
+
+If we choose the probability vector randomly as π = ( 1 4 , 1 4 , 1 2 ) {\displaystyle \pi =\left({\frac {1}{4}},{\frac {1}{4}},{\frac {1}{2}}\right)} \pi =\left({\frac {1}{4}},{\frac {1}{4}},{\frac {1}{2}}\right), then the closest reversible Markov chain according to the Frobenius norm is approximately given by
+Mvchain approx C2.png
+Bernoulli scheme
+
+A Bernoulli scheme is a special case of a Markov chain where the transition probability matrix has identical rows, which means that the next state is even independent of the current state (in addition to being independent of the past states). A Bernoulli scheme with only two possible states is known as a Bernoulli process.
+General state space
+
+For an overview of Markov chains on a general state space, see Markov chains on a measurable state space.
+Harris chains
+
+Many results for Markov chains with finite state space can be generalized to chains with uncountable state space through Harris chains. The main idea is to see if there is a point in the state space that the chain hits with probability one. Generally, it is not true for continuous state space, however, we can define sets A and B along with a positive number ε and a probability measure ρ, such that
+
+    { If  τ A = inf { n ≥ 0 : X n ∈ A } ,  then  P z ( τ A < ∞ ) > 0  for all  z . If  x ∈ A  and  C ⊂ B ,  then  p ( x , C ) ≥ ε ρ ( C ) . {\displaystyle {\begin{cases}{\text{If }}\tau _{A}=\inf\{n\geq 0:X_{n}\in A\},&{\text{ then }}P_{z}(\tau _{A}<\infty )>0{\text{ for all }}z.\\{\text{If }}x\in A{\text{ and }}C\subset B,&{\text{ then }}p(x,C)\geq \varepsilon \rho (C).\end{cases}}} {\displaystyle {\begin{cases}{\text{If }}\tau _{A}=\inf\{n\geq 0:X_{n}\in A\},&{\text{ then }}P_{z}(\tau _{A}<\infty )>0{\text{ for all }}z.\\{\text{If }}x\in A{\text{ and }}C\subset B,&{\text{ then }}p(x,C)\geq \varepsilon \rho (C).\end{cases}}}
+
+Then we could collapse the sets into an auxiliary point α, and a recurrent Harris chain can be modified to contain α. Lastly, the collection of Harris chains is a comfortable level of generality, which is broad enough to contain a large number of interesting examples, yet restrictive enough to allow for a rich theory.
+
+The use of Markov chains in Markov chain Monte Carlo methods covers cases where the process follows a continuous state space.
+Locally interacting Markov chains
+
+Considering a collection of Markov chains whose evolution takes in account the state of other Markov chains, is related to the notion of locally interacting Markov chains. This corresponds to the situation when the state space has a (Cartesian-) product form. See interacting particle system and stochastic cellular automata (probabilistic cellular automata). See for instance Interaction of Markov Processes[62] or[63]
+Markovian representations
+
+In some cases, apparently non-Markovian processes may still have Markovian representations, constructed by expanding the concept of the 'current' and 'future' states. For example, let X be a non-Markovian process. Then define a process Y, such that each state of Y represents a time-interval of states of X. Mathematically, this takes the form:
+
+    Y ( t ) = { X ( s ) : s ∈ [ a ( t ) , b ( t ) ] } . {\displaystyle Y(t)={\big \{}X(s):s\in [a(t),b(t)]\,{\big \}}.} Y(t) = \big\{ X(s): s \in [a(t), b(t)] \, \big\}.
+
+If Y has the Markov property, then it is a Markovian representation of X.
+
+An example of a non-Markovian process with a Markovian representation is an autoregressive time series of order greater than one.[64]
+Transient behaviour
+
+Write P(t) for the matrix with entries pij = P(Xt = j | X0 = i). Then the matrix P(t) satisfies the forward equation, a first-order differential equation
+
+    P ′ ( t ) = P ( t ) Q {\displaystyle P'(t)=P(t)Q} {\displaystyle P'(t) = P(t) Q}
+
+where the prime denotes differentiation with respect to t. The solution to this equation is given by a matrix exponential
+
+    P ( t ) = e t Q {\displaystyle P(t)=e^{tQ}} {\displaystyle P(t) = e^{tQ}}
+
+In a simple case such as a CTMC on the state space {1,2}. The general Q matrix for such a process is the following 2 × 2 matrix with α,β > 0
+
+    Q = ( − α α β − β ) . {\displaystyle Q={\begin{pmatrix}-\alpha &\alpha \\\beta &-\beta \end{pmatrix}}.} {\displaystyle Q = \begin{pmatrix} -\alpha & \alpha \\ \beta & -\beta \end{pmatrix}.}
+
+The above relation for forward matrix can be solved explicitly in this case to give
+
+    P ( t ) = ( β α + β + α α + β e − ( α + β ) t α α + β − α α + β e − ( α + β ) t β α + β − β α + β e − ( α + β ) t α α + β + β α + β e − ( α + β ) t ) {\displaystyle P(t)={\begin{pmatrix}{\frac {\beta }{\alpha +\beta }}+{\frac {\alpha }{\alpha +\beta }}e^{-(\alpha +\beta )t}&{\frac {\alpha }{\alpha +\beta }}-{\frac {\alpha }{\alpha +\beta }}e^{-(\alpha +\beta )t}\\{\frac {\beta }{\alpha +\beta }}-{\frac {\beta }{\alpha +\beta }}e^{-(\alpha +\beta )t}&{\frac {\alpha }{\alpha +\beta }}+{\frac {\beta }{\alpha +\beta }}e^{-(\alpha +\beta )t}\end{pmatrix}}} {\displaystyle P(t) = \begin{pmatrix} \frac{\beta}{\alpha+\beta} + \frac{\alpha}{\alpha+\beta}e^{-(\alpha+\beta)t} & \frac{\alpha}{\alpha+\beta} - \frac{\alpha}{\alpha+\beta}e^{-(\alpha+\beta)t} \\ \frac{\beta}{\alpha+\beta} - \frac{\beta}{\alpha+\beta}e^{-(\alpha+\beta)t} & \frac{\alpha}{\alpha+\beta} + \frac{\beta}{\alpha+\beta}e^{-(\alpha+\beta)t} \end{pmatrix}}
+
+However, direct solutions are complicated to compute for larger matrices. The fact that Q is the generator for a semigroup of matrices
+
+    P ( t + s ) = e ( t + s ) Q = e t Q e s Q = P ( t ) P ( s ) {\displaystyle P(t+s)=e^{(t+s)Q}=e^{tQ}e^{sQ}=P(t)P(s)} P(t+s)=e^{{(t+s)Q}}=e^{{tQ}}e^{{sQ}}=P(t)P(s)
+
+is used.
+Stationary distribution
+
+The stationary distribution for an irreducible recurrent CTMC is the probability distribution to which the process converges for large values of t. Observe that for the two-state process considered earlier with P(t) given by
+
+    P ( t ) = ( β α + β + α α + β e − ( α + β ) t α α + β − α α + β e − ( α + β ) t β α + β − β α + β e − ( α + β ) t α α + β + β α + β e − ( α + β ) t ) {\displaystyle P(t)={\begin{pmatrix}{\frac {\beta }{\alpha +\beta }}+{\frac {\alpha }{\alpha +\beta }}e^{-(\alpha +\beta )t}&{\frac {\alpha }{\alpha +\beta }}-{\frac {\alpha }{\alpha +\beta }}e^{-(\alpha +\beta )t}\\{\frac {\beta }{\alpha +\beta }}-{\frac {\beta }{\alpha +\beta }}e^{-(\alpha +\beta )t}&{\frac {\alpha }{\alpha +\beta }}+{\frac {\beta }{\alpha +\beta }}e^{-(\alpha +\beta )t}\end{pmatrix}}} {\displaystyle P(t) = \begin{pmatrix} \frac{\beta}{\alpha+\beta} + \frac{\alpha}{\alpha+\beta}e^{-(\alpha+\beta)t} & \frac{\alpha}{\alpha+\beta} - \frac{\alpha}{\alpha+\beta}e^{-(\alpha+\beta)t} \\ \frac{\beta}{\alpha+\beta} - \frac{\beta}{\alpha+\beta}e^{-(\alpha+\beta)t} & \frac{\alpha}{\alpha+\beta} + \frac{\beta}{\alpha+\beta}e^{-(\alpha+\beta)t} \end{pmatrix}}
+
+as t → ∞ the distribution tends to
+
+    P π = ( β α + β α α + β β α + β α α + β ) {\displaystyle P_{\pi }={\begin{pmatrix}{\frac {\beta }{\alpha +\beta }}&{\frac {\alpha }{\alpha +\beta }}\\{\frac {\beta }{\alpha +\beta }}&{\frac {\alpha }{\alpha +\beta }}\end{pmatrix}}} {\displaystyle P_{\pi }={\begin{pmatrix}{\frac {\beta }{\alpha +\beta }}&{\frac {\alpha }{\alpha +\beta }}\\{\frac {\beta }{\alpha +\beta }}&{\frac {\alpha }{\alpha +\beta }}\end{pmatrix}}}
+
+Observe that each row has the same distribution as this does not depend on starting state. The row vector π may be found by solving[65]
+
+    π Q = 0. {\displaystyle \pi Q=0.} {\displaystyle \pi Q = 0.}
+
+with the additional constraint that
+
+    ∑ i ∈ S π i = 1. {\displaystyle \sum _{i\in S}\pi _{i}=1.} {\displaystyle \sum_{i \in S} \pi_i = 1.}
+
+Example 1
+Directed graph representation of a continuous-time Markov chain describing the state of financial markets (note: numbers are made-up).
+
+The image to the right describes a continuous-time Markov chain with state-space {Bull market, Bear market, Stagnant market} and transition rate matrix
+
+        Q = ( − 0.025 0.02 0.005 0.3 − 0.5 0.2 0.02 0.4 − 0.42 ) . {\displaystyle Q={\begin{pmatrix}-0.025&0.02&0.005\\0.3&-0.5&0.2\\0.02&0.4&-0.42\end{pmatrix}}.} {\displaystyle Q=\begin{pmatrix} -0.025 & 0.02 & 0.005 \\ 0.3 & -0.5 & 0.2 \\ 0.02 & 0.4 & -0.42 \end{pmatrix}.}
+
+The stationary distribution of this chain can be found by solving π (Q-I) = 0, where I is the identity matrix, subject to the constraint that elements must sum to 1 to obtain
+
+    π = ( 0.885 0.071 0.044 ) . {\displaystyle \pi ={\begin{pmatrix}0.885&0.071&0.044\end{pmatrix}}.} {\displaystyle \pi = \begin{pmatrix}0.885 & 0.071 & 0.044 \end{pmatrix}.}
+
+Example 2
+Transition graph with transition probabilities, exemplary for the states 1, 5, 6 and 8. There is a bidirectional secret passage between states 2 and 8.
+
+The image to the right describes a discrete-time Markov chain with state-space {1,2,3,4,5,6,7,8,9}. The player controls Pac-Man through a maze, eating pac-dots. Meanwhile, he is being hunted by ghosts. For convenience, the maze shall be a small 3x3-grid and the monsters move randomly in horizontal and vertical directions. A secret passageway between states 2 and 8 can be used in both directions. Entries with probability zero are removed in the following transition matrix:
+
+Q = ( 1 2 1 2 1 4 1 4 1 4 1 4 1 2 1 2 1 3 1 3 1 3 1 4 1 4 1 4 1 4 1 3 1 3 1 3 1 2 1 2 1 4 1 4 1 4 1 4 1 2 1 2 ) {\displaystyle Q={\begin{pmatrix}&{\frac {1}{2}}&&{\frac {1}{2}}\\{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}&&&{\frac {1}{4}}\\&{\frac {1}{2}}&&&&{\frac {1}{2}}\\{\frac {1}{3}}&&&&{\frac {1}{3}}&&{\frac {1}{3}}\\&{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}\\&&{\frac {1}{3}}&&{\frac {1}{3}}&&&&{\frac {1}{3}}\\&&&{\frac {1}{2}}&&&&{\frac {1}{2}}\\&{\frac {1}{4}}&&&{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}\\&&&&&{\frac {1}{2}}&&{\frac {1}{2}}\end{pmatrix}}} {\displaystyle Q={\begin{pmatrix}&{\frac {1}{2}}&&{\frac {1}{2}}\\{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}&&&{\frac {1}{4}}\\&{\frac {1}{2}}&&&&{\frac {1}{2}}\\{\frac {1}{3}}&&&&{\frac {1}{3}}&&{\frac {1}{3}}\\&{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}\\&&{\frac {1}{3}}&&{\frac {1}{3}}&&&&{\frac {1}{3}}\\&&&{\frac {1}{2}}&&&&{\frac {1}{2}}\\&{\frac {1}{4}}&&&{\frac {1}{4}}&&{\frac {1}{4}}&&{\frac {1}{4}}\\&&&&&{\frac {1}{2}}&&{\frac {1}{2}}\end{pmatrix}}}
+
+This Markov chain is irreducible, because the ghosts can fly from every state to every state in a finite amount of time. Due to the secret passageway, the Markov chain is also aperiodic, because the monsters can move from any state to any state both in an even and in an uneven number of state transitions. Therefore, a unique stationary distribution exists and can be found by solving π Q = 0 subject to the constraint that elements must sum to 1. The solution of this linear equation subject to the constraint is π = ( 7.7 , 15.4 , 7.7 , 11.5 , 15.4 , 11.5 , 7.7 , 15.4 , 7.7 ) % . {\displaystyle \pi =(7.7,15.4,7.7,11.5,15.4,11.5,7.7,15.4,7.7)\%.} {\displaystyle \pi =(7.7,15.4,7.7,11.5,15.4,11.5,7.7,15.4,7.7)\%.} The central state and the border states 2 and 8 of the adjacent secret passageway are visited most and the corner states are visited least.
+Hitting times
+
+The hitting time is the time, starting in a given set of states until the chain arrives in a given state or set of states. The distribution of such a time period has a phase type distribution. The simplest such distribution is that of a single exponentially distributed transition.
+Expected hitting times
+
+For a subset of states A ⊆ S, the vector kA of hitting times (where element k i A {\displaystyle k_{i}^{A}} {\displaystyle k_{i}^{A}} represents the expected value, starting in state i that the chain enters one of the states in the set A) is the minimal non-negative solution to[65]
+
+    k i A = 0  for  i ∈ A − ∑ j ∈ S q i j k j A = 1  for  i ∉ A . {\displaystyle {\begin{aligned}k_{i}^{A}=0&{\text{ for }}i\in A\\-\sum _{j\in S}q_{ij}k_{j}^{A}=1&{\text{ for }}i\notin A.\end{aligned}}} {\displaystyle \begin{align} k_i^A = 0 & \text{ for } i \in A\\ -\sum_{j \in S} q_{ij} k_j^A = 1&\text{ for } i \notin A. \end{align}}
+
+Time reversal
+
+For a CTMC Xt, the time-reversed process is defined to be X ^ t = X T − t {\displaystyle \scriptstyle {\hat {X}}_{t}=X_{T-t}} {\displaystyle \scriptstyle \hat X_t = X_{T-t}}. By Kelly's lemma this process has the same stationary distribution as the forward process.
+
+A chain is said to be reversible if the reversed process is the same as the forward process. Kolmogorov's criterion states that the necessary and sufficient condition for a process to be reversible is that the product of transition rates around a closed loop must be the same in both directions.
+Embedded Markov chain
+
+One method of finding the stationary probability distribution, π, of an ergodic continuous-time Markov chain, Q, is by first finding its embedded Markov chain (EMC). Strictly speaking, the EMC is a regular discrete-time Markov chain, sometimes referred to as a jump process. Each element of the one-step transition probability matrix of the EMC, S, is denoted by sij, and represents the conditional probability of transitioning from state i into state j. These conditional probabilities may be found by
+
+    s i j = { q i j ∑ k ≠ i q i k if  i ≠ j 0 otherwise . {\displaystyle s_{ij}={\begin{cases}{\frac {q_{ij}}{\sum _{k\neq i}q_{ik}}}&{\text{if }}i\neq j\\0&{\text{otherwise}}.\end{cases}}} {\displaystyle s_{ij} = \begin{cases} \frac{q_{ij}}{\sum_{k \neq i} q_{ik}} & \text{if } i \neq j \\ 0 & \text{otherwise}. \end{cases} }
+
+From this, S may be written as
+
+    S = I − ( diag ⁡ ( Q ) ) − 1 Q {\displaystyle S=I-\left(\operatorname {diag} (Q)\right)^{-1}Q} {\displaystyle S = I - \left( \operatorname{diag}(Q) \right)^{-1} Q}
+
+where I is the identity matrix and diag(Q) is the diagonal matrix formed by selecting the main diagonal from the matrix Q and setting all other elements to zero.
+
+To find the stationary probability distribution vector, we must next find φ {\displaystyle \varphi } \varphi such that
+
+    φ S = φ , {\displaystyle \varphi S=\varphi ,} {\displaystyle \varphi S=\varphi ,}
+
+with φ {\displaystyle \varphi } \varphi being a row vector, such that all elements in φ {\displaystyle \varphi } \varphi are greater than 0 and ‖ φ ‖ 1 {\displaystyle \|\varphi \|_{1}} {\displaystyle \|\varphi \|_{1}} = 1. From this, π may be found as
+
+    π = − φ ( diag ⁡ ( Q ) ) − 1 ‖ φ ( diag ⁡ ( Q ) ) − 1 ‖ 1 . {\displaystyle \pi ={-\varphi (\operatorname {diag} (Q))^{-1} \over \left\|\varphi (\operatorname {diag} (Q))^{-1}\right\|_{1}}.} {\displaystyle \pi ={-\varphi (\operatorname {diag} (Q))^{-1} \over \left\|\varphi (\operatorname {diag} (Q))^{-1}\right\|_{1}}.}
+
+(S may be periodic, even if Q is not. Once π is found, it must be normalized to a unit vector.)
+
+Another discrete-time process that may be derived from a continuous-time Markov chain is a δ-skeleton—the (discrete-time) Markov chain formed by observing X(t) at intervals of δ units of time. The random variables X(0), X(δ), X(2δ), ... give the sequence of states visited by the δ-skeleton.
+Applications
+
+Research has reported the application and usefulness of Markov chains in a wide range of topics such as physics, chemistry, medicine, music, game theory and sports.
+Physics
+
+Markovian systems appear extensively in thermodynamics and statistical mechanics, whenever probabilities are used to represent unknown or unmodelled details of the system, if it can be assumed that the dynamics are time-invariant, and that no relevant history need be considered which is not already included in the state description.[66]
+
+The paths, in the path integral formulation of quantum mechanics, are Markov chains.[67]
+
+Markov chains are used in lattice QCD simulations.[68]
+Chemistry
+E + S ↽ − − ⇀ E Substrate binding S ⟶ E Catalytic step + P {\displaystyle {\ce {{E}+{\underset {Substrate \atop binding}{S<=>E}}{\overset {Catalytic \atop step}{S->E}}+P}}} {\displaystyle {\ce {{E}+{\underset {Substrate \atop binding}{S<=>E}}{\overset {Catalytic \atop step}{S->E}}+P}}}
+Michaelis-Menten kinetics. The enzyme (E) binds a substrate (S) and produces a product (P). Each reaction is a state transition in a Markov chain.
+
+Markov chains and continuous-time Markov processes are useful in chemistry when physical systems closely approximate the Markov property. For example, imagine a large number n of molecules in solution in state A, each of which can undergo a chemical reaction to state B with a certain average rate. Perhaps the molecule is an enzyme, and the states refer to how it is folded. The state of any single enzyme follows a Markov chain, and since the molecules are essentially independent of each other, the number of molecules in state A or B at a time is n times the probability a given molecule is in that state.
+
+The classical model of enzyme activity, Michaelis–Menten kinetics, can be viewed as a Markov chain, where at each time step the reaction proceeds in some direction. While Michaelis-Menten is fairly straightforward, far more complicated reaction networks can also be modeled with Markov chains.
+
+An algorithm based on a Markov chain was also used to focus the fragment-based growth of chemicals in silico towards a desired class of compounds such as drugs or natural products.[69] As a molecule is grown, a fragment is selected from the nascent molecule as the "current" state. It is not aware of its past (that is, it is not aware of what is already bonded to it). It then transitions to the next state when a fragment is attached to it. The transition probabilities are trained on databases of authentic classes of compounds.
+
+Also, the growth (and composition) of copolymers may be modeled using Markov chains. Based on the reactivity ratios of the monomers that make up the growing polymer chain, the chain's composition may be calculated (e.g., whether monomers tend to add in alternating fashion or in long runs of the same monomer). Due to steric effects, second-order Markov effects may also play a role in the growth of some polymer chains.
+
+Similarly, it has been suggested that the crystallization and growth of some epitaxial superlattice oxide materials can be accurately described by Markov chains.[70]
+Testing
+
+Several theorists have proposed the idea of the Markov chain statistical test (MCST), a method of conjoining Markov chains to form a "Markov blanket", arranging these chains in several recursive layers ("wafering") and producing more efficient test sets—samples—as a replacement for exhaustive testing. MCSTs also have uses in temporal state-based networks; Chilukuri et al.'s paper entitled "Temporal Uncertainty Reasoning Networks for Evidence Fusion with Applications to Object Detection and Tracking" (ScienceDirect) gives a background and case study for applying MCSTs to a wider range of applications.
+Solar irradiance variability
+
+Solar irradiance variability assessments are useful for solar power applications. Solar irradiance variability at any location over time is mainly a consequence of the deterministic variability of the sun’s path across the sky dome and the variability in cloudiness. The variability of accessible solar irradiance on Earth’s surface has been modeled using Markov chains ,[71][72][73][74] also including modeling the two states of clear and cloudiness as a two-state Markov chain.[75][76]
+Speech recognition
+
+Hidden Markov models are the basis for most modern automatic speech recognition systems.
+Information and computer science
+
+Markov chains are used throughout information processing. Claude Shannon's famous 1948 paper A Mathematical Theory of Communication, which in a single step created the field of information theory, opens by introducing the concept of entropy through Markov modeling of the English language. Such idealized models can capture many of the statistical regularities of systems. Even without describing the full structure of the system perfectly, such signal models can make possible very effective data compression through entropy encoding techniques such as arithmetic coding. They also allow effective state estimation and pattern recognition. Markov chains also play an important role in reinforcement learning.
+
+Markov chains are also the basis for hidden Markov models, which are an important tool in such diverse fields as telephone networks (which use the Viterbi algorithm for error correction), speech recognition and bioinformatics (such as in rearrangements detection[77]).
+
+The LZMA lossless data compression algorithm combines Markov chains with Lempel-Ziv compression to achieve very high compression ratios.
+Queueing theory
+
+Markov chains are the basis for the analytical treatment of queues (queueing theory). Agner Krarup Erlang initiated the subject in 1917.[78] This makes them critical for optimizing the performance of telecommunications networks, where messages must often compete for limited resources (such as bandwidth).[79]
+
+Numerous queueing models use continuous-time Markov chains. For example, an M/M/1 queue is a CTMC on the non-negative integers where upward transitions from i to i + 1 occur at rate λ according to a Poisson process and describe job arrivals, while transitions from i to i – 1 (for i > 1) occur at rate μ (job service times are exponentially distributed) and describe completed services (departures) from the queue.
+Internet applications
+
+The PageRank of a webpage as used by Google is defined by a Markov chain.[80] It is the probability to be at page i {\displaystyle i} i in the stationary distribution on the following Markov chain on all (known) webpages. If N {\displaystyle N} N is the number of known webpages, and a page i {\displaystyle i} i has k i {\displaystyle k_{i}} k_{i} links to it then it has transition probability α k i + 1 − α N {\displaystyle {\frac {\alpha }{k_{i}}}+{\frac {1-\alpha }{N}}} {\frac {\alpha }{k_{i}}}+{\frac {1-\alpha }{N}} for all pages that are linked to and 1 − α N {\displaystyle {\frac {1-\alpha }{N}}} {\frac {1-\alpha }{N}} for all pages that are not linked to. The parameter α {\displaystyle \alpha } \alpha is taken to be about 0.85.[81]
+
+Markov models have also been used to analyze web navigation behavior of users. A user's web link transition on a particular website can be modeled using first- or second-order Markov models and can be used to make predictions regarding future navigation and to personalize the web page for an individual user.
+Statistics
+
+Markov chain methods have also become very important for generating sequences of random numbers to accurately reflect very complicated desired probability distributions, via a process called Markov chain Monte Carlo (MCMC). In recent years this has revolutionized the practicability of Bayesian inference methods, allowing a wide range of posterior distributions to be simulated and their parameters found numerically.
+Economics and finance
+
+Markov chains are used in finance and economics to model a variety of different phenomena, including asset prices and market crashes. The first financial model to use a Markov chain was from Prasad et al. in 1974.[82] Another was the regime-switching model of James D. Hamilton (1989), in which a Markov chain is used to model switches between periods high and low GDP growth (or alternatively, economic expansions and recessions).[83] A more recent example is the Markov switching multifractal model of Laurent E. Calvet and Adlai J. Fisher, which builds upon the convenience of earlier regime-switching models.[84][85] It uses an arbitrarily large Markov chain to drive the level of volatility of asset returns.
+
+Dynamic macroeconomics heavily uses Markov chains. An example is using Markov chains to exogenously model prices of equity (stock) in a general equilibrium setting.[86]
+
+Credit rating agencies produce annual tables of the transition probabilities for bonds of different credit ratings.[87]
+Social sciences
+
+Markov chains are generally used in describing path-dependent arguments, where current structural configurations condition future outcomes. An example is the reformulation of the idea, originally due to Karl Marx's Das Kapital, tying economic development to the rise of capitalism. In current research, it is common to use a Markov chain to model how once a country reaches a specific level of economic development, the configuration of structural factors, such as size of the middle class, the ratio of urban to rural residence, the rate of political mobilization, etc., will generate a higher probability of transitioning from authoritarian to democratic regime.[88]
+Mathematical biology
+
+Markov chains also have many applications in biological modelling, particularly population processes, which are useful in modelling processes that are (at least) analogous to biological populations. The Leslie matrix, is one such example used to describe the population dynamics of many species, though some of its entries are not probabilities (they may be greater than 1). Another example is the modeling of cell shape in dividing sheets of epithelial cells.[89] Yet another example is the state of ion channels in cell membranes.
+
+Markov chains are also used in simulations of brain function, such as the simulation of the mammalian neocortex.[90] Markov chains have also been used to model viral infection of single cells.[91]
+Genetics
+
+Markov chains have been used in population genetics in order to describe the change in gene frequencies in small populations affected by genetic drift, for example in the diffusion equation method described by Motoo Kimura.[92]
+Games
+
+Markov chains can be used to model many games of chance.[1] The children's games Snakes and Ladders and "Hi Ho! Cherry-O", for example, are represented exactly by Markov chains. At each turn, the player starts in a given state (on a given square) and from there has fixed odds of moving to certain other states (squares).
+Music
+
+Markov chains are employed in algorithmic music composition, particularly in software such as Csound, Max, and SuperCollider. In a first-order chain, the states of the system become note or pitch values, and a probability vector for each note is constructed, completing a transition probability matrix (see below). An algorithm is constructed to produce output note values based on the transition matrix weightings, which could be MIDI note values, frequency (Hz), or any other desirable metric.[93]
+1st-order matrix Note 	A 	C♯ 	E♭
+A 	0.1 	0.6 	0.3
+C♯ 	0.25 	0.05 	0.7
+E♭ 	0.7 	0.3 	0
+2nd-order matrix Notes 	A 	D 	G
+AA 	0.18 	0.6 	0.22
+AD 	0.5 	0.5 	0
+AG 	0.15 	0.75 	0.1
+DD 	0 	0 	1
+DA 	0.25 	0 	0.75
+DG 	0.9 	0.1 	0
+GG 	0.4 	0.4 	0.2
+GA 	0.5 	0.25 	0.25
+GD 	1 	0 	0
+
+A second-order Markov chain can be introduced by considering the current state and also the previous state, as indicated in the second table. Higher, nth-order chains tend to "group" particular notes together, while 'breaking off' into other patterns and sequences occasionally. These higher-order chains tend to generate results with a sense of phrasal structure, rather than the 'aimless wandering' produced by a first-order system.[94]
+
+Markov chains can be used structurally, as in Xenakis's Analogique A and B.[95] Markov chains are also used in systems which use a Markov model to react interactively to music input.[96]
+
+Usually musical systems need to enforce specific control constraints on the finite-length sequences they generate, but control constraints are not compatible with Markov models, since they induce long-range dependencies that violate the Markov hypothesis of limited memory. In order to overcome this limitation, a new approach has been proposed.[97]
+Baseball
+
+Markov chain models have been used in advanced baseball analysis since 1960, although their use is still rare. Each half-inning of a baseball game fits the Markov chain state when the number of runners and outs are considered. During any at-bat, there are 24 possible combinations of number of outs and position of the runners. Mark Pankin shows that Markov chain models can be used to evaluate runs created for both individual players as well as a team.[98] He also discusses various kinds of strategies and play conditions: how Markov chain models have been used to analyze statistics for game situations such as bunting and base stealing and differences when playing on grass vs. AstroTurf.[99]
+Markov text generators
+
+Markov processes can also be used to generate superficially real-looking text given a sample document. Markov processes are used in a variety of recreational "parody generator" software (see dissociated press, Jeff Harrison,[100] Mark V. Shaney,[101][102] and Academias Neutronium).
+Bioinformatics
+
+In the bioinformatics field, they can be used to simulate DNA sequences.[51][103]

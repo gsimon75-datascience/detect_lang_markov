@@ -1,0 +1,270 @@
+Markov-lánc
+A Wikipédiából, a szabad enciklopédiából
+Ugrás a navigációhoz
+Ugrás a kereséshez
+
+A matematikában a Markov-lánc egy olyan diszkrét sztochasztikus folyamatot jelent, amely Markov-tulajdonságú. Nevét egy orosz matematikusról, Andrej Markovról kapta, aki hírnevét a tudomány ezen ágában végzett kutatásaival szerezte. Markov-tulajdonságúnak lenni röviden annyit jelent, hogy adott jelenbeli állapot mellett, a rendszer jövőbeni állapota nem függ a múltbeliektől. Másképpen megfogalmazva ez azt is jelenti, hogy a jelen leírása teljesen magába foglalja az összes olyan információt, ami befolyásolhatja a folyamat jövőbeli helyzetét. Vegyünk például egy olyan fizikai rendszert, amelynek lehetséges állapotai A 0 , A 1 , … , A k , … {\displaystyle A_{0},A_{1},\dots ,A_{k},\dots } {\displaystyle A_{0},A_{1},\dots ,A_{k},\dots }. Az S rendszer az idő múlásával állapotait véletlenszerűen változtatja; vizsgáljuk a rendszer állapotait a t = 0 , 1 , … {\displaystyle t=0,1,\dots } {\displaystyle t=0,1,\dots } diszkrét időpontokban, és X n {\displaystyle X_{n}} {\displaystyle X_{n}} legyen egyenlő k-val, ha S az n időpontban az A k {\displaystyle A_{k}} {\displaystyle A_{k}} állapotban van. Ezzel a terminológiával a Markov-tulajdonság így is megfogalmazható: A rendszer korábbi állapotai a későbbi állapotokra csak a jelen állapoton keresztül gyakorolhatnak befolyást.
+
+Adott jelen mellett tehát a jövő feltételesen független a múlttól. Semmi, ami a múltban történt, nem hat, nem ad előrejelzést a jövőre nézve, a jövőben minden lehetséges. Alapvető példa erre az érmedobás – ha fejet dobunk elsőre, másodikra ugyanúgy 50/50%-kal dobhatunk írást vagy fejet egyaránt. Ha pedig 100-szor dobunk fejet egymás után, akkor is ugyanannyi a valószínűsége, hogy fejet kapunk 101.-re, mint annak, hogy írást, az előzőekhez hasonlóan-a múlt tehát nem jelzi előre a jövőbeli eredményt. A jelen állapot az, hogy van egy érménk (nem cinkelt), fejjel és írással a két oldalán. Szabályos kereteket feltételezve semmi más nem befolyásolhatja a jövőbeni dobás alakulását.
+
+Minden egyes pillanatban a rendszer az adott valószínűségi változó eloszlása alapján vagy megváltoztatja az állapotát a jelenbeli állapotától, vagy ugyanúgy marad. Az állapotváltozásokat átmenetnek nevezzük, és azokat a valószínűségeket, melyek a különböző állapotváltozásokra vonatkoznak, átmenet-valószínűségeknek nevezzük. Ez a fogalom megtalálható a véletlen analízisben is.
+Tartalomjegyzék
+
+    1 Formális definíció
+        1.1 Típusai
+        1.2 Példa
+    2 Markov-láncok tulajdonságai
+        2.1 Reducibilitás
+        2.2 Periodicitás
+        2.3 Rekurrencia
+        2.4 Ergodicitás
+        2.5 Szilárd-állapot analízis és határeloszlások
+    3 Véges állapotú Markov-láncok
+    4 Megfordítható Markov-láncok
+    5 Bernoulli-modell
+    6 Markov-láncok általános állapothalmazzal
+    7 Alkalmazások
+        7.1 Fizika
+        7.2 Statisztikai folyamatok
+        7.3 Internetes alkalmazások
+        7.4 Gazdaság
+        7.5 Matematikai biológia
+        7.6 A tanulás folyamatának statisztikai elmélete
+        7.7 Játék, szerencsejáték
+        7.8 Zene
+        7.9 Baseball
+        7.10 Markov paródiagenerátor
+    8 Történet
+    9 Bibliográfia
+    10 Hivatkozások
+
+Formális definíció
+
+A nem független valószínűségi változók egy jelentős osztálya a Markov-láncok. Egy X1, X2, X3, … valószínűségi változó sorozatot Markov-láncnak nevezzük, ha az alábbi feltétel teljesül rá minden n természetes számra és minden x, x1, x2,…, xn valós számrendszerre 1 valószínűséggel:
+
+    Pr ( X n + 1 = x | X n = x n , … , X 1 = x 1 ) = Pr ( X n + 1 = x | X n = x n ) . {\displaystyle \Pr(X_{n+1}=x|X_{n}=x_{n},\ldots ,X_{1}=x_{1})=\Pr(X_{n+1}=x|X_{n}=x_{n}).\,} {\displaystyle \Pr(X_{n+1}=x|X_{n}=x_{n},\ldots ,X_{1}=x_{1})=\Pr(X_{n+1}=x|X_{n}=x_{n}).\,}
+
+Ezt a feltételt szokás Markov-tulajdonságnak is nevezni. Jelen esetben az Xi lehetséges értékei egy megszámlálható S halmazból valóak. Ezt az S halmazt állapothalmaznak nevezzük. A Markov-láncokat ábrázolhatjuk irányított gráfokkal is, ahol a csúcsok az egyes állapotok, a két csúcsot összekötő élre írt érték (felfogható súlyokként is) pedig az egyik állapotból a másikba kerülés valószínűsége (iránynak megfelelően).
+Típusai
+
+Stacionárius átmenetvalószínűségű (homogén) Markov-láncról beszélünk, ha az átmenet-valószínűségek nem függnek az időtől, azaz:
+
+    Pr ( X n + 1 = j ∣ X n = i ) = p i j {\displaystyle \Pr(X_{n+1}=j\mid X_{n}=i)=p_{ij}\,} {\displaystyle \Pr(X_{n+1}=j\mid X_{n}=i)=p_{ij}\,}
+
+n-től függetlenül.
+
+m-edrendű Markov-láncok az olyan Markov-láncok, melyekre (véges m esetén):
+
+    Pr ( X n = x n | X n − 1 = x n − 1 , X n − 2 = x n − 2 , … , X 1 = x 1 ) {\displaystyle \Pr(X_{n}=x_{n}|X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{1}=x_{1})} {\displaystyle \Pr(X_{n}=x_{n}|X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{1}=x_{1})}
+    = Pr ( X n = x n | X n − 1 = x n − 1 , X n − 2 = x n − 2 , … , X n − m = x n − m ) {\displaystyle =\Pr(X_{n}=x_{n}|X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{n-m}=x_{n-m})} {\displaystyle =\Pr(X_{n}=x_{n}|X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{n-m}=x_{n-m})}
+
+minden n-re. m=1 esetén egyszerű Markov-láncnak nevezzük.
+Példa
+
+Valamely véges állapotú gép jól reprezentálhatja a Markov-láncokat. Feltételezzük, hogy a masinánk lehetséges inputjai egymástól függetlenek és egyenletes eloszlásúak. Ekkor, ha a gépezet egy tetszőleges y állapotban van az n-edik időpillanatban, akkor annak valószínűsége, hogy az n + 1-edik pillanatban az x állapotban lesz, csak a jelenlegi állapottól függ.
+Markov-láncok tulajdonságai
+
+Először szükséges bevezetnünk az egy-lépéses átmenet-valószínűség:
+
+    p i j = Pr ( X 1 = j ∣ X 0 = i ) . {\displaystyle p_{ij}=\Pr(X_{1}=j\mid X_{0}=i).\,} {\displaystyle p_{ij}=\Pr(X_{1}=j\mid X_{0}=i).\,}
+
+és az n-lépéses átmenet-valószínűség fogalmát:
+
+    p i j ( n ) = Pr ( X n = j ∣ X 0 = i ) {\displaystyle p_{ij}^{(n)}=\Pr(X_{n}=j\mid X_{0}=i)\,} {\displaystyle p_{ij}^{(n)}=\Pr(X_{n}=j\mid X_{0}=i)\,}
+
+Előbbi az i állapotból egy lépéssel a j állapotba kerülés, utóbbi az n. lépés után a j állapot valószínűségét fejezi ki, feltéve, hogy P r ( X 0 = i ) > 0 {\displaystyle Pr(X_{0}=i)>0} {\displaystyle Pr(X_{0}=i)>0}.
+
+Az n-lépéses átmenet-valószínűségekre teljesül a Chapman–Kolmogorov-egyenlőség, amely 0 < k< n esetén minden k-ra az alábbi:
+
+    p i j ( n ) = ∑ r ∈ S p i r ( k ) p r j ( n − k ) . {\displaystyle p_{ij}^{(n)}=\sum _{r\in S}p_{ir}^{(k)}p_{rj}^{(n-k)}.} {\displaystyle p_{ij}^{(n)}=\sum _{r\in S}p_{ir}^{(k)}p_{rj}^{(n-k)}.}
+
+Egy Markov-lánc kezdeti eloszlása egy (sor)vektor, mely az alábbi módon értelmezett
+
+    d ( 0 ) = ( Pr ( X 0 = x 0 ) , Pr ( X 0 = x 1 ) , … , Pr ( X 0 = x s ) ) . {\displaystyle d(0)=(\Pr(X_{0}=x_{0}),\Pr(X_{0}=x_{1}),\dots ,\Pr(X_{0}=x_{s})).} {\displaystyle d(0)=(\Pr(X_{0}=x_{0}),\Pr(X_{0}=x_{1}),\dots ,\Pr(X_{0}=x_{s})).}
+
+Míg az abszolút eloszlása az n-edik időpillanatban
+
+    d ( n ) = ( Pr ( X n = x 0 ) , Pr ( X n = x 1 ) , … , Pr ( X n = x s ) ) . {\displaystyle d(n)=(\Pr(X_{n}=x_{0}),\Pr(X_{n}=x_{1}),\dots ,\Pr(X_{n}=x_{s})).} {\displaystyle d(n)=(\Pr(X_{n}=x_{0}),\Pr(X_{n}=x_{1}),\dots ,\Pr(X_{n}=x_{s})).}
+
+ahol
+
+    Pr ( X n = j ) = ∑ r ∈ S p r j Pr ( X n − 1 = r ) = ∑ r ∈ S p r j ( n ) Pr ( X 0 = r ) . {\displaystyle \Pr(X_{n}=j)=\sum _{r\in S}p_{rj}\Pr(X_{n-1}=r)=\sum _{r\in S}p_{rj}^{(n)}\Pr(X_{0}=r).} {\displaystyle \Pr(X_{n}=j)=\sum _{r\in S}p_{rj}\Pr(X_{n-1}=r)=\sum _{r\in S}p_{rj}^{(n)}\Pr(X_{0}=r).} j=1, 2, ..., s. s féle állapot van.
+
+Azonban egy Markov-lánc lehet az időtől független, ilyenkor X n {\displaystyle X_{n}} {\displaystyle X_{n}} eloszlása, azaz d ( n ) {\displaystyle d(n)} {\displaystyle d(n)} nem függ n-től, azaz d ( n ) = d ( 0 ) {\displaystyle d(n)=d(0)} {\displaystyle d(n)=d(0)} minden n-re. Ekkor szokás az eloszlást egyszerűen d {\displaystyle d} d-vel jelölni.
+Reducibilitás
+
+Egy tetszőleges i, j állapotpárról azt mondjuk, hogy i-ből elérhető a j állapot (jelölése: i → j), ha feltéve, hogy az i állapotban vagyunk, annak a valószínűsége, hogy valamikor a jövőben a j-be kerülünk, nem nulla. Formálisan, j elérhető i-ből, ha létezik olyan n>0, melyre
+
+    Pr ( X n = j | X 0 = i ) > 0. {\displaystyle \Pr(X_{n}=j|X_{0}=i)>0.\,} {\displaystyle \Pr(X_{n}=j|X_{0}=i)>0.\,}
+
+Egy i állapot egy j állapottal kapcsolatos (más néven közlekedik) (jelölve: i ↔ j), ha i-ből j és j-ből i is egyaránt elérhető. Egy C halmaz kapcsolatos osztályt alkot, ha benne minden elempár kapcsolatos egymással, és nem létezik olyan C-n kívüli állapot, amely valamely C-beli állapottal kapcsolatos lenne. (Azt is mondhatjuk, hogy a kapcsolatosság ekvivalenciareláció, tehát osztályokra bontja az állapotteret). Egy ilyen osztályt zártnak hívunk, ha az osztály elhagyásának valószínűsége nulla, azaz ha i C-beli, de j nem, akkor j nem elérhető i-ből. Végezetül, egy Markov-láncot irreducibilisnek nevezünk, ha állapotainak halmaza egy kapcsolatos osztályt alkot: vagy mind tranziensek, vagy rekurrens zérus állapotok, vagy rekurrens nem zérus állapotok. Mindegyik esetben az összes állapot periódusa megegyezik. Egy véges sok állapotú láncnak nem lehet zérus állapota, és nem lehet az összes állapota tranziens. Egy irreducibilis Markov-láncban bármely állapotból bármely állapotba eljuthatunk valahány (véges) lépésben.
+Periodicitás
+
+Tetszőleges i állapot periódusa k, ha ahhoz, hogy i állapotból i állapotba visszatérjünk, k-nak valamely többszörös darabszámú lépésre van szükség. Például, ha egy i állapotba való visszatérés csak páros darab lépésben történhet meg, akkor i periódusa 2 lesz. Egy i állapot periódusának formális definíciója:
+
+    k = lnko ⁡ { n : Pr ( X n = i | X 0 = i ) > 0 } {\displaystyle k=\operatorname {lnko} \{n:\Pr(X_{n}=i|X_{0}=i)>0\}} {\displaystyle k=\operatorname {lnko} \{n:\Pr(X_{n}=i|X_{0}=i)>0\}}
+
+(ahol „lnko” a legnagyobb közös osztó). Meg kell jegyezni, hogy attól függetlenül, hogy egy állapot periódusa k, nem jelenti azt, hogy belőle kiindulva k lépésben újra el tudjuk érni azt. Például, ha egy állapotba vissza tudunk térni {6,8,10,12,…} lépésben, akkor annak periódusa 2 lesz, annak ellenére, hogy a 2-es szám nincs a listában. Ha k = 1, akkor az állapotot aperiodikusnak nevezzük. Egyébként (ha k>1) az állapotot k-periodikusnak mondjuk.
+
+Bebizonyítható az is, hogy egy kapcsolatos osztályban minden állapot periódusa ugyanaz, azaz a periódus osztálytulajdonság.
+
+Egy véges állapotú irreducibilis Markov-láncot ergodikusnak nevezünk, ha minden állapota aperiodikus.
+Rekurrencia
+
+Egy tetszőleges i állapot tranziens , átmeneti, ha (feltéve, hogy i állapotból indulunk) annak a valószínűsége, hogy soha nem térünk vissza i-be nem nulla, azaz annak valószínűsége, a rendszer valamikor visszatér az i állapotba, nem egy. Legyen Ti valószínűségi változó az az első a lépésszám, ami után először visszatérünk i-be:
+
+    T i = inf { n : X n = i | X 0 = i } {\displaystyle T_{i}=\inf\{n:X_{n}=i|X_{0}=i\}} {\displaystyle T_{i}=\inf\{n:X_{n}=i|X_{0}=i\}}
+
+Ekkor i állapot tranziens, ha:
+
+    Pr ( T i < ∞ ) < 1. {\displaystyle \Pr(T_{i}<{\infty })<1.} {\displaystyle \Pr(T_{i}<{\infty })<1.}
+
+Egy i állapot lényeges: ha i → j esetén j → i is teljesül. A lényegesség osztálytulajdonság, azaz beszélhetünk lényeges és lényegtelen osztályokról, egy osztálynak vagy minden eleme lényeges, vagy egy sem. A lényeges osztályokból nem lehet kijutni (mert akkor vissza is tudnánk jönni, azaz osztályon belül maradnánk), a lényegtelenekből viszont kijuthatunk és ekkor többé már nem térhetünk vissza. A nem lényeges állapotok tranziensek (fordítva azonban nem igaz).
+
+Legyen Mi a visszatérésig megtett lépésszám várható értéke (átlagos visszatérési idő)
+
+    M i = E [ T i ] . {\displaystyle M_{i}=E[T_{i}].\,} {\displaystyle M_{i}=E[T_{i}].\,}
+
+Ekkor ha Mi véges, az i állapotot pozitívnak, egyébként nullállapotnak nevezzük. Meg lehet mutatni azt is, hogy egy állapot akkor és csak akkor lényeges, ha:
+
+    ∑ n = 0 ∞ p i i ( n ) = ∞ {\displaystyle \sum _{n=0}^{\infty }p_{ii}^{(n)}=\infty } {\displaystyle \sum _{n=0}^{\infty }p_{ii}^{(n)}=\infty }
+
+Egy i állapotot nyelőnek nevezünk, ha lehetetlen belőle kikerülni, azaz, ha
+
+    p i i = 1 {\displaystyle p_{ii}=1} {\displaystyle p_{ii}=1} , azaz p i j = 0 {\displaystyle p_{ij}=0} {\displaystyle p_{ij}=0} minden i ≠ j {\displaystyle i\not =j} {\displaystyle i\not =j}-re.
+
+Ergodicitás
+
+Egy i állapotra azt mondjuk, hogy ergodikus, ha aperiodikus és pozitív. Ha pedig egy Markov-láncban minden állapot ergodikus, akkor magát a láncot is ergodikusnak nevezzük.
+Szilárd-állapot analízis és határeloszlások
+
+Ha egy Markov-lánc homogén, azaz a folyamat egy időfüggetlen pij mátrixszal leírható, ekkor a π vektor a stacionárius eloszlás, ha ∀ j ∈ S {\displaystyle \forall j\in S} {\displaystyle \forall j\in S} -re teljesül, hogy:
+
+0 ≤ π j ≤ 1 {\displaystyle 0\leq \pi _{j}\leq 1} {\displaystyle 0\leq \pi _{j}\leq 1}
+
+∑ j ∈ S π j = 1 {\displaystyle \sum _{j\in S}\pi _{j}=1} {\displaystyle \sum _{j\in S}\pi _{j}=1}
+
+    π j = ∑ i ∈ S π i p i j . {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}p_{ij}.} {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}p_{ij}.}
+
+Egy irreducibilis láncnak akkor és csakis akkor van stacionárius eloszlása, ha az összes állapota pozitív. Ebben az esetben π egyértelmű, és kifejezhető a kapcsolata a várt visszatérési idővel:
+
+    π j = 1 M j . {\displaystyle \pi _{j}={\frac {1}{M_{j}}}.\,} {\displaystyle \pi _{j}={\frac {1}{M_{j}}}.\,}
+
+Továbbá, ha egy lánc irreducibilis és aperiodikus is, akkor bármely i és j állapotra,
+
+    lim n → ∞ p i j ( n ) = 1 M j . {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {1}{M_{j}}}.} {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {1}{M_{j}}}.}
+
+Meg kell jegyeznünk, hogy ez nem szab feltételeket a kezdeti eloszlásra nézve, a lánc konvergál a stacionárius eloszláshoz függetlenül attól, hol kezdődött.
+
+Ha egy Markov-lánc nem irreducibilis, akkor stacionárius eloszlása nem lesz egyértelmű (beleértve minden zárt kapcsolatos osztályt, ami a láncban van, mindegyiknek külön-külön saját stacionárius eloszlása lesz. Ezek közül egyik sem lesz kiterjeszthető az egész láncra). Azonban, ha egy j állapot aperiodikus, akkor
+
+    lim n → ∞ p j j ( n ) = 1 M j {\displaystyle \lim _{n\rightarrow \infty }p_{jj}^{(n)}={\frac {1}{M_{j}}}} {\displaystyle \lim _{n\rightarrow \infty }p_{jj}^{(n)}={\frac {1}{M_{j}}}}
+
+és az összes többi i állapotra legyen fij annak a valószínűsége, hogy eljutunk j-be valahány lépésben, ha i-ből indultunk,
+
+    lim n → ∞ p i j ( n ) = f i j M j . {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {f_{ij}}{M_{j}}}.} {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {f_{ij}}{M_{j}}}.}
+
+Véges állapotú Markov-láncok
+
+Ha az állapothalmaz véges, az átmenet-valószínűségek mátrixba rendezhetőek, ezt átmenet mátrixnak (jel.: P) nevezzük. Ezen mátrix i-edik sorának j-edik elemét pij-vel jelöljük, és az alábbi módon kaphatjuk meg:
+
+    p i j = Pr ( X n + 1 = j ∣ X n = i ) . {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i).\,} {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i).\,}
+
+A P egy sztochasztikus mátrix, azaz minden eleme nemnegatív, és minden sorban az elemek összege 1 (ez a valószínűség tulajdonságaiból következik). Továbbiakban, ha egy Markov-lánc homogén, azaz átmenet mátrixának, P-nek elemei nem függnek az időtől (azaz n-től), ekkor a k-lépéses átmenet-valószínűség mátrixa megkapható az átmenet mátrix k-adik hatványként, azaz Pk alakban (ez a Chapman-Kolmogorov-tétel következménye). A stacionárius eloszlás π, egy (sor)vektor, amelyre teljesül az alábbi egyenlet:
+
+    π = π P . {\displaystyle \pi =\pi \mathbf {P} .\,} {\displaystyle \pi =\pi \mathbf {P} .\,}
+
+Más szóval a π stacionárius eloszlás az átmenet mátrix az 1 sajátértékéhez tartozó bal (lenormált) sajátvektora.
+
+A stacionárius eloszlás mindig létezik, de az nem garantált, hogy egyértelmű is lesz. Azonban ha egy Markov-lánc irreducibilis, aperiodikus és véges állapotterű, akkor létezik egy és csakis egy stacionárius eloszlás, π. Ráadásul Pk konvergál egy egy-rangú mátrixhoz, melynek minden sora a stacionárius eloszlás π, azaz
+
+    lim k → ∞ P k = 1 π {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi } {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi }
+
+ahol 1 oszlopvektor, aminek minden eleme 1. Ez itt nem más, mint a Perron–Frobenius-tétel. Az állítás tehát nem jelent mást, hogy ahogy telik az idő, a Markov-lánc elfelejti, honnan indult (azaz a kezdeti eloszlását), és konvergál a stacionárius eloszláshoz.
+Megfordítható Markov-láncok
+
+A Markov-láncok megfordításáról szóló ötlet, a Bayes-tétel alkalmazásával történő feltételes valószínűség „invertálás” képességéből származtatható:
+
+    Pr ( X n = i ∣ X n + 1 = j ) = Pr ( X n = i , X n + 1 = j ) Pr ( X n + 1 = j ) {\displaystyle \Pr(X_{n}=i\mid X_{n+1}=j)={\frac {\Pr(X_{n}=i,X_{n+1}=j)}{\Pr(X_{n+1}=j)}}} {\displaystyle \Pr(X_{n}=i\mid X_{n+1}=j)={\frac {\Pr(X_{n}=i,X_{n+1}=j)}{\Pr(X_{n+1}=j)}}}
+
+                        = Pr ( X n = i ) Pr ( X n + 1 = j ∣ X n = i ) Pr ( X n + 1 = j ) . {\displaystyle ={\frac {\Pr(X_{n}=i)\Pr(X_{n+1}=j\mid X_{n}=i)}{\Pr(X_{n+1}=j)}}.\,} {\displaystyle ={\frac {\Pr(X_{n}=i)\Pr(X_{n+1}=j\mid X_{n}=i)}{\Pr(X_{n+1}=j)}}.\,}
+
+Ez most úgy képzelhetjük el, mintha az idő megfordult volna. Ekképpen egy Markov-láncról azt mondjuk, hogy megfordítható, ha létezik egy olyan π, melyre
+
+    π i p i , j = π j p j , i . {\displaystyle \pi _{i}p_{i,j}=\pi _{j}p_{j,i}.\,} {\displaystyle \pi _{i}p_{i,j}=\pi _{j}p_{j,i}.\,}
+
+Ezt a feltételt szokás leíró egyensúly feltételnek is nevezni.
+
+Ezeket összegezve i {\displaystyle i} i-re
+
+    ∑ i π i p i , j = π j {\displaystyle \sum _{i}\pi _{i}p_{i,j}=\pi _{j}\,} {\displaystyle \sum _{i}\pi _{i}p_{i,j}=\pi _{j}\,}
+
+egyenletet kapjuk a megfordítható Markov-láncokra. A π mindig stacionárius eloszlást jelöli.
+Bernoulli-modell
+
+A Bernoulli-féle modell egy olyan speciális esete a Markov-láncoknak, ahol az átmenet mátrix sorai egységek. Ez azt jelenti, hogy a következő állapot még az eredeti, jelenbeli állapottól is teljesen független (természetesen azon túl, hogy a múltbeliektől független). A két-állapotú Bernoulli-modellt szokás Bernoulli-folyamatnak is nevezni.
+Markov-láncok általános állapothalmazzal
+
+Sok eredmény, ami a véges állapotú Markov-láncokra vonatkozik, általánosítható olyan láncokra, melyek állapothalmaza megszámlálhatatlan méretű, a Harris-láncok segítségével. Az alapötlet az, hogy megnézzük, van-e olyan pont az állapothalmazban, amit a lánc 1 valószínűséggel elér. Általánosságban ez persze nem igaz a végtelen számosságú állapothalmazokra, azonban definiálhatunk egy A és egy B halmazt együtt ε számmal, és egy ρ valószínűségi mértékkel, melyekre
+
+    Ha τ A = inf { n ≥ 0 : X n ∈ A } {\displaystyle \tau _{A}=\inf\{n\geq 0:X_{n}\in A\}} {\displaystyle \tau _{A}=\inf\{n\geq 0:X_{n}\in A\}}, akkor P z ( τ A < ∞ ) > 0 {\displaystyle P_{z}(\tau _{A}<\infty )>0} {\displaystyle P_{z}(\tau _{A}<\infty )>0} minden z {\displaystyle z} z-re.
+    Ha x ∈ A {\displaystyle x\in A} {\displaystyle x\in A} és C ⊂ B {\displaystyle C\subset B} {\displaystyle C\subset B}, akkor p ( x , C ) ≥ ϵ ρ ( C ) {\displaystyle p(x,C)\geq \epsilon \rho (C)} {\displaystyle p(x,C)\geq \epsilon \rho (C)}.
+
+Ekkor összehúzhatjuk a két halmazt egy kiegészítő ponttá, legyen ez α. Ekkor a rekurrens Harris-lánc úgy alakítható, hogy tartalmazza α-t is. A Harris-láncok gyűjteménye már egy kényelmes foka az általánosságnak. Elég tág, ahhoz, hogy számtalan izgalmas példát magába foglaljon, de eléggé korlátozott ahhoz, hogy számos jelentős tétel legyen megfogalmazható rájuk.
+Alkalmazások
+Fizika
+
+A Markovi rendszerek jelentős részei a fizikának, különösképp a statisztikus mechanikának. Minden egyes alkalommal, amikor a valószínűséget használjuk egy rendszer ismeretlen, vagy modellezetlen részletének jellemzésére, és feltehető, hogy a mozgások időre nézve invariánsak, illetve nincs szükség a múltbéli események ismerésére a jövőbeli állapot meghatározására, Markov-láncokról beszélünk.
+Statisztikai folyamatok
+
+A Markov-láncokat használhatjuk a statisztika egyes folyamatainak modellezésére is. Claude Shannon egyik híres 1948-as lapja „A kommunikáció matematikai elmélete”, mely egy csapás alatt megteremtette az információelmélet mezejét, kezdődik rögtön azzal, hogy az angol nyelv Markov modellezésének segítségével bemutatja az entrópia fogalmát. Az ilyen idealizált modellek segíthetnek a rendszerek statisztikai szabályszerűségeit megragadni. Annak ellenére, hogy nem tudjuk teljes pontossággal leírni a rendszer struktúráját, az ilyen modellek kellően hatékony adattömörítést biztosíthatnak egyes entrópikus kódolási technikákkal, például az aritmetikai kódolással. Hatékonyak lehetnek az állapot értékelés, és a minta felismerésben is. A világ mobil telefon rendszereinek hibaelhárítása a Viberth-algoritmustól függ, míg rejtett Markov modellek állnak a beszédfelismerés és a bioinformatika (például, a gének előrejelzésében) illetve a tanulás egyes folyamatainak hátterében is.
+
+A Markov-láncok metódusai fontos szerepet játszanak abban is, hogy véletlen számok sorozatait generáljunk ahhoz, hogy kellően precízen tükrözni tudjunk bonyolult valószínűség-eloszlásokat, mint például egy folyamatot, a Markov lánc Monte Carlót (MCMC). Az utóbbi években ez forradalmasította a Bayes-i következtetés egyes metódusait is.
+Internetes alkalmazások
+
+Egy honlap PageRank mutatója, amelyet a Google is használ, is Markov-lánc által definiált. Annak a valószínűsége, hogy egy tetszőleges i {\displaystyle i} i honlapon legyünk a stacionárius eloszlás alapján, a következő Markov-lánc minden (ismert) weboldalra. Legyen N {\displaystyle N} N az ismert honlapok száma, és ha az i {\displaystyle i} i-edik lap k i {\displaystyle k_{i}} {\displaystyle k_{i}} linkkel rendelkezik, akkor annak az átmenet-valószínűsége, hogy be van linkelve egy másik laphoz 1 − q k i + q N {\displaystyle {\frac {1-q}{k_{i}}}+{\frac {q}{N}}} {\displaystyle {\frac {1-q}{k_{i}}}+{\frac {q}{N}}}, és q N {\displaystyle {\frac {q}{N}}} {\displaystyle {\frac {q}{N}}} ha nincs egy másik lap linkjei között. A használt q {\displaystyle q} q paraméter megközelítőleg 0,15-dal egyenlő.
+
+Markov-láncokat használnak arra is, hogy analizálják a felhasználók navigációs viselkedését a weben. Egy internetező "linkátmenetét" egy adott honlapon modellezhetjük első-, vagy másodrendű Markov-modellek segítségével, és arra is felhasználhatjuk, hogy ezzel előre jelezzük a későbbi navigációkat, és ez által készíthessünk alkalmas weblapot minden egyes felhasználó részére külön-külön.
+Gazdaság
+
+A dinamikus makroökonómiának is nélkülözhetetlen része a Markov-lánc.
+Matematikai biológia
+
+A Markov-láncok újabb felhasználási területe a biológiai modellezés. Kiváltképp a népesedési folyamatoké, amely hasznos olyan folyamatok modellezésében, amelyek analógok a biológiai népességgel. A Leslie-mátrix is egy alkalmas példa erre, annak ellenére, hogy egyes értékei nem valószínűségek (lehetnek 1-nél is nagyobbak). Másik fontos példa a sejtek osztódása közbeni alakok modellezése. Az alakok eloszlása, hosszú ideig rejtély volt, mind addig, míg azt meg nem határozták egy egyszerű Markov-modell segítségével. Ebben a modellben egy sejt állapota, annak oldalainak számát jelenti. A békákon, legyeken és hidrákon tapasztalati úton szerzett információk azt sugallják, hogy a sejt alakjának stacionárius eloszlása bizonyíthatóan minden többsejtű állatra ugyanaz.[1]
+A tanulás folyamatának statisztikai elmélete
+
+Memóriánk működésére is létezik statisztikailag helyes megközelítés. Az emberi agy működése a tanulási folyamatok során is Markov-láncokkal magyarázható. Képzeljünk el egy tanulót, akinek átnyújtunk egy lista szót. Ő azokat átolvassa, majd leírja azokat, amiket megjegyzett. Ezután ismét átolvassa, a memorizáltakat leírja, és a kísérletsorozat így folytatódik. Valamelyik szót vizsgálatunk tárgyává választva, azt mondjuk, hogy a szó n-edik kísérletnél a k állapotban van, ha az n kísérletből k esetben emlékezett a szóra a kísérleti alany. Ezen P(k,n) valószínűségek meghatározására is Markov-láncok elméletére van szükség.
+Játék, szerencsejáték
+
+Markov-láncokat használunk egyes szerencsejátékok és társasjátékok modellezésére is. Egy ismert gyerekjáték, a „Kígyók és létrák” is egy Markov-láncként fogható fel. Minden egyes körnél a játékos egy meghatározott mezőn áll (adott állapotban van) és megvannak a rögzített valószínűségi értékek a következő, lehetséges mezőre (állapotba) jutáshoz.
+Zene
+
+Markov-láncokat alkalmaznak az úgynevezett algoritmikus zenei összeállítások készítésére, olyan szoftverek esetén, mint a CSound vagy a Max. Egy elsőrendű láncban a rendszer állapotai hangjeggyé vagy hangmagassági értékké válnak, és így a minden egyes hanghoz tartozó valószínűségi vektorokból egy átmenetmátrix konstruálható. Egy jól megalkotott algoritmus pedig ezeket a hangjegyeket létrehozza, és kirakja az outputra az átmenetmátrix „súlyai” alapján, legyen az MIDI hangjegy érték, vagy frekvencia (Hz), vagy egyéb kívánatos mérték.
+első-rendű mátrix Note 	A 	C# 	Eb
+A 	0.1 	0.6 	0.3
+C# 	0.25 	0.05 	0.7
+Eb 	0.7 	0.3 	0
+másodrendű mátrix Note 	A 	D 	G
+AA 	0.18 	0.6 	0.22
+AD 	0.5 	0.5 	0
+AG 	0.15 	0.75 	0.1
+DD 	0 	0 	1
+DA 	0.25 	0 	0.75
+DG 	0.9 	0.1 	0
+GG 	0.4 	0.4 	0.2
+GA 	0.5 	0.25 	0.25
+GD 	1 	0 	0
+
+
+A másodrendű Markov-lánc, figyelembe véve az aktuális és az előző állapotot egyaránt, a második ábrán látható módon írható le.
+Baseball
+
+1960 óta használnak Markov-láncokat, modelleket a magasabb fokú baseball analízisben. Bár az igaz, hogy használata még mindig ritka. Minden egyes helycsere egy baseball meccsen megfelel a Markov-lánc egy állapotának, beleértve a futások és out-ok számát. 24-féle futás-out kombináció tartozik az egyes helycserékhez. Markov-modelleket használhatunk ahhoz, hogy megbecsüljük a futásokat az összes játékosra nézve külön-külön, vagy a csapatra összességében.
+Markov paródiagenerátor
+
+Markov folyamatokat arra is használhatjuk, hogy egy minta dokumentum alapján látszólag értelmesnek tűnő szövegeket generáljunk. Ezeket különböző szórakoztatási célú szoftvereknél, úgynevezett "paródia generátoroknál" használják (lásd dissociated press, Jeff Harrison, Mark V Shaney, [5] [6]).[1][2]).
+Történet
+
+Andrej Markov az első eredményeket (1906) ezen folyamatok tekintetében kizárólag elméleti szinten fektette le. A megszámlálhatóan végtelen állapothalmazra való általánosítással Kolmogorov (1936) állt elő. A Markov-láncok szoros kapcsolatban állnak a Brown-mozgással és az ergodikus hipotézissel, mely két fizikai téma meghatározó részét képezték a 20. század korai éveinek, de Markov ennek ellenére úgy tűnik, ezt inkább kiemelte a matematikai motivációból, nevezetesen azzal, hogy kiterjesztette a független eseményekre vonatkozó nagy számok törvényét. A felfedezéseit először 1913-ban használta fel.
+
+

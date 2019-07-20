@@ -1,0 +1,567 @@
+Cadeias de Markov
+Origem: Wikipédia, a enciclopédia livre.
+Saltar para a navegação
+Saltar para a pesquisa
+Uma cadeia de Markov simples de dois estados
+
+Em matemática, uma cadeia de Markov (cadeia de Markov em tempo discreto ou DTMC[1][2][3]) é um caso particular de processo estocástico com estados discretos (o parâmetro, em geral o tempo, pode ser discreto ou contínuo) com a propriedade de que a distribuição de probabilidade do próximo estado depende apenas do estado atual e não na sequência de eventos que precederam, uma propriedade chamada de Markoviana, chamada assim em homenagem ao matemático Andrei Andreyevich Markov. A definição dessa propriedade, também chamada de memória markoviana, é que os estados anteriores são irrelevantes para a predição dos estados seguintes, desde que o estado atual seja conhecido. Cadeias de Markov têm muitas aplicações como modelos estatísticos de processos do mundo real.
+Índice
+
+    1 Introdução
+    2 Definição formal
+        2.1 Caracterização de um processo de Markov
+        2.2 Variações
+        2.3 Cadeias de Markov em espaços de estados discretos
+    3 Exemplo
+    4 Evolução transitória
+    5 Propriedades
+        5.1 Redutibilidade
+        5.2 Periodicidade
+        5.3 Transitoriedade
+            5.3.1 Tempo médio de recorrência
+            5.3.2 Número esperado de visitas
+            5.3.3 Absorvendo estados
+        5.4 Ergodicidade
+        5.5 Análise de estado estacionário e distribuições limitantes
+            5.5.1 Análise de estado estacionário e na cadeia de Markov de tempo não homogêneo
+    6 Espaço de estado finito
+        6.1 Relação distribuição estacionária de vetores próprios e simplices
+        6.2 Cadeia de Markov de tempo homogêneo com um espaço de estado finito
+        6.3 Velocidade de convergência para a distribuição estacionária
+    7 Cadeia de Markov reversíveis
+        7.1 Cadeia de Markov reversível mais próxima
+    8 Esquema de Bernoulli
+    9 Espaço geral do estado
+        9.1 Cadeias Harris
+        9.2 Cadeias de Markov interagindo localmente
+    10 Aplicações
+        10.1 Física
+        10.2 Química
+        10.3 Ensaio
+        10.4 Reconhecimento de fala
+        10.5 Ciências da informação
+        10.6 Teoria de filas
+        10.7 Aplicações de Internet
+        10.8 Estatística
+        10.9 Economia e finanças
+        10.10 Ciências Sociais
+        10.11 Biologia matemática
+        10.12 Genética
+        10.13 Jogos
+        10.14 Música
+        10.15 Beisebol
+        10.16 Geradores de texto de Markov
+    11 Ajustando
+    12 História
+    13 Referências
+    14 Ligações externas
+
+Introdução
+O matemático russo Andrei Markov.
+
+A cadeia de Markov é um processo estocástico com a propriedade de Markov.[4] O termo "cadeia de Markov" refere-se à sequência de variáveis aleatórias, tais um processo move-se através de, com a propriedade de Markov definindo a dependência de série única entre períodos adjacentes (como em uma "cadeia"). Assim, pode ser usado para sistemas que seguem uma cadeia de eventos ligados, onde o que acontece em seguida depende apenas do estado atual do sistema descrevendo.
+
+Na literatura, diferentes tipos de processo de Markov são designados como "cadeia de Markov". Normalmente, o termo é reservado para um processo com um conjunto discreto de vezes, isto é, Cadeia de Markov de Tempo Discreto (DTMC).[5] Por outro lado, alguns autores utilizam o termo "processo de Markov" para se referir a uma cadeia de Markov de tempo contínuo sem referência explícita.[6][7]
+
+Enquanto o parâmetro de tempo é geralmente discreto, o espaço de estado de uma cadeia de Markov não tem quaisquer restrições geralmente aceitas: o termo pode referir-se a um processo em um espaço de estado arbitrário.[8] No entanto, muitas aplicações de Cadeias de Markov empregam conjuntos contáveis finitos ou infinitos (isto é, espaços de estado discretos), que têm uma análise estatística mais simples. Além da hora do índice e os parâmetros de espaço de estado, há muitas outras variações, extensões e generalizações (ver Variações). Para simplificar, a maior parte deste artigo concentra-se no tempo discreto, discreta caso de espaço de estado, salvo indicação em contrário.
+
+As mudanças de estado do sistema são chamadas transições. As probabilidades associadas com várias mudanças de estado são chamados de probabilidades de transição. O processo é caracterizado por um espaço de estado, uma matriz de transição descrevendo as probabilidades de transições de particulares, e um estado inicial (ou a distribuição inicial) através do espaço de estado. Por convenção, assumimos todos os estados e transições possíveis foram incluídos na definição do processo, por isso há sempre um próximo estado, e o processo não termina.
+
+Um processo aleatório de tempo discreto envolve um sistema que é em um determinado estado, em cada passo, com o estado a mudar de forma aleatória entre os passos. Os passos são muitas vezes considerados como momentos no tempo, mas podem igualmente bem se referirem à distância física ou a qualquer outra medida discreta. Formalmente, os passos são os números inteiros ou números naturais, e o processo aleatório é um mapeamento destes para estados. A propriedade de Markov afirma que a distribuição de probabilidade condicional para o sistema no próximo passo (e, de fato, em todas as etapas futuras) depende apenas do estado atual do sistema, e não adicionalmente sobre o estado do sistema em etapas anteriores.
+
+Uma vez que o sistema altera aleatoriamente, é geralmente impossível prever com exatidão o estado de uma cadeia de Markov num dado momento no futuro. No entanto, as propriedades estatísticas do futuro do sistema podem ser previstas. Em muitas aplicações, são elas as importantes.
+
+A famosa cadeia de Markov é o chamado "andar do bêbado", um passeio aleatório na linha número onde, a cada passo, a posição pode mudar por um ou -1 com igual probabilidade. A partir de qualquer posição há duas transições possível, para o seguinte ou anterior inteiro. As probabilidades de transição dependem somente da posição atual, não sobre o modo em que a posição foi alcançada. Por exemplo, as probabilidades de transição de 5-4 e 5-6 são ambos 0,5, e todos os outros a partir de probabilidades de transição 5 é 0. Estas probabilidades são independentes do fato de se o sistema foi anteriormente em 4 ou 6.
+
+Outro exemplo são os hábitos alimentares de uma criatura que só come uvas, queijo ou alface, e cujos hábitos alimentares estão em conformidade com as seguintes regras:
+
+    Ele come apenas uma vez por dia.
+    Se ele comeu queijo hoje, amanhã ele vai comer alface ou uvas com igual probabilidade.
+    Se ele comeu uvas hoje, amanhã ele vai comer uvas com probabilidade de 1/10, queijo com probabilidade 4/10 e alface com probabilidade 5/10.
+    Se ele comeu alface hoje, amanhã ele vai comer uvas com probabilidade de 4/10 ou queijo com probabilidade 6/10. Ele não vai comer alface novamente amanhã.
+
+Os hábitos alimentares desta criatura podem ser modelados com uma cadeia de Markov desde que a escolha em seu amanhã depende unicamente do que comer em seu hoje, e não do que comeu ontem ou em qualquer outro momento do passado. Uma propriedade estatística é de que a percentagem esperada pode ser calculada ao longo de um longo período de tempo, dos dias em que a criatura vai comer uvas.
+
+Uma série de eventos independentes (por exemplo, uma série de arremessos de moedas) satisfaz a definição formal de uma cadeia de Markov. No entanto, a teoria é normalmente aplicada apenas quando a distribuição de probabilidade do próximo passo depende não-trivialmente sobre o estado atual. Existem muitos outros exemplos de cadeias de Markov.
+Definição formal
+Cadeia de Markov simples.
+
+Uma cadeia de Markov é uma sequência X1, X2, X3, ... de variáveis aleatórias. O escopo destas variáveis, isto é, o conjunto de valores que elas podem assumir, é chamado de espaço de estados, onde Xn denota o estado do processo no tempo n. Se a distribuição de probabilidade condicional de Xn+1 nos estados passados é uma função apenas de Xn, então:
+
+    Pr ( X n + 1 = x | X 0 , X 1 , X 2 , … , X n ) = Pr ( X n + 1 = x | X n ) , {\displaystyle \Pr(X_{n+1}=x|X_{0},X_{1},X_{2},\ldots ,X_{n})=\Pr(X_{n+1}=x|X_{n}),\,} {\displaystyle \Pr(X_{n+1}=x|X_{0},X_{1},X_{2},\ldots ,X_{n})=\Pr(X_{n+1}=x|X_{n}),\,}
+
+onde x é algum estado do processo. A identidade acima define a propriedade de Markov.
+
+Cadeias de Markov são frequentemente descritas por uma sequência de grafos dirigidos, onde as arestas do gráfico n são rotulados por as probabilidades de ir de um estado no tempo n para outros estados no tempo n+1, Pr ( X n + 1 = x ∣ X n = x n ) {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=x_{n})} {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=x_{n})}. A mesma informação é representada pela matriz de transição de momento n para o tempo n+1. No entanto, as cadeias Markov são assumidas frequentemente como sendo tempo-homogêneas (ver variações abaixo), nesse caso o gráfico e a matriz são independentes de n e, portanto, não são apresentados como sequências.
+
+Estas descrições realçam a estrutura da cadeia de Markov que é independente da distribuição inicial Pr ( X 1 = x 1 ) {\displaystyle \Pr(X_{1}=x_{1})} {\displaystyle \Pr(X_{1}=x_{1})}. Quando o tempo é homogêneo, a cadeia pode ser interpretada como uma máquina de estado atribuindo uma probabilidade de pular de cada vértice ou estado para outro adjacente. A probabilidade Pr ( X n = x | X 1 = x 1 ) {\displaystyle \Pr(X_{n}=x|X_{1}=x_{1})} {\displaystyle \Pr(X_{n}=x|X_{1}=x_{1})} de Estado da máquina pode ser analisado como o comportamento estatístico da máquina com um elemento x 1 {\displaystyle x_{1}} x_1 do espaço de estados como entrada, ou como o comportamento da máquina com a distribuição inicial Pr ( X 1 = y ) = [ x 1 = y ] {\displaystyle \Pr(X_{1}=y)=[x_{1}=y]} {\displaystyle \Pr(X_{1}=y)=[x_{1}=y]} de estados como entrada, onde [ P ] {\displaystyle [P]} {\displaystyle [P]} é o suporte de Iverson.
+
+O fato de que algumas sequências de estados pode ter zero probabilidade de ocorrência corresponde a um gráfico com vários componentes ligados, onde se omitem arestas que levaria a uma probabilidade de transição zero. Por exemplo, se a tem uma probabilidade diferente de zero de ir para b, mas a e x estão em diferentes componentes ligados do gráfico, então, Pr ( X n + 1 = b | X n = a ) {\displaystyle \Pr(X_{n+1}=b|X_{n}=a)} {\displaystyle \Pr(X_{n+1}=b|X_{n}=a)} é definida, enquanto Pr ( X n + 1 = b | X 1 = x , . . . , X n = a ) {\displaystyle \Pr(X_{n+1}=b|X_{1}=x,...,X_{n}=a)} {\displaystyle \Pr(X_{n+1}=b|X_{1}=x,...,X_{n}=a)} não é.
+
+Uma maneira simples de visualizar um tipo específico de cadeia de Markov é através de uma máquina de estados finitos. Se você está no estado y no tempo n, então a probabilidade de que você se mova para o estado x no tempo n + 1 não depende de n, e somente depende do estado atual y em que você está. Assim em qualquer tempo n, uma cadeia de Markov finita pode ser caracterizada por uma matriz de probabilidades cujo elemento (x, y) é dado por Pr ( X n + 1 = x | X n = y ) {\displaystyle \Pr(X_{n+1}=x|X_{n}=y)\,} {\displaystyle \Pr(X_{n+1}=x|X_{n}=y)\,} e é independente do tempo n. Estes tipos de cadeia de Markov finitas e discretas podem também ser descritas por meio de um grafo dirigido (orientado), onde cada aresta é rotulada com as probabilidades de transição de um estado a outro sendo estes estados representados como os nós conectados pelas arestas.
+Caracterização de um processo de Markov
+Ver artigo principal: Processo estocástico
+
+Um processo de Markov é um processo estocástico em que a probabilidade de o sistema estar no estado i no período (n+1) depende somente do estado em que o sistema está no período n. Ou seja, para os processos de Markov, só interessa o estado imediato.[9][10] Os principais elementos de um processo de Markov são dois[9] :
+
+    a probabilidade xi(n) de ocorrer o estado i no n-ésimo período de tempo, ou, alternativamente, a fração da população em questão que está no estado i no n-ésimo período de tempo
+    as probabilidades de transição mij, que representam as probabilidades de o processo estar no estado i no tempo (n+1) dado que está no estado j no tempo n. Estas probabilidades de transição são normalmente agrupadas numa matriz, que denominamos matriz de transição, matriz estocástica ou ainda matriz de Markov.
+
+Variações
+
+    Processos de Markov de tempo contínuo têm um índice contínuo.
+    Cadeias de Markov de tempo homogêneo (ou cadeias de Markov estacionárias) são processos em que
+
+        Pr ( X n + 1 = x ∣ X n = y ) = Pr ( X n = x ∣ X n − 1 = y ) {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=y)=\Pr(X_{n}=x\mid X_{n-1}=y)\,} {\displaystyle \Pr(X_{n+1}=x\mid X_{n}=y)=\Pr(X_{n}=x\mid X_{n-1}=y)\,}
+
+para todo n. A probabilidade da transição de n é independente.
+
+    Uma cadeia de Markov de ordem m (ou uma cadeia de Markov com memória m), onde m é finito, é um processo que satisfaça
+
+        Pr ( X n = x n ∣ X n − 1 = x n − 1 , X n − 2 = x n − 2 , … , X 1 = x 1 ) = Pr ( X n = x n ∣ X n − 1 = x n − 1 , X n − 2 = x n − 2 , … , X n − m = x n − m )  for  n > m {\displaystyle {\begin{aligned}{}&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{1}=x_{1})\\=&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{n-m}=x_{n-m}){\text{ for }}n>m\end{aligned}}} {\displaystyle {\begin{aligned}{}&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{1}=x_{1})\\=&\Pr(X_{n}=x_{n}\mid X_{n-1}=x_{n-1},X_{n-2}=x_{n-2},\dots ,X_{n-m}=x_{n-m}){\text{ for }}n>m\end{aligned}}}
+
+Em outras palavras, o estado futuro depende dos passados m estados. É possível construir uma cadeia (Yn) de (Xn), que tem a propriedade de Markov "clássico", tendo como espaço de estado do m-tuplas ordenadas de valores X, ou seja, Yn = (Xn, Xn−1, ..., Xn−m+1).
+Cadeias de Markov em espaços de estados discretos
+Ver artigo principal: Matriz de transição
+
+Um espaço de estados é representável por uma matriz. Chamada de matriz de transição, com o (i, j)-ésimo elemento igual a
+
+    P i j = Pr ( X n + 1 = j ∣ X n = i ) {\displaystyle P_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i)\,} {\displaystyle P_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i)\,}
+
+Para um espaço de estados discretos, as integrações na probabilidade de transição de k passos são somatórios, e podem ser calculados como a k-ésima potência da matriz de transição. Isto é, se P é a matriz de transição para um passo, então Pk é a matriz de transição para a transição de k passos.
+
+A distribuição estacionária π {\displaystyle \pi } \pi é o vetor que satisfaz a equação:
+
+    π T P = π T , {\displaystyle \pi ^{T}\mathbf {P} =\pi ^{T},} {\displaystyle \pi ^{T}\mathbf {P} =\pi ^{T},}
+
+onde π T {\displaystyle \pi ^{T}} {\displaystyle \pi ^{T}} é o vetor transposto de π {\displaystyle \pi } \pi. Em outras palavras, a distribuição estacionária π {\displaystyle \pi } \pi é o autovetor (vetor próprio) esquerdo da matriz de transição, associado com o autovalor (valor próprio) 1.
+
+Como consequência, nem a existência nem a unicidade de distribuição estacionária é garantida para uma matriz de transição qualquer P. Contudo, se P é irredutível e aperiódica, então existe uma distribuição estacionária π {\displaystyle \pi } \pi. Além disso, Pk converge para uma matriz na qual cada linha é a (transposta da) distribuição estacionária π T {\displaystyle \pi ^{T}} {\displaystyle \pi ^{T}}, que é dada por:
+
+    lim k → ∞ P k = 1 π T , {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi ^{T},} {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi ^{T},}
+
+onde 1 {\displaystyle \mathbf {1} } {\displaystyle \mathbf {1} } é o vetor coluna com todas as entradas iguais a 1. Isto é estabelecido pelo Teorema de Perron-Frobenius.
+Exemplo de cadeia de Markov.
+
+Isto significa que se nós simularmos ou observamos uma caminhada aleatória com matriz de transição P, então a probabilidade de longo prazo de que o indivíduo que faz a caminhada esteja em um certo estado é independente do estado em que essa caminhada começou, e é definida pela distribuição estacionária. A caminhada aleatória "ignora" o passado. Em suma, cadeias de Markov são o passo seguinte depois dos processos sem memória (isto é, uma sequência de variáveis aleatórias independentes distribuídas uniformemente).
+
+Uma matriz de transição que é positiva (isto é, todo o elemento da matriz é positivo) é irredutível e aperiódica. Uma matriz é uma matriz estocástica se e somente se é uma matriz de probabilidades de transição de uma cadeia de Markov.
+
+Um caso especial de probabilidade de transição independente do passado é conhecido como o esquema de Bernoulli. Um esquema de Bernoulli com somente dois estados possíveis é conhecido como um processo de Bernoulli.
+Exemplo
+Finance Markov chain example state space - PT.svg
+
+Um diagrama de estado para um exemplo simples é mostrado na figura à direita, usando para imaginar as transições de estado de um grafo dirigido. Os estados representam se um mercado de ações hipotético está exibindo um mercado em alta, mercado em baixa, ou tendência do mercado estagnado durante uma determinada semana. De acordo com a figura, uma semana de alta é seguido por uma outra semana de alta 90% do tempo, de uma semana de baixa 7,5% do tempo, e uma semana estagnada outro 2,5% do tempo. Etiquetas de espaço de estado {1 = alta, 2 = baixa, 3 = estagnado} a matriz de transição para este exemplo é
+
+    P = [ 0.9 0.075 0.025 0.15 0.8 0.05 0.25 0.25 0.5 ] . {\displaystyle P={\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}.} {\displaystyle P={\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}.}
+
+A distribuição por estados pode ser escrito como um vetor de linha estocástico x com x(n + 1) = x(n)P. Assim, se no tempo n o sistema está no estado x(n), e em seguida, três períodos de tempo mais tarde, no tempo n + 3 a distribuição é
+
+    x ( n + 3 ) = x ( n + 2 ) P = ( x ( n + 1 ) P ) P = x ( n + 1 ) P 2 = ( x ( n ) P ) P 2 = x ( n ) P 3 {\displaystyle {\begin{aligned}x^{(n+3)}&=x^{(n+2)}P=\left(x^{(n+1)}P\right)P\\\\&=x^{(n+1)}P^{2}=\left(x^{(n)}P\right)P^{2}\\&=x^{(n)}P^{3}\\\end{aligned}}} {\displaystyle {\begin{aligned}x^{(n+3)}&=x^{(n+2)}P=\left(x^{(n+1)}P\right)P\\\\&=x^{(n+1)}P^{2}=\left(x^{(n)}P\right)P^{2}\\&=x^{(n)}P^{3}\\\end{aligned}}}
+
+Em particular, se num momento n o sistema está no estado 2 (baixa), então no tempo n + 3, a distribuição é
+
+    x ( n + 3 ) = [ 0 1 0 ] [ 0.9 0.075 0.025 0.15 0.8 0.05 0.25 0.25 0.5 ] 3 = [ 0 1 0 ] [ 0.7745 0.17875 0.04675 0.3575 0.56825 0.07425 0.4675 0.37125 0.16125 ] = [ 0.3575 0.56825 0.07425 ] . {\displaystyle {\begin{aligned}x^{(n+3)}&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}^{3}\\&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.7745&0.17875&0.04675\\0.3575&0.56825&0.07425\\0.4675&0.37125&0.16125\\\end{bmatrix}}\\&={\begin{bmatrix}0.3575&0.56825&0.07425\end{bmatrix}}.\end{aligned}}} {\displaystyle {\begin{aligned}x^{(n+3)}&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.9&0.075&0.025\\0.15&0.8&0.05\\0.25&0.25&0.5\end{bmatrix}}^{3}\\&={\begin{bmatrix}0&1&0\end{bmatrix}}{\begin{bmatrix}0.7745&0.17875&0.04675\\0.3575&0.56825&0.07425\\0.4675&0.37125&0.16125\\\end{bmatrix}}\\&={\begin{bmatrix}0.3575&0.56825&0.07425\end{bmatrix}}.\end{aligned}}}
+
+Utilizando a matriz de transição, é possível calcular, por exemplo, a fracção de longo prazo de semanas durante o qual o mercado é estagnado, ou o número médio de semanas que será necessário para passar de uma estagnada a um mercado de touro. Usando as probabilidades de transição, as probabilidades de estado estacionário indicam que 62,5% das semanas estará em um mercado de touro, 31,25% de semanas estará em um mercado de urso e 6,25% de semanas será estagnada, uma vez que:
+
+    lim N → ∞ P N = [ 0.625 0.3125 0.0625 0.625 0.3125 0.0625 0.625 0.3125 0.0625 ] {\displaystyle \lim _{N\to \infty }\,P^{N}={\begin{bmatrix}0.625&0.3125&0.0625\\0.625&0.3125&0.0625\\0.625&0.3125&0.0625\\\end{bmatrix}}} {\displaystyle \lim _{N\to \infty }\,P^{N}={\begin{bmatrix}0.625&0.3125&0.0625\\0.625&0.3125&0.0625\\0.625&0.3125&0.0625\\\end{bmatrix}}}
+
+Um desenvolvimento aprofundado e muitos exemplos podem ser encontradas na monografia sobre-linha Meyn & Tweedie 2005.[11]
+
+Imagine um país onde só seja possível estar em três classes sociais, denominadas estados: A, B ou C. Em cada período de tempo, a probabilidade de uma pessoa mudar de um estado para outro é constante no tempo e só depende dos estados. Este processo é chamado de cadeia de Markov.[12]
+
+Uma máquina de estado finito pode ser utilizada como uma representação de uma cadeia de Markov. Assumindo uma sequência de sinais de entrada independentes e identicamente distribuídos (por exemplo, símbolos de um alfabeto binário escolhido por lançamentos de moeda), se a máquina está no estado y no tempo n, então a probabilidade de que ele se move para declarar x no tempo n + 1 depende apenas do estado atual.
+Evolução transitória
+
+A probabilidade de ir do estado i para o estado j em intervalos de tempo n é
+
+    p i j ( n ) = Pr ( X n = j ∣ X 0 = i ) {\displaystyle p_{ij}^{(n)}=\Pr(X_{n}=j\mid X_{0}=i)\,} {\displaystyle p_{ij}^{(n)}=\Pr(X_{n}=j\mid X_{0}=i)\,}
+
+e a transição de um único passo é
+
+    p i j = Pr ( X 1 = j ∣ X 0 = i ) . {\displaystyle p_{ij}=\Pr(X_{1}=j\mid X_{0}=i).\,} {\displaystyle p_{ij}=\Pr(X_{1}=j\mid X_{0}=i).\,}
+
+Para uma cadeia de Markov de tempo homogêneo:
+
+    p i j ( n ) = Pr ( X k + n = j ∣ X k = i ) {\displaystyle p_{ij}^{(n)}=\Pr(X_{k+n}=j\mid X_{k}=i)\,} {\displaystyle p_{ij}^{(n)}=\Pr(X_{k+n}=j\mid X_{k}=i)\,}
+
+e
+
+    p i j = Pr ( X k + 1 = j ∣ X k = i ) . {\displaystyle p_{ij}=\Pr(X_{k+1}=j\mid X_{k}=i).\,} {\displaystyle p_{ij}=\Pr(X_{k+1}=j\mid X_{k}=i).\,}
+
+As probabilidades de transição de n-etapa satisfazem a equação Chapman-Kolmogorov, que para qualquer k tal que 0 < k < n,
+
+    p i j ( n ) = ∑ r ∈ S p i r ( k ) p r j ( n − k ) {\displaystyle p_{ij}^{(n)}=\sum _{r\in S}p_{ir}^{(k)}p_{rj}^{(n-k)}} {\displaystyle p_{ij}^{(n)}=\sum _{r\in S}p_{ir}^{(k)}p_{rj}^{(n-k)}}
+
+onde S é o espaço de estados da cadeia de Markov.
+
+A distribuição marginal Pr(Xn = x) é a distribuição mais estados no tempo n. A distribuição inicial é Pr(X0 = x). A evolução do processo através de um passo de tempo é descrita pela
+
+    Pr ( X n = j ) = ∑ r ∈ S p r j Pr ( X n − 1 = r ) = ∑ r ∈ S p r j ( n ) Pr ( X 0 = r ) . {\displaystyle \Pr(X_{n}=j)=\sum _{r\in S}p_{rj}\Pr(X_{n-1}=r)=\sum _{r\in S}p_{rj}^{(n)}\Pr(X_{0}=r).} {\displaystyle \Pr(X_{n}=j)=\sum _{r\in S}p_{rj}\Pr(X_{n-1}=r)=\sum _{r\in S}p_{rj}^{(n)}\Pr(X_{0}=r).}
+
+Nota: O expoente (n) é um índice e não um expoente.
+Propriedades
+Redutibilidade
+
+Um estado j é dito ser acessível a partir de um estado i (escrito i → j) se um sistema começou no estado i tem uma probabilidade diferente de zero de transição para o estado j em algum ponto. Formalmente, o estado j é acessível a partir do estado i, se existe um inteiro nij ≥ 0 tal que
+
+    Pr ( X n i j = j ∣ X 0 = i ) = p i j ( n i j ) > 0. {\displaystyle \Pr(X_{n_{ij}}=j\mid X_{0}=i)=p_{ij}^{(n_{ij})}>0.\,} {\displaystyle \Pr(X_{n_{ij}}=j\mid X_{0}=i)=p_{ij}^{(n_{ij})}>0.\,}
+
+Este inteiro é permitido para ser diferente para cada par de estados, portanto, os subscritos em nij. Permitindo que n seja zero significa que cada estado é definida para ser acessível a partir de si mesmo.
+
+Um estado i é dito para se comunicar com o estado j (escrito i ↔ j) se ambos i → j e j → i. Um conjunto de estados C é uma classe de comunicação se cada par de estados em C comunica com o outro. Uma classe comunicação está fechado se a probabilidade de deixar a classe é zero, ou seja, que se i estiver em C, mas j não, então j não é acessível a partir de i. Pode-se mostrar que a comunicação neste sentido é uma relação de equivalência e, assim, que as classes comunicantes são as classes de equivalência dessa relação.
+
+O conjunto de classes comunicantes forma, um gráfico acíclico dirigido por herdar as setas do espaço estado original. Uma classe comunicação está fechado, se e somente se ele não tem setas de saída neste gráfico.
+
+Um estado i é dito ser essencial ou final se para todo j tal que i → j também é verdade que j → i. Um estado i é não-essencial se não é essencial.[13] Um estado é definitiva se e somente se sua classe comunicação está fechado.
+
+A cadeia de Markov é dito ser irredutível se o seu espaço de estado é uma classe única comunicação; em outras palavras, se é possível chegar a qualquer estado de qualquer estado.
+Periodicidade
+
+Um estado i tem período k se houver retorno ao estado i deve ocorrer em múltiplos de passos de tempo k. Formalmente, o período de um estado é definido como
+
+    k = gcd { n > 0 : Pr ( X n = i ∣ X 0 = i ) > 0 } {\displaystyle k=\gcd\{n>0:\Pr(X_{n}=i\mid X_{0}=i)>0\}} {\displaystyle k=\gcd\{n>0:\Pr(X_{n}=i\mid X_{0}=i)>0\}}
+
+(Onde "mdc" é o maior divisor comum), desde que este conjunto não é vazio. Caso contrário, o período não está definido. Note-se que mesmo que um estado tem período k, pode não ser possível atingir o estado em k passos. Por exemplo, suponha que é possível voltar ao estado em {6, 8, 10, 12, ...} intervalos de tempo; k seria 2, embora 2 não aparece nesta lista.
+
+Se k = 1, então o estado é dito ser aperiódico: retorno ao estado i pode ocorrer em períodos irregulares. Pode ser demonstrado que um estado i é aperiódico se e somente se existe n tal que para todo n' ≥ n,
+
+    Pr ( X n ′ = i ∣ X 0 = i ) > 0. {\displaystyle \Pr(X_{n'}=i\mid X_{0}=i)>0.} {\displaystyle \Pr(X_{n'}=i\mid X_{0}=i)>0.}
+
+Caso contrário (k > 1), o estado é dito ser periódico com período k. A cadeia de Markov é aperiódica se cada estado é aperiódico. Uma cadeia de Markov irredutível só precisa de um estado aperiódico para implicar que todos os estados são aperiódicos.
+
+Cada estado de um grafo bipartido tem um período regular.
+Transitoriedade
+
+Um estado i é dito transitório, se, uma vez que começamos no estado i, existe uma probabilidade não nula de que nunca voltará a i. Formalmente, seja a variável aleatória Ti o primeiro tempo de retorno ao estado i (o "hitting time"):
+
+    T i = inf { n ≥ 1 : X n = i ∣ X 0 = i } . {\displaystyle T_{i}=\inf\{n\geq 1:X_{n}=i\mid X_{0}=i\}.} {\displaystyle T_{i}=\inf\{n\geq 1:X_{n}=i\mid X_{0}=i\}.}
+
+O número
+
+    f i i ( n ) = Pr ( T i = n ) {\displaystyle f_{ii}^{(n)}=\Pr(T_{i}=n)} {\displaystyle f_{ii}^{(n)}=\Pr(T_{i}=n)}
+
+é a probabilidade de voltar para o estado i pela primeira vez após n passos. Portanto, o estado i é transitório se
+
+    Pr ( T i < ∞ ) = ∑ n = 1 ∞ f i i ( n ) < 1. {\displaystyle \Pr(T_{i}<{\infty })=\sum _{n=1}^{\infty }f_{ii}^{(n)}<1.} {\displaystyle \Pr(T_{i}<{\infty })=\sum _{n=1}^{\infty }f_{ii}^{(n)}<1.}
+
+O estado i é recorrente (ou persistente) se não é transitório. Estados recorrentes tem garantidos (com probabilidade 1) um hitting time finito. Recorrência e transitoriedade são propriedades de classe, isto é, elas são válidas ou não de forma igual para todos os membros de uma classe comunicante.
+Tempo médio de recorrência
+
+Mesmo que o hitting time seja finito com probabilidade 1, ele não precisa de ter uma expectativa finita. O tempo de recorrência média no estado i é o tempo de retorno esperado Mi:
+
+    M i = E [ T i ] = ∑ n = 1 ∞ n ⋅ f i i ( n ) . {\displaystyle M_{i}=E[T_{i}]=\sum _{n=1}^{\infty }n\cdot f_{ii}^{(n)}.\,} {\displaystyle M_{i}=E[T_{i}]=\sum _{n=1}^{\infty }n\cdot f_{ii}^{(n)}.\,}
+
+Estado i é recorrente positivo (ou persistente não-nulo) se Mi é finito; caso contrário, o estado i é recorrente nulo (ou persistente nulo).
+Número esperado de visitas
+
+Pode ser mostrado que um estado i é recorrente se e somente se o número esperado de visitas a este estado é infinito, isto é,
+
+    ∑ n = 0 ∞ p i i ( n ) = ∞ . {\displaystyle \sum _{n=0}^{\infty }p_{ii}^{(n)}=\infty .} {\displaystyle \sum _{n=0}^{\infty }p_{ii}^{(n)}=\infty .}
+
+Absorvendo estados
+
+Um estado i é chamado de absorção, se é impossível sair deste estado. Portanto, o estado i está absorvendo se e somente se
+
+    p i i = 1  and  p i j = 0  for  i ≠ j . {\displaystyle p_{ii}=1{\text{ and }}p_{ij}=0{\text{ for }}i\not =j.} {\displaystyle p_{ii}=1{\text{ and }}p_{ij}=0{\text{ for }}i\not =j.}
+
+Se cada estado pode chegar a um estado de absorção, então a cadeia de Markov é uma cadeia de Markov absorvente.
+Ergodicidade
+
+Um estado i é dito ser ergódico se ele tem uma recorrência aperiódica e positiva. Em outras palavras, um estado i é ergódico se for recorrente, tem um período de 1 e tem tempo de recorrência média finita. Se todos os estados em uma cadeia de Markov irredutível são ergódicos, então a cadeia é ergódica.
+
+É possível mostrar que uma cadeia de Marvok irredutível de estado finito é ergódica se ela tem um estado aperiódico. A cadeia de Markov tem a propriedade ergódica se há um número finito N tal que qualquer estado pode ser alcançado a partir de qualquer outro estado em exatamente N passos. No caso de uma matriz de transição totalmente ligada, em que todas as transições têm uma probabilidade não nula, esta condição é preenchida com N = 1. A cadeia de Markov com mais de um estado e apenas uma transição de sair por estado não pode ser ergódica.
+Análise de estado estacionário e distribuições limitantes
+
+Se a cadeia de Markov é uma cadeia de Markov de tempo homogénea, de modo que o processo é descrito por uma única matriz que independe do tempo p i j {\displaystyle p_{ij}} {\displaystyle p_{ij}}, então o vetor π {\displaystyle {\boldsymbol {\pi }}} {\displaystyle {\boldsymbol {\pi }}} é chamado de distribuição estacionária (ou medida invariante) se ∀ j ∈ S {\displaystyle \forall j\in S} {\displaystyle \forall j\in S} satisfaz
+
+    0 ≤ π j ≤ 1. {\displaystyle 0\leq \pi _{j}\leq 1.} {\displaystyle 0\leq \pi _{j}\leq 1.}
+
+    ∑ j ∈ S π j = 1. {\displaystyle \sum _{j\in S}\pi _{j}=1.} {\displaystyle \sum _{j\in S}\pi _{j}=1.}
+
+    π j = ∑ i ∈ S π i p i j . {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}p_{ij}.} {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}p_{ij}.}
+
+Uma cadeia irredutível tem uma distribuição estacionária se e somente se todos os seus estados são recorrentes positivos.[14] Nesse caso, π é único e está relacionada com o tempo de retorno esperado:
+
+    π j = C M j , {\displaystyle \pi _{j}={\frac {C}{M_{j}}}\,,} {\displaystyle \pi _{j}={\frac {C}{M_{j}}}\,,}
+
+onde C {\displaystyle C} C é a constante de normalização. Além disso, se a cadeia positiva recorrente é irredutível e aperiódica, diz-se que tem uma distribuição limitante; para qualquer i e j,
+
+    lim n → ∞ p i j ( n ) = C M j . {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {C}{M_{j}}}.} {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}={\frac {C}{M_{j}}}.}
+
+Note-se que não existe qualquer hipótese da distribuição inicial; a cadeia converge para a distribuição estacionária independentemente de onde ele começa. Tal π {\displaystyle \pi } \pi é chamado de distribuição em equilíbrio da cadeia.
+
+Se uma cadeia tem mais de uma classe comunicante fechada, suas distribuições estacionárias não serão únicas (considere qualquer classe comunicante fechada C i {\displaystyle C_{i}} C_{i} na cadeia, cada uma terá a sua própria distribuição estacionária única π i {\displaystyle \pi _{i}} {\displaystyle \pi _{i}}. Estendendo essas distribuições à cadeia global, definindo todos os valores a zero fora da classe comunicante, resulta que o conjunto de medidas invariantes da cadeia original é o conjunto de todas as combinações convexas da { π i {\displaystyle \pi _{i}} {\displaystyle \pi _{i}}). No entanto, se um estado j é aperiódico, então
+
+    lim n → ∞ p j j ( n ) = C M j {\displaystyle \lim _{n\rightarrow \infty }p_{jj}^{(n)}={\frac {C}{M_{j}}}} {\displaystyle \lim _{n\rightarrow \infty }p_{jj}^{(n)}={\frac {C}{M_{j}}}}
+
+e para qualquer outro estado i, sendo fij a probabilidade de que a cadeia visite o estado j, se ele começa no i,
+
+    lim n → ∞ p i j ( n ) = C f i j M j . {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}=C{\frac {f_{ij}}{M_{j}}}.} {\displaystyle \lim _{n\rightarrow \infty }p_{ij}^{(n)}=C{\frac {f_{ij}}{M_{j}}}.}
+
+Se um estado i é periódico com período k > 1, então o limite
+
+    lim n → ∞ p i i ( n ) {\displaystyle \lim _{n\rightarrow \infty }p_{ii}^{(n)}} {\displaystyle \lim _{n\rightarrow \infty }p_{ii}^{(n)}}
+
+não existe, embora o limite
+
+    lim n → ∞ p i i ( k n + r ) {\displaystyle \lim _{n\rightarrow \infty }p_{ii}^{(kn+r)}} {\displaystyle \lim _{n\rightarrow \infty }p_{ii}^{(kn+r)}}
+
+exista para cada inteiro r.
+Análise de estado estacionário e na cadeia de Markov de tempo não homogêneo
+
+A cadeia de Markov não precisa ser necessariamente o tempo homogêneo para ter uma distribuição de equilíbrio. Se há uma distribuição de probabilidade sobre estados π {\displaystyle {\boldsymbol {\pi }}} {\displaystyle {\boldsymbol {\pi }}} tal que
+
+    π j = ∑ i ∈ S π i Pr ( X n + 1 = j ∣ X n = i ) {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}\,\Pr(X_{n+1}=j\mid X_{n}=i)} {\displaystyle \pi _{j}=\sum _{i\in S}\pi _{i}\,\Pr(X_{n+1}=j\mid X_{n}=i)}
+
+para cada estado j e cada tempo n, então π {\displaystyle {\boldsymbol {\pi }}} {\displaystyle {\boldsymbol {\pi }}} é uma distribuição em equilíbrio da cadeia de Markov. Tal situação pode ocorrer em métodos de cadeia de Markov de Monte Carlo (MCMC) em situações em que um número de diferentes matrizes de transição são usadas, porque cada uma é eficaz para um tipo particular de mistura, mas cada matriz respeita uma distribuição de equilíbrio partilhada.
+Espaço de estado finito
+
+Se o espaço de estados é finito, a distribuição de probabilidade de transição pode ser representada por uma matriz, chamada de matriz de transição, com o (i, j)-ésimo elemento de P igual
+
+    p i j = Pr ( X n + 1 = j ∣ X n = i ) . {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i).\,} {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i).\,}
+
+Uma vez que cada fileira de P soma um e todos os elementos são não-negativos, P é uma matriz estocástica direita.
+Relação distribuição estacionária de vetores próprios e simplices
+
+Um π distribuição estacionária é um vetor (linha), cujos elementos são não-negativos e somam 1, mantém-se inalterado pela operação da matriz de transição P sobre ele e por isso é definida pela
+
+    π P = π . {\displaystyle \pi \mathbf {P} =\pi .\,} {\displaystyle \pi \mathbf {P} =\pi .\,}
+
+Ao comparar essa definição com a de um vetor próprio vemos que os dois conceitos estão relacionados e que
+
+    π = e ∑ i e i {\displaystyle \pi ={\frac {e}{\sum _{i}{e_{i}}}}} {\displaystyle \pi ={\frac {e}{\sum _{i}{e_{i}}}}}
+
+é um múltiplo normalizado ( ∑ i π i = 1 {\displaystyle \textstyle \sum _{i}\pi _{i}=1} {\displaystyle \textstyle \sum _{i}\pi _{i}=1}) de um vetor próprio esquerdo e' da matriz de transição PT com um valor próprio de 1. Se houver mais do que uma unidade de vetor próprio em seguida, a soma ponderada dos correspondentes estados estacionários é também um estado estacionário. Mas para uma cadeia de Markov é geralmente mais interessados em um estado estacionário que é o limite das distribuições de sequência para alguma distribuição inicial.
+
+Os valores de distribuição estacionária π i {\displaystyle \textstyle \pi _{i}} {\displaystyle \textstyle \pi _{i}} estão associadas com o espaço de estado de P e seus vetores próprios têm as suas proporções relativas preservadas. Uma vez que os componentes do π são positivos e a restrição de que a sua soma é a unidade pode ser reescrita como ∑ i 1 ⋅ π i = 1 {\displaystyle \textstyle \sum _{i}1\cdot \pi _{i}=1} {\displaystyle \textstyle \sum _{i}1\cdot \pi _{i}=1} vemos que o produto do ponto de π com um vetor cujos componentes são todos 1 é unitário e que π encontra-se em um simplex.
+Cadeia de Markov de tempo homogêneo com um espaço de estado finito
+
+Se a cadeia de Markov é vez homogênea, em seguida, a matriz de transição P é o mesmo depois de cada passo, de modo que a probabilidade de transição do passo k pode ser calculado como a potência k da matriz de transição Pk.
+
+Se a cadeia de Markov é irredutível e aperiódica, então há uma distribuição estacionária única π. Além disso, neste caso Pk converge para uma matriz de posto um em que cada linha é o π distribuição estacionária, que é,
+
+    lim k → ∞ P k = 1 π {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi } {\displaystyle \lim _{k\rightarrow \infty }\mathbf {P} ^{k}=\mathbf {1} \pi }
+
+onde 1 é o vetor coluna com todas as entradas iguais a 1. Isto é afirmado pelo teorema de Perron-Frobenius. Se, por qualquer meio, lim k → ∞ P k {\displaystyle \scriptstyle \lim _{k\to \infty }\mathbf {P} ^{k}} {\displaystyle \scriptstyle \lim _{k\to \infty }\mathbf {P} ^{k}} é encontrado, então a distribuição estacionária da cadeia de Markov em questão pode ser facilmente determinada para qualquer distribuição, tal como será explicado abaixo.
+
+Para algumas matrizes estocásticas P, o limite lim k → ∞ P k {\displaystyle \scriptstyle \lim \limits _{k\to \infty }\mathbf {P} ^{k}} {\displaystyle \scriptstyle \lim \limits _{k\to \infty }\mathbf {P} ^{k}} não existe enquanto a distribuição é estacionária, como mostra este exemplo:
+
+    P = ( 0 1 1 0 ) P 2 k = I P 2 k + 1 = P {\displaystyle \mathbf {P} ={\begin{pmatrix}0&1\\1&0\end{pmatrix}}\qquad \mathbf {P} ^{2k}=I\qquad \mathbf {P} ^{2k+1}=\mathbf {P} } {\displaystyle \mathbf {P} ={\begin{pmatrix}0&1\\1&0\end{pmatrix}}\qquad \mathbf {P} ^{2k}=I\qquad \mathbf {P} ^{2k+1}=\mathbf {P} }
+
+    ( 1 2 1 2 ) ( 0 1 1 0 ) = ( 1 2 1 2 ) {\displaystyle {\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}{\begin{pmatrix}0&1\\1&0\end{pmatrix}}={\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}} {\displaystyle {\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}{\begin{pmatrix}0&1\\1&0\end{pmatrix}}={\begin{pmatrix}{\frac {1}{2}}&{\frac {1}{2}}\end{pmatrix}}}
+
+Observe que este exemplo ilustra uma cadeia de Markov periódica.
+
+Uma vez que existem um número de diferentes casos especiais a considerar, o processo de encontrar este limite se existir pode ser uma tarefa longa. No entanto, existem muitas técnicas que podem ajudar a encontrar esse limite. Seja P uma matriz n×n, e definindo Q = lim k → ∞ P k . {\displaystyle \scriptstyle \mathbf {Q} =\lim _{k\to \infty }\mathbf {P} ^{k}.} {\displaystyle \scriptstyle \mathbf {Q} =\lim _{k\to \infty }\mathbf {P} ^{k}.}
+
+É verdade que sempre
+
+    Q P = Q . {\displaystyle \mathbf {QP} =\mathbf {Q} .} {\displaystyle \mathbf {QP} =\mathbf {Q} .}
+
+Subtraindo 'Q de ambos os lados e fatorando, tem os resultados
+
+    Q ( P − I n ) = 0 n , n , {\displaystyle \mathbf {Q} (\mathbf {P} -\mathbf {I} _{n})=\mathbf {0} _{n,n},} {\displaystyle \mathbf {Q} (\mathbf {P} -\mathbf {I} _{n})=\mathbf {0} _{n,n},}
+
+Onde In é a matriz identidade de tamanho n e 0n,n é a matriz zero de tamanho n×n. Multiplicando juntos matrizes estocásticos sempre produz uma outra matriz estocástica, então Q deve ser uma matriz estocástica (ver definição acima). Por vezes é suficiente para utilizar a equação da matriz acima e o facto de que Q é uma matriz estocástica de resolver por Q, incluindo o facto de que a soma de cada uma das linhas em P é 1, existem n+1 equações para determinar n incógnitas, por isso é computacionalmente mais fácil se, por um lado uma seleciona uma linha em Q e substituir cada um dos seus elementos por uma, e por outro um substituir o elemento correspondente (a uma na mesma coluna) no vetor de 0, e ao lado esquerdo - multi este último vetor pelo inverso da antiga matriz transformada para encontrar Q.
+
+Aqui é um método para fazê-lo: em primeiro lugar, definir a função f(A) para retornar a matriz A com a sua coluna mais à direita substituído com toda a 1s. Se [f(P − In)]−1 existe, em seguida,
+
+    Q = f ( 0 n , n ) [ f ( P − I n ) ] − 1 . {\displaystyle \mathbf {Q} =f(\mathbf {0} _{n,n})[f(\mathbf {P} -\mathbf {I} _{n})]^{-1}.} {\displaystyle \mathbf {Q} =f(\mathbf {0} _{n,n})[f(\mathbf {P} -\mathbf {I} _{n})]^{-1}.}
+
+A equação matriz original é equivalente a um sistema de n × n equações lineares em n × n variáveis. E existem n equações lineares mais a partir do facto de que Q é uma matriz estocástica direito cujo cada linha somas para 1. Por isso, necessita de qualquer N × n equações lineares independentes das equações (N × N + N) para resolver os n × n variáveis. Neste exemplo, os n equações de "Q multiplicado pela coluna mais à direita de (P-Na)" foram substituídos por aqueles N estocásticos.
+
+Uma coisa a notar é que, se P tem um elemento Pi,i na sua diagonal principal, que é igual a 1 e a linha om ou coluna i-ésima é preenchida com zeros, então essa linha ou coluna permanecerá inalterada em todos os poderes subsequentes Pk . Assim, a i-ésima linha ou coluna de Q terá os 1 e os 0 de nas mesmas posições como em P.
+Velocidade de convergência para a distribuição estacionária
+
+Como afirmado anteriormente, a partir da equação π = π P {\displaystyle \mathbf {\pi } =\mathbf {\pi P} } {\displaystyle \mathbf {\pi } =\mathbf {\pi P} }, (se existir) o estacionária (ou steady state) π distribuição é um autovetor esquerdo da linha da matriz estocástica P. Em seguida, assumindo que P é diagonalizável ou equivalentemente que P tem n autovetores linearmente independentes, a velocidade de convergência é elaborado da seguinte forma. (Para não diagonalizável, ou seja, matrizes defeituosos, pode-se começar com a forma normal Jordan de P e prosseguir com o conjunto um pouco mais envolvidos de argumentos de uma maneira similar.[15])
+
+Seja U a matriz de autovetores (cada um normalizado para ter uma norma L2 igual a 1), onde cada coluna é um vetor próprio esquerdo do P e deixe Σ a matriz diagonal de valores próprios à esquerda de P, ou seja, Σ = diag(λ1,λ2,λ3,...,λn). Então, por eigendecomposição
+
+    P = U Σ U − 1 . {\displaystyle \mathbf {P} =\mathbf {U\Sigma U} ^{-1}.} {\displaystyle \mathbf {P} =\mathbf {U\Sigma U} ^{-1}.}
+
+Deixe os valores próprios ser enumerados tal que 1 = |λ1| > |λ2| ≥ |λ3| ≥ ... ≥ |λn|. Uma vez que P é uma matriz estocástica de linha, o seu maior valor próprio esquerda é 1. Se houver uma distribuição estacionário original, em seguida, o valor próprio maior e o vetor próprio correspondente é também único (porque não existe nenhum outro π que resolve a equação distribuição estacionária acima). Seja ui a coluna i da matriz U, ou seja, ui é o autovetor esquerdo de P correspondente a λi. Também sendo x ser um vetor linha comprimento n que representa uma distribuição de probabilidade válida; já que os autovetores ui se distribuem por Rn, podemos escrever
+
+    x T = ∑ i = 1 n a i u i {\displaystyle \mathbf {x} ^{T}=\sum _{i=1}^{n}a_{i}\mathbf {u} _{i}} {\displaystyle \mathbf {x} ^{T}=\sum _{i=1}^{n}a_{i}\mathbf {u} _{i}}
+
+por algum conjunto de ai∈ℝ. Se começa-se a multiplicação de P com x da esquerda e continuar esta operação com os resultados, no final, obtém-se o π distribuição estacionária. Em outras palavras, π = ui ← xPPP...P = xPk como k vai para infinito. Que significa
+
+    π ( k ) = x ( U Σ U − 1 ) ( U Σ U − 1 ) ⋯ ( U Σ U − 1 ) {\displaystyle \mathbf {\pi } ^{(k)}=\mathbf {x} (\mathbf {U\Sigma U} ^{-1})(\mathbf {U\Sigma U} ^{-1})\cdots (\mathbf {U\Sigma U} ^{-1})} {\displaystyle \mathbf {\pi } ^{(k)}=\mathbf {x} (\mathbf {U\Sigma U} ^{-1})(\mathbf {U\Sigma U} ^{-1})\cdots (\mathbf {U\Sigma U} ^{-1})}
+
+    = x U Σ k U − 1 {\displaystyle =\mathbf {xU\Sigma } ^{k}\mathbf {U} ^{-1}} {\displaystyle =\mathbf {xU\Sigma } ^{k}\mathbf {U} ^{-1}}
+
+desde UU−1 = I, a matriz de identidade e de energia de uma matriz diagonal também é uma matriz diagonal em que cada entrada é feita para que o poder.
+
+    = ( a 1 u 1 T + a 2 u 2 T + ⋯ + a n u n T ) U Σ k U − 1 , {\displaystyle =(a_{1}\mathbf {u} _{1}^{T}+a_{2}\mathbf {u} _{2}^{T}+\cdots +a_{n}\mathbf {u} _{n}^{T})\mathbf {U\Sigma } ^{k}\mathbf {U} ^{-1},} {\displaystyle =(a_{1}\mathbf {u} _{1}^{T}+a_{2}\mathbf {u} _{2}^{T}+\cdots +a_{n}\mathbf {u} _{n}^{T})\mathbf {U\Sigma } ^{k}\mathbf {U} ^{-1},}
+
+    = a 1 λ 1 k u 1 + a 2 λ 2 k u 2 + ⋯ + a n λ n k u n , {\displaystyle =a_{1}\lambda _{1}^{k}\mathbf {u} _{1}+a_{2}\lambda _{2}^{k}\mathbf {u} _{2}+\cdots +a_{n}\lambda _{n}^{k}\mathbf {u} _{n},} {\displaystyle =a_{1}\lambda _{1}^{k}\mathbf {u} _{1}+a_{2}\lambda _{2}^{k}\mathbf {u} _{2}+\cdots +a_{n}\lambda _{n}^{k}\mathbf {u} _{n},}
+
+uma vez que os vetores próprios são ortonormais. Então[16]
+
+    = λ 1 k { a 1 u 1 + a 2 ( λ 2 λ 1 ) k u 2 + a 3 ( λ 3 λ 1 ) k u 3 + ⋯ + a n ( λ n λ 1 ) k u n } . {\displaystyle =\lambda _{1}^{k}\left\{a_{1}\mathbf {u} _{1}+a_{2}\left({\frac {\lambda _{2}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{2}+a_{3}\left({\frac {\lambda _{3}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{3}+\cdots +a_{n}\left({\frac {\lambda _{n}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{n}\right\}.} {\displaystyle =\lambda _{1}^{k}\left\{a_{1}\mathbf {u} _{1}+a_{2}\left({\frac {\lambda _{2}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{2}+a_{3}\left({\frac {\lambda _{3}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{3}+\cdots +a_{n}\left({\frac {\lambda _{n}}{\lambda _{1}}}\right)^{k}\mathbf {u} _{n}\right\}.}
+
+Desde π = u1, π(k) abordagens para π como k vai para infinito com uma velocidade na ordem de λ2/λ1 exponencialmente. Isto acontece porque |λ2| ≥ |λ3| ≥ ... ≥ |λn|, portanto, λ2/λ1 é o termo dominante. Um ruído aleatório na distribuição de estado π também pode acelerar essa convergência com a distribuição estacionária.[17]
+Cadeia de Markov reversíveis
+
+Uma cadeia de Markov é dita ser reversível se existe uma distribuição de probabilidade π sobre os seus estados tais que
+
+    π i Pr ( X n + 1 = j ∣ X n = i ) = π j Pr ( X n + 1 = i ∣ X n = j ) {\displaystyle \pi _{i}\Pr(X_{n+1}=j\mid X_{n}=i)=\pi _{j}\Pr(X_{n+1}=i\mid X_{n}=j)} {\displaystyle \pi _{i}\Pr(X_{n+1}=j\mid X_{n}=i)=\pi _{j}\Pr(X_{n+1}=i\mid X_{n}=j)}
+
+para todos os tempos n e todos os estados i e j. Esta condição é conhecida como condição de balanço detalhado (alguns livros chamam a equação de balanço local).
+
+Considerando-se um tempo arbitrário n fixo e usando a abreviação
+
+    p i j = Pr ( X n + 1 = j ∣ X n = i ) , {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i)\,,} {\displaystyle p_{ij}=\Pr(X_{n+1}=j\mid X_{n}=i)\,,}
+
+a equação do balanço detalhado pode ser escrita de forma mais compacta como
+
+    π i p i j = π j p j i . {\displaystyle \pi _{i}p_{ij}=\pi _{j}p_{ji}\,.} {\displaystyle \pi _{i}p_{ij}=\pi _{j}p_{ji}\,.}
+
+O tempo de um só passo a partir de n a n+1 pode ser pensado como tendo cada pessoa i que inicialmente πi dólares e pagar cada pessoa j uma fração pij dela. A condição de balanço detalhado afirma que a cada pagamento, a outra pessoa paga exatamente a mesma quantidade de dinheiro de volta.[18] É evidente que a quantidade total de dinheiro π que cada pessoa tem permanece o mesmo após o passo de tempo, uma vez que cada dólar gasto é equilibrado por um dólar correspondente recebida. Isto pode ser demonstrado mais formalmente pela igualdade
+
+    ∑ i π i p i j = ∑ i π j p j i = π j ∑ i p j i = π j , {\displaystyle \sum _{i}\pi _{i}p_{ij}=\sum _{i}\pi _{j}p_{ji}=\pi _{j}\sum _{i}p_{ji}=\pi _{j}\,,} {\displaystyle \sum _{i}\pi _{i}p_{ij}=\sum _{i}\pi _{j}p_{ji}=\pi _{j}\sum _{i}p_{ji}=\pi _{j}\,,}
+
+que afirma essencialmente que a quantidade total de dinheiro pessoa j recebe (incluindo de si mesmo) durante o passo de tempo é igual à quantidade de dinheiro que ele paga a outros, o que equivale a todo o dinheiro que tinha inicialmente porque foi assumido que todo o dinheiro é gasto (isto é pji soma 1 sobre i). A suposição é uma questão técnica, porque o dinheiro não é realmente usada é simplesmente pensado como sendo pagos de pessoa j para si mesmo (isto é pjj não é necessariamente zero).
+
+Como n foi arbitrário, este raciocínio é válido para qualquer n, e, portanto, para cadeias de Markov reversíveis π é sempre uma distribuição no estado estacionário de Pr(Xn+1 = j | Xn = i) para cada n.
+
+Se a cadeia de Markov começa na distribuição em estado estacionário, isto é, se Pr(X0 = i) = πi, então Pr(Xn = i) = πi para todo o n e a equação de equilíbrio detalhada pode ser escrito como
+
+    Pr ( X n = i , X n + 1 = j ) = Pr ( X n + 1 = i , X n = j ) . {\displaystyle \Pr(X_{n}=i,X_{n+1}=j)=\Pr(X_{n+1}=i,X_{n}=j)\,.} {\displaystyle \Pr(X_{n}=i,X_{n+1}=j)=\Pr(X_{n+1}=i,X_{n}=j)\,.}
+
+Os lados esquerdo e direito desta última equação são idênticas, exceto para uma reversão dos índices de tempo n e n + 1. critério de Kolmogorov dá uma condição necessária e suficiente para uma cadeia de Markov para ser reversível directamente a partir das probabilidades de transição de matriz. O critério exige que os produtos de probabilidades em torno de cada circuito fechado são os mesmos em ambas as direcções em torno do circuito.
+
+Cadeias de Markov reversíveis são comuns na cadeia de Markov Monte Carlo (MCMC) se aproxima, porque a equação do balanço detalhado para a distribuição π desejada implica necessariamente que a cadeia de Markov foi construído de modo que π é uma distribuição em estado estacionário. Mesmo com correntes de Markov de tempo não homogénea, em que múltiplas matrizes de transição são usados, se cada matriz de transição exibe equilíbrio detalhada com a distribuição π desejada, isto implica necessariamente que π é uma distribuição em estado estacionário da cadeia de Markov.
+Cadeia de Markov reversível mais próxima
+
+Para qualquer cadeia de Markov de tempo homogêneo dada por uma matriz de transição P ∈ R n × n {\displaystyle P\in \mathbb {R} ^{n\times n}} {\displaystyle P\in \mathbb {R} ^{n\times n}}, qualquer norma | | ⋅ | | {\displaystyle ||\cdot ||} {\displaystyle ||\cdot ||} em R n × n {\displaystyle \mathbb {R} ^{n\times n}} {\displaystyle \mathbb {R} ^{n\times n}} que é induzido por um produto escalar, e qualquer vetor probabilidade π {\displaystyle \pi } \pi, existe uma matriz de transição única P ∗ {\displaystyle P^{*}} {\displaystyle P^{*}} que é reversível de acordo com a π {\displaystyle \pi } \pi e que está mais próxima de P {\displaystyle P} P de acordo com a norma | | ⋅ | | {\displaystyle ||\cdot ||} {\displaystyle ||\cdot ||}. A matriz P ∗ {\displaystyle P^{*}} {\displaystyle P^{*}} pode ser calculada resolvendo um problema de otimização quadrático-convexa.[19]
+
+Por exemplo, considere a seguinte cadeia de Markov:
+Cadeia de Markov simples
+
+Esta cadeia de Markov não é reversível. De acordo com o Frobenius Norm a cadeia de Markov reversíveis mais próximo de acordo com π = ( 1 3 , 1 3 , 1 3 ) {\displaystyle \pi =\left({\frac {1}{3}},{\frac {1}{3}},{\frac {1}{3}}\right)} {\displaystyle \pi =\left({\frac {1}{3}},{\frac {1}{3}},{\frac {1}{3}}\right)} pode ser calculado como
+Mchain simple corrected C1.png
+
+Se escolher o vetor de probabilidade aleatoriamente como π = ( 1 4 , 1 4 , 1 2 ) {\displaystyle \pi =\left({\frac {1}{4}},{\frac {1}{4}},{\frac {1}{2}}\right)} {\displaystyle \pi =\left({\frac {1}{4}},{\frac {1}{4}},{\frac {1}{2}}\right)}, então a cadeia de Markov reversível mais próxima de acordo com a norma de Frobenius é dada aproximadamente pela
+Mvchain approx C2.png
+Esquema de Bernoulli
+
+Um esquema de Bernoulli é um caso especial de uma cadeia de Markov, onde a matriz de probabilidades de transição tem linhas idênticas, o que significa que o próximo estado é ainda independente do estado corrente (para além de serem independentes dos estados anteriores). Um esquema de Bernoulli com apenas dois estados possíveis é conhecido como um processo de Bernoulli.
+Espaço geral do estado
+
+Para uma visão geral de cadeias de Markov em um espaço geral do estado, ver as cadeias de Markov artigo em um espaço de estado mensurável.
+Cadeias Harris
+
+Muitos resultados para cadeias de Markov com espaço de estados finitos podem ser generalizados para cadeias com espaço de estado incontável através de cadeias de Harris. A ideia principal é para ver se há um ponto no espaço de estado que os hits da cadeia com probabilidade um. Geralmente, não é verdadeiro para o espaço de estado contínuo, no entanto, podemos definir conjuntos A e B, juntamente com um número positivo ε e uma medida de probabilidade ρ, de tal modo que
+
+    Se  τ A = inf { n ≥ 0 : X n ∈ A } ,  então  P z ( τ A < ∞ ) > 0  para todo  z . {\displaystyle {\text{Se }}\tau _{A}=\inf\{n\geq 0:X_{n}\in A\},{\text{ então }}P_{z}(\tau _{A}<\infty )>0{\text{ para todo }}z.} {\displaystyle {\text{Se }}\tau _{A}=\inf\{n\geq 0:X_{n}\in A\},{\text{ então }}P_{z}(\tau _{A}<\infty )>0{\text{ para todo }}z.}
+
+    Se  x ∈ A  e  C ⊂ B ,  então  p ( x , C ) ≥ ε ρ ( C ) . {\displaystyle {\text{Se }}x\in A{\text{ e }}C\subset B,{\text{ então }}p(x,C)\geq \varepsilon \rho (C).} {\displaystyle {\text{Se }}x\in A{\text{ e }}C\subset B,{\text{ então }}p(x,C)\geq \varepsilon \rho (C).}
+
+Em seguida, pode entrar em colapso os conjuntos em um ponto auxiliar α, e uma cadeia Harris recorrente pode ser modificado para conter α. Finalmente, o conjunto de cadeias Harris é um nível confortável de generalidade, a qual é ampla o suficiente para conter um grande número de exemplos interessantes, ainda restritiva suficiente para permitir uma teoria rica.
+
+O uso de cadeias de Markov em cadeia de Markov métodos de Monte Carlo abrange casos em que o processo segue um espaço de estado contínuo.
+Cadeias de Markov interagindo localmente
+
+Considerando-se uma coleção de cadeias de Markov cuja evolução leva em conta o estado de outras cadeias de Markov, está relacionada com a noção de interagir localmente cadeias de Markov. Isso corresponde à situação em que o espaço de estado tem uma forma de produto. Veja interagindo sistema de partículas e autômatos celulares estocástico (probabilística autômatos celulares). Ver, por exemplo Interação de Markov processos.[20] ou [21]
+Aplicações
+
+A pesquisa tem relatado a aplicação e utilidade das cadeias de Markov em uma ampla gama de tópicos, tais como a física, química, medicina, música, teoria dos jogos e esportes.
+Física
+
+Sistemas Markovianos aparecem extensivamente em termodinâmica e mecânica estatística, sempre que as probabilidades são usados para representar detalhes desconhecidos ou não modelados do sistema, se pode presumir-se que a dinâmica é invariante no tempo, e que nenhuma história relevante precisa ser considerado que não estiver incluído na descrição do estado.
+Química
+Cinética de Michaelis-Menten. A enzima (E) se liga ao substrato (S) e produz um produto (P). Cada reação é uma transição de estado em uma cadeia de Markov.
+
+Cadeias de Markov e processos de Markov de tempo contínuo são úteis em química quando os sistemas físicos aproximam a propriedade de Markov. O modelo clássico da actividade da enzima, a cinética de Michaelis-Menten, pode ser visto como uma cadeia de Markov, onde em cada etapa de tempo a reacção prossegue em algum sentido. Enquanto Michaelis-Menten é bastante simples, redes de reacção muito mais complicados também podem ser modeladas com cadeias de Markov.
+
+Um algoritmo baseado numa cadeia de Markov também foi utilizado para focar o crescimento baseado no fragmento de produtos químicos in silico no sentido de uma classe desejada de compostos, tais como fármacos ou produtos naturais.[22] Como uma molécula é cultivada, um fragmento é seleccionado a partir da molécula nascente como o estado "corrente". Não é do conhecimento do seu passado (isto é, não está consciente de que já se encontra ligado a ele). É, em seguida, passa para o próximo estado, quando um fragmento é ligado a ele. As probabilidades de transição são treinados em bases de dados das classes autênticas de compostos.
+
+Além disso, o crescimento (e composição) dos copolímeros pode ser modelada utilizando cadeias de Markov. Com base nas relações de reactividade dos monómeros que formam a cadeia polimérica em crescimento, a composição da corrente pode ser calculada (por exemplo, se monómeros tendem a adicionar de forma alternada ou em funcionamentos longos do mesmo monómero). Devido aos efeitos estéricos, de segunda ordem efeitos de Markov pode também desempenhar um papel no crescimento de algumas cadeias de polímero.
+
+Do mesmo modo, tem sido sugerido que a cristalização e o crescimento de alguns dos materiais de óxido de superrede epitaxiais pode ser descrito com precisão por Cadeias de Markov.[23]
+Ensaio
+
+Muitos teóricos têm proposto a ideia do teste estatístico cadeia de Markov (MCST), um método de conjunção cadeias de Markov para formar um "Markov cobertor", organizando essas cadeias em várias camadas recursiva ( "wafering") e produção de testes mais eficientes conjuntos-amostras -como um substituto para testes exaustivos. MCSTs também têm usos em redes baseadas no estado temporais; O artigo de Chilukuri et al. intitulado "temporais Networks Incerteza raciocínio para Evidence fusão com Aplicações para objeto de Detecção e Acompanhamento" (ScienceDirect) dá um estudo de fundo e caso para aplicar MCSTs a uma ampla gama de aplicações.
+Reconhecimento de fala
+
+Modelos ocultos de Markov são a base para a maioria dos sistemas de reconhecimento de voz automáticas modernas.
+Ciências da informação
+
+Cadeias de Markov são usados em todo o processamento da informação. famosa 1948 de papel uma teoria matemática de Claude Shannon de comunicação, que em uma única etapa criou o campo da teoria da informação, abre com a introdução do conceito de entropia através de modelagem Markov do idioma Inglês. Tais modelos idealizados pode capturar muitas das regularidades estatísticas de sistemas. Mesmo sem descrever a estrutura completa do sistema perfeitamente, tais modelos de sinal podem tornar possível a compressão de dados muito eficaz através de técnicas de codificação de entropia, como codificação aritmética. Eles também permitem que estimação de estado eficaz e reconhecimento de padrões. Cadeias de Markov também desempenham um papel importante no aprendizado por reforço.
+
+Cadeias de Markov são também a base para modelos ocultos de Markov, que são um instrumento importante para diversas áreas como redes telefónicas (que utilizam o algoritmo Viterbi para correção de erro), reconhecimento de voz e bioinformática (como na detecção de rearranjos[24]).
+
+O algoritmo de compressão de dados sem perdas LZMA combina cadeias de Markov com compressão Lempel-Ziv para alcançar taxas de compressão muito elevados.
+Teoria de filas
+
+Cadeias de Markov são a base para o tratamento analítico das filas (teoria de filas). Agner Krarup Erlang iniciou o assunto em 1917.[25] Isso os torna crítico para otimizar o desempenho de redes de telecomunicações, em que as mensagens devem muitas vezes competem por recursos limitados (como a largura de banda).[26]
+Aplicações de Internet
+
+O PageRank de uma página da web como usado pelo Google é definida por uma cadeia de Markov.[27] É a probabilidade de estar em página i {\displaystyle i} i displaystyle na distribuição estacionária sobre a seguinte cadeia de Markov em todas as páginas Web (conhecidas). Se N {\displaystyle N} N é o número de páginas da Web conhecidas, e uma página i {\displaystyle i} i tem k i {\displaystyle k_{i}} k_i links para ela, então ele tem probabilidade de transição α k i + 1 − α N {\displaystyle {\frac {\alpha }{k_{i}}}+{\frac {1-\alpha }{N}}} {\displaystyle {\frac {\alpha }{k_{i}}}+{\frac {1-\alpha }{N}}} para todas as páginas que estão ligadas a ela e 1 − α N {\displaystyle {\frac {1-\alpha }{N}}} {\displaystyle {\frac {1-\alpha }{N}}} para todas as páginas que estão não ligadas. O parâmetro α {\displaystyle \alpha } \alpha é considerado como sendo cerca de 0,85.
+
+Os modelos de Markov também têm sido utilizados para analisar o comportamento de navegação Web de utilizadores. web link transição de um usuário em um determinado site pode ser modelado usando modelos de Markov de ordem segunda primeira ou e pode ser usado para fazer previsões sobre a navegação futuro e para personalizar a página da web para um usuário individual.
+Estatística
+
+métodos da cadeia de Markov também se tornaram muito importantes para a geração de sequências de números aleatórios para refletir com precisão as distribuições de probabilidade desejados muito complicadas, através de um processo chamado de Markov chain Monte Carlo (MCMC). Nos últimos anos, este tem revolucionado a praticabilidade de métodos de inferência bayesiana, permitindo uma ampla gama de distribuições posteriores a ser simulada e seus parâmetros encontrados numericamente.
+Economia e finanças
+
+Cadeias de Markov são utilizados em finanças e economia para modelar uma variedade de diferentes fenômenos, incluindo os preços dos ativos e falhas de mercado. O primeiro modelo financeiro para usar uma cadeia de Markov foi de Prasad et al. em 1974.[28] Outro foi o modelo de mudança de regime de James D. Hamilton (1989), em que uma cadeia de Markov é usado para modelar alterna entre períodos de crescimento alta e baixa do PIB (ou, alternativamente, expansões econômicas e recessões).[29] Um exemplo mais recente é o modelo Multifractal Switching Markov de Laurent E. Calvet e Adlai J. Fisher, que foi construído sobre a conveniência de modelos anteriores de mudança de regime.[30][31] Ele usa um arbitrariamente grande cadeia de Markov para dirigir o nível de volatilidade dos retornos de ativos.
+
+Macroeconomia dinâmica usa fortemente cadeias de Markov. Um exemplo está usando cadeias de Markov de preços modelo exogenamente de equidade (estoque) em um ambiente de equilíbrio geral.[32]
+
+As agências de notação produzir tabelas anuais das probabilidades de transição para as obrigações de diferentes classificações de crédito.[33]
+Ciências Sociais
+
+Cadeias de Markov são geralmente usados para descrever argumentos dependentes do caminho, onde as configurações estruturais atuais condicionam os resultados futuros. Um exemplo é a reformulação da ideia, originalmente devido a de Karl Marx Das Kapital, amarrando o desenvolvimento econômico com a ascensão do capitalismo. Na pesquisa atual, é comum o uso de uma cadeia de Markov para modelar como quando um país atinge um determinado nível de desenvolvimento económico, a configuração de fatores estruturais, tais como tamanho da burguesia comercial, a proporção da população urbana à residência rural, a taxa de de mobilização política, etc., irá gerar uma maior probabilidade de transição de autoritário para o regime democrático.[34]
+Biologia matemática
+
+Cadeias de Markov também têm muitas aplicações na modelagem biológica, em particular os processos de populações, que são úteis em processos de modelagem que são (pelo menos) análogo ao populações biológicas. A matriz de Leslie é um exemplo deste tipo, embora algumas das suas entradas não são probabilidades (que pode ser maior do que 1). Outro exemplo é a modelação das células em forma dividindo folhas de células epiteliais.[35] Ainda um outro exemplo é o estado dos canais de íons em membranas celulares.
+
+Cadeias de Markov também são utilizados em simulações da função cerebral, tais como a simulação do neocórtex de mamífero.[36]
+Genética
+
+Cadeias de Markov têm sido usados em genética de populações, a fim de descrever a mudança nas frequências de genes em pequenas populações afetadas por deriva genética, por exemplo, na forma de equação de difusão descrita por Motoo Kimura.[37]
+Jogos
+
+Cadeias de Markov pode ser usado para modelar muitos jogos de azar. Jogos infantis Snakes and Ladders e "Hi Ho! Cherry-O", por exemplo, são representados exatamente por cadeias de Markov. Em cada turno, o jogador começa em um determinado estado (em um determinado quadrado) e de lá tem chances de se mudar para alguns outros estados (quadrados) fixo.
+Música
+
+Cadeias de Markov são empregados na composição de música algorítmica, particularmente em softwares como o CSound, Max e SuperCollider. Em uma cadeia de primeira ordem, os estados do sistema tornam-se notas ou valores de altura, e um vetor de probabilidade para cada nota é construído, completando uma matriz de probabilidade de transição (ver abaixo). Um algoritmo é construído para produzir valores de altura de saída com base nos coeficientes de matriz de transição, que pode ser de alturas MIDI, de frequências (Hz), ou qualquer outra métrica desejável.[38] matriz de 1ª ordem
+Matriz de primeira ordem Nota 	A 	C♯ 	E♭
+A 	0.1 	0.6 	0.3
+C♯ 	0.25 	0.05 	0.7
+E♭ 	0.7 	0.3 	0
+Matriz de segunda ordem Notas 	A 	D 	G
+AA 	0.18 	0.6 	0.22
+AD 	0.5 	0.5 	0
+AG 	0.15 	0.75 	0.1
+DD 	0 	0 	1
+DA 	0.25 	0 	0.75
+DG 	0.9 	0.1 	0
+GG 	0.4 	0.4 	0.2
+GA 	0.5 	0.25 	0.25
+GD 	1 	0 	0
+
+Uma cadeia de Markov de segunda ordem pode ser introduzida ao considerar o estado atual e também o estado anterior, conforme indicado na segunda tabela. Cadeias de ordem "n" tendem a "agrupar" notas particulares juntas, enquanto 'quebrando' para outros padrões e sequências ocasionalmente. Estas cadeias de ordem superior tendem a gerar resultados com um sentido de estrutura frasal, ao invés do 'vaguear' produzido por um sistema de primeira ordem.[39]
+
+Cadeias de Markov podem ser usadas estruturalmente, como na Analogique A e B de Xenakis.[40] Cadeias de Markov também são utilizadas em sistemas que utilizam um modelo de Markov para reagir interativamente a entrada de música.[41]
+
+Normalmente sistemas musicais precisa impor restrições de controle específicas sobre as sequências de comprimento finito que geram, mas as restrições de controle não são compatíveis com os modelos de Markov, uma vez que induzem dependências de longo alcance que violam a hipótese de Markov de memória limitada. De modo a ultrapassar esta limitação, uma nova abordagem tem sido proposta.[42]
+Beisebol
+
+Modelos de cadeia de Markov foram usados na análise de beisebol avançado desde 1960, embora a sua utilização é ainda raro. Cada meio-turno de um jogo de beisebol se encaixa o estado da cadeia de Markov, quando o número de corredores e saídas são considerados. Durante qualquer no bastão, existem 24 possíveis combinações de número de saídas e a posição dos corredores. Mark Pankin mostra que modelos de cadeia de Markov pode ser usado para avaliar corridas criadas para ambos os jogadores individuais, bem como uma equipe.[43] Ele também discute vários tipos de estratégias e condições de jogo: como os modelos da cadeia de Markov têm sido usados para analisar estatísticas para situações de jogo, tais como Bunting e base de roubo e diferenças quando se joga na grama ou na relva sintética.[44]
+Geradores de texto de Markov
+
+Processos de Markov também pode ser usado para gerar texto superficialmente com aparência real dado um documento de exemplo: eles são usados em uma variedade de software de recreio "gerador de paródia" (ver comunicado de imprensa dissociada, Jeff Harrison,[45] Mark V Shaney[46][47]). Esses processos também são usados por spammers para injetar parágrafos ocultos aparência reais em e-mail não solicitado e postar comentários em uma tentativa de obter essas mensagens passado filtros de spam.
+
+No campo da bioinformática, eles podem ser utilizados para simular as sequências de DNA.[48]
+Ajustando
+
+Ao ajustar uma cadeia de Markov aos dados, situações nas quais os parâmetros descrevem mal a situação podem destacar tendências interessantes.[49][50][51]
+História
+
+Andrey Markov produziu os primeiros resultados (1906) para estes processos, puramente teórica. A generalização para espaços de estado infinitos contáveis foi dada por Kolmogorov (1936). Cadeias de Markov estão relacionados com o movimento Browniano e a hipótese ergódica, dois tópicos da física que eram importante nos primeiros anos do século XX. No entanto, Markov primeiro usou as cadeias em 1906 como parte de seu argumento contra Pavel Nekrasov, em particular para fazer o caso que a lei dos grandes números pode ser estendido para eventos dependentes.[52] Em 1913, ele aplicou suas descobertas para os primeiros 20.000 cartas de Eugene Onegin de Pushkin.[52] Em 1917, a aplicação mais prática de seu trabalho foi feito por Erlang obter fórmulas para a perda de chamadas e tempo de espera nas redes telefônicas.[25]
+
+Seneta fornece uma conta de motivações de Markov e desenvolvimento inicial da teoria.[53] O termo "cadeia" foi utilizado pela Markov (1906) sugerem que uma sequência de variáveis dependentes emparelhadas.[54]
